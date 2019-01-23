@@ -1,0 +1,113 @@
+﻿@model IEnumerable<Topnet_v1.reference>
+
+@{
+    ViewBag.Title = "Liste";
+    ViewBag.SubTitle = "Référence KPI";
+}
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
+    @Scripts.Render("~/Scripts/Elements/Icons/menu")
+}
+
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
+
+@Styles.Render("~/Styles/Elements/Icons")
+
+
+
+     @Html.ActionLink("Ajouter une référence", "Create", null, new { @class = "btn btn-danger" })<br/><br/>
+        
+    
+
+<div class="box">
+    <div class="box-body">
+
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Borne mauvaise
+                    </th>
+
+                    <th>
+                        Borne moyenne
+                    </th>
+                    <th>
+                        Borne bonne
+                    </th>
+                    <th>
+                        Date mise à jour
+                    </th>
+                    <th>
+                        Nom référence
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.borneDebut)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.borneMoyenne)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.borneFin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.dateReference)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.KPI.nomKPI)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "Detail", new { id = item.idReference, dateReference = item.dateReference }) |
+                            @Html.ActionLink("  ", "EditReference", new
+                            {
+                                id = item.idReference,
+                                nomkp = item.KPI.nomKPI,
+                                borneDebut = item.borneDebut
+                                ,
+                                borneFin = item.borneFin,
+                                borneMoyenne = item.borneMoyenne
+                            }, new { @class = "fa fa-fw fa-pencil-square-o" }) |
+
+
+
+                            @Html.ActionLink("  ", "DeleteConfirmed", new { id = item.idReference },
+                                                                  new { onclick = "return confirm('Are you sure you wish to delete this user?');", @class = "fa fa-fw fa-trash-o" })
+
+
+
+
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+    @Scripts.Render("~/Scripts/Tables/Data")
+
+}

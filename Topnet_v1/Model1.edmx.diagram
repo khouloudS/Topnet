@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e2225e11567d4865893789a470ba4ef2" Name="Diagram1">
+        <EntityTypeShape EntityType="topnetDATAModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.AspNetRole" Width="1.5" PointX="8.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.AspNetUserClaim" Width="1.5" PointX="13.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.AspNetUserLogin" Width="1.5" PointX="13.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.AspNetUser" Width="1.5" PointX="11" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.attenuation" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.client" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.deligation" Width="1.5" PointX="11" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.gouvernerat" Width="1.5" PointX="8.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.historiqueKPIGlobal" Width="1.5" PointX="6" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.historiqueSession" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.KPI" Width="1.5" PointX="3.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.ligneADSL" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.localite" Width="1.5" PointX="13.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.modem" Width="1.5" PointX="3" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.motif" Width="1.5" PointX="3.75" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.reference" Width="1.5" PointX="6" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.sysdiagram" Width="1.5" PointX="10.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.ticket" Width="1.5" PointX="6" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.TypeReseau" Width="1.5" PointX="3" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.historiqueKPI" Width="1.5" PointX="6" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.dailyParameter" Width="1.5" PointX="8.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.notexiste" Width="1.5" PointX="12.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetDATAModel.ticketGenere" Width="1.5" PointX="10.75" PointY="12.75" IsExpanded="true" />
+        <AssociationConnector Association="topnetDATAModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetDATAModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetDATAModel.FK_ATTENUATION_ASSOCIATI_LIGNEADS" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetDATAModel.FK_DELIGATI_ASSOCIATI_GOUVERNE" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetDATAModel.FK_LOCALITE_ASSOCIATI_DELIGATI" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetDATAModel.FK_HISTORIQ_ASSOCIATI_KPI" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetDATAModel.FK_HISTORIQ_ASSOCIATI_LIGNEADS" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetDATAModel.FK_HISTORIQ_CORRESPON_KPI" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetDATAModel.FK_ref_ASSOCIATI_KPI" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetDATAModel.FK_HISTORIQ_AVOIR_LIGNEADS" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetDATAModel.FK_MODEM_ASSOCIATI_LIGNEADS" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetDATAModel.FK_TICKET_ASSOCIATI_LIGNEADS" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetDATAModel.FK_TICKET_ASSOCIATI_MOTIF" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetDATAModel.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetDATAModel.ligneADSLtypeReseau" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

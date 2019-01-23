@@ -1,0 +1,2130 @@
+﻿@{
+    ViewBag.Title = "Ligne ADSL";
+    ViewBag.SubTitle = "Tableau de bord";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Forms/Advanced/menu")
+    @Scripts.Render("~/Scripts/Charts/Inline/menu")
+}
+
+@Styles.Render("~/AdminLTE/plugins/daterangepicker/css")
+@Styles.Render("~/AdminLTE/plugins/icheck/css")
+@Styles.Render("~/AdminLTE/plugins/colorpicker/css")
+@Styles.Render("~/AdminLTE/plugins/timepicker/css")
+@Styles.Render("~/AdminLTE/plugins/select2/css")
+@Styles.Render("~/AdminLTE/dist/css")
+@Styles.Render("~/AdminLTE/dist/css/skins")
+<style>
+    .canvasjs-chart-credit {
+        display: none;
+    }
+
+    table tr td {
+        padding-top: 5px;
+    }
+
+    #chartdiv {
+        width: 200px;
+        height: 400px;
+    }
+
+    .zc-ref {
+        display: none;
+        width: 200px;
+        height: 400px;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<script>
+    zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
+</script>
+<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/gauge.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+<script type="text/javascript">
+
+
+    function navigate(target) {
+        var username = $('#ddlUsers').val();
+
+        $.ajax({
+            url: "/MoreInfo/Index",
+            type: "GET",
+            data: { username: username },
+            success: function (result) {
+
+                window.location.href = target + '?UserName=' + username;
+
+            }
+        });
+    }
+    function navigate1(target) {
+        var username = $('#ddlUsers').val();
+
+        $.ajax({
+            url: "/MoreInfoMoyDure/Index",
+            type: "GET",
+            data: { username: username },
+            success: function (result) {
+
+                window.location.href = target + '?UserName=' + username;
+
+            }
+        });
+    }
+
+
+
+    $(document).ready(function () {
+        $("#ddlUsers").change(function () {
+
+
+            var username = $(this).find('option:selected').val();
+
+          //  document.write(borneResultatreferenceKPIMoySession);
+
+
+            $.ajax({
+                url: "/Dashboard/Icon",
+                type: "GET",
+                data: {
+                    username: username
+                },
+                /*****Success**/
+                success: function (result) {
+
+                    $("#icon").html(result);
+
+                }
+            });
+        });
+    });
+    function generateDashboard() {
+        var username = $('#ddlUsers').val();
+
+        $.ajax({
+            url: "/Dashboard/GetData",
+            data: {
+                username: username
+
+            },
+            success: function (result) {
+                GetDurationData(result[0].Value);
+                GetNumberData(result[1].Value);
+                GetSessionData(result[2].Value);
+                GetDWSNRData(result[3].Value);
+                GetAttData(result[4].Value);
+                GetResultProgessBarre(result[5].Value);
+                GetResultGaugeMIN(result[6].Value);
+                GetResultProgessBarreMax(result[7].Value);
+                GetResultProgessBarrenbDex(result[8].Value);
+            }
+        });
+    }
+
+    function GetDurationData(data) {
+        var dps = [];
+        for (i = 0; i < data.length; i++) {
+            dps.push({ x: new Date(parseInt(data[i].date.split('(')[1].split(')')[0])), y: data[i].dureeConnexionParJour })
+        }
+        console.log(dps);
+        var chart2 = new CanvasJS.Chart("durchart",
+            {
+                title: {
+                    text: "Durée des sessions"
+                },
+                axisY: {
+                    includeZero: false,
+                    title: "Durée",
+                    suffix: "s",
+                    labelFormatter: function (seconds) {
+                        return CanvasJS.formatDate(seconds.Value,
+                            (Math.floor(seconds.value / 3600)) + ":" + ("0" + Math.floor(seconds.value / 60) % 60).slice(-2)
+                            + ":" + ("0" + seconds.value % 60).slice(-2));
+                    }
+                },
+                axisX: {
+                    title: "Date"
+                },
+                data: [
+                    {
+                        type: "line",
+                        dataPoints: dps
+                    }
+                ]
+            });
+        chart2.render();
+    }
+
+    function GetNumberData(data) {
+        var dps = [];
+        for (i = 0; i < data.length; i++) {
+            dps.push({ y: data[i].nbDeconnexionParJour, label: new Date(parseInt(data[i].date.split('(')[1].split(')')[0])).toLocaleDateString() })
+        }
+        var chart = new CanvasJS.Chart("numchart", {
+            animationEnabled: true,
+            title: {
+                text: "Nombre de déconnexion"
+            },
+            axisY: {
+                title: "Nombre"
+            },
+            axisX: {
+                title: "Date"
+            },
+            data: [{
+                type: "column",
+                name: "numbers",
+                color: "#014D65",
+                dataPoints: dps
+            }]
+        });
+        chart.render();
+
+    }
+
+    function GetSessionData(data) {
+        //var dps = [];
+        //var dps2 = [];
+        //for (i = 0; i < data.length; i++) {
+        //    dps.push({ x: new Date(parseInt(data[i].dateDebutSession.split('(')[1].split(')')[0])), y: data[i].startTime})
+        //    dps2.push({ x: new Date(parseInt(data[i].dateFinSession.split('(')[1].split(')')[0])), y: data[i+1].stopTime })
+        //}
+
+
+
+    }
+
+    function GetDWSNRData(data) {
+        var dps = [];
+        var dps2 = [];
+        var a;
+        var b;
+        for (i = 0; i < data.length; i++) {
+
+            dps2.push({ x: new Date(parseInt(data[i].DATE_SCAN.split('(')[1].split(')')[0])), y: data[i].UPSNR })
+            dps.push({ x: new Date(parseInt(data[i].DATE_SCAN.split('(')[1].split(')')[0])), y: data[i].DWSNR })
+             a = data[data.length - 1].DWSNR;
+             b = data[data.length - 1].UPSNR;
+        }
+
+        var chart = new CanvasJS.Chart("dwsnrchart", {
+            animationEnabled: true,
+            theme: "light2",
+            title: {
+                text: "Marge SNR"
+            },
+            axisX: {
+                valueFormatString: "YYYY",
+                crosshair: {
+                    enabled: true,
+                    snapToDataPoint: true,
+                    title: "Date"
+                }
+            },
+            axisY: {
+                title: "Marge SNR value",
+                suffix: "db",
+                crosshair: {
+                    enabled: true
+                },
+                stripLines: [{
+                    value: 9,
+                    label: "Average"
+                }]
+            },
+            toolTip: {
+                shared: true
+            },
+            legend: {
+                cursor: "pointer",
+                verticalAlign: "bottom",
+                horizontalAlign: "left",
+                dockInsidePlotArea: true,
+                itemclick: toogleDataSeries
+            },
+            data: [{
+                type: "line",
+                showInLegend: true,
+                name: "UP SNR",
+                markerType: "square",
+                xValueFormatString: "MM DD",
+                color: "#F08080",
+                dataPoints: dps2
+
+            },
+            {
+                type: "line",
+                showInLegend: true,
+                name: "DW SNR",
+                lineDashType: "dash",
+                dataPoints: dps
+
+            }]
+        });
+        chart.render();
+
+        function toogleDataSeries(e) {
+            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            } else {
+                e.dataSeries.visible = true;
+            }
+            chart.render();
+        }
+
+
+        /****************SNR*******************************************************************/
+
+
+        var myConfig15 = {
+            "type": "gauge",
+            "scale-r": {
+                "aperture": 200,
+                "values": "0:100:10",
+                "center": {
+                    "size": 12,
+                    "background-color": "#66CCFF #FFCCFF",
+                    "border-color": "none"
+                },
+                "ring": {
+                    "size": 10,
+                    "rules": [
+                        {
+                            "rule": "%v >=0 && %v < 6",
+                            "background-color": "#FB0A02"
+                        },
+                        {
+                            "rule": "%v >= 6 && %v < 9",
+                            "background-color": "#EC7928"
+                        },
+                        {
+                            "rule": "%v >= 9 && %v < 12",
+                            "background-color": "#FAC100"
+                        },
+                        {
+                            "rule": "%v >= 12 && %v < 25",
+                            "background-color": "#B1AD00"
+                        },
+                        {
+                            "rule": "%v >= 25",
+                            "background-color": "#348D00"
+                        }
+                    ]
+                },
+                "guide": {
+                    "background-color": "#66CCFF #FFCCFF",
+                    "alpha": 0.2
+                },
+                "tick": {
+                    "line-color": "#66CCFF",
+                    "line-style": "solid",
+                    "line-width": 3,
+                    "size": 15,
+                    "placement": "inner"
+                },
+                "minor-ticks": 4,
+                "minor-tick": {
+                    "line-color": "#FFFFFF",
+                    "line-style": "solid",
+                    "line-width": 2,
+                    "size": 10,
+                    "placement": "inner"
+                }
+            },
+            "plot": {
+                "csize": "5%",
+                "size": "80%",
+                "background-color": "#000000",
+                "value-box": { //Value Boxes
+                    "placement": "center",  //Specify "center", "tip", or "edge".
+                    "text": "%v",
+                    "font-color": "blue"
+                }
+            },
+            "labels": [
+                {
+                    "id": "lbl1",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 160,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Excelente",
+                    "backgroundColor": "#348D00",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#237b00",
+                        "text": "< 25 <br>Units",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl2",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 80,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Moyenne",
+                    "backgroundColor": "#B1AD00",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#a09c00",
+                        "text": "> 12 < 25<br>Units",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl3",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 0,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Médiocre",
+                    "backgroundColor": "#FAC100",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#e9b000",
+                        "text": "> 9 < 12<br>Units",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl4",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": -80,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Mauvaise",
+                    "backgroundColor": "#EC7928",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#da6817",
+                        "text": "> 6 < 12<br>Units",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl5",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": -160,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Très mauvaise",
+                    "backgroundColor": "#FB0A02",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#ea0901",
+                        "text": "< 6<br>Units",
+                        "shadow": 0
+                    }
+                }
+            ],
+            "series": [
+                { "values": [a] }
+            ]
+        };
+
+
+        zingchart.render({
+            id: 'myChart',
+            data: myConfig15,
+            height: "100%",
+            width: "100%"
+        });
+
+        /******************************************************************************************************************/
+
+        var myConfig15 = {
+            "type": "gauge",
+            "scale-r": {
+                "aperture": 200,
+                "values": "0:100:10",
+                "center": {
+                    "size": 12,
+                    "background-color": "#66CCFF #FFCCFF",
+                    "border-color": "none"
+                },
+                "ring": {
+                    "size": 10,
+                    "rules": [
+                        {
+                            "rule": "%v >=0 && %v < 6",
+                            "background-color": "#FB0A02"
+                        },
+                        {
+                            "rule": "%v >= 6 && %v < 9",
+                            "background-color": "#EC7928"
+                        },
+                        {
+                            "rule": "%v >= 9 && %v < 12",
+                            "background-color": "#FAC100"
+                        },
+                        {
+                            "rule": "%v >= 12 && %v < 25",
+                            "background-color": "#B1AD00"
+                        },
+                        {
+                            "rule": "%v >= 25",
+                            "background-color": "#348D00"
+                        }
+                    ]
+                },
+                "guide": {
+                    "background-color": "#66CCFF #FFCCFF",
+                    "alpha": 0.2
+                },
+                "tick": {
+                    "line-color": "#66CCFF",
+                    "line-style": "solid",
+                    "line-width": 3,
+                    "size": 15,
+                    "placement": "inner"
+                },
+                "minor-ticks": 4,
+                "minor-tick": {
+                    "line-color": "#FFFFFF",
+                    "line-style": "solid",
+                    "line-width": 2,
+                    "size": 10,
+                    "placement": "inner"
+                }
+            },
+            "plot": {
+                "csize": "5%",
+                "size": "80%",
+                "background-color": "#000000",
+                "value-box": { //Value Boxes
+                    "placement": "center",  //Specify "center", "tip", or "edge".
+                    "text": "%v",
+                    "font-color": "blue"
+                }
+            },
+            "labels": [
+                {
+                    "id": "lbl1",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 160,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Excelente",
+                    "backgroundColor": "#348D00",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#237b00",
+                        "text": "< 25 <br>Units",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl2",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 80,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Moyenne",
+                    "backgroundColor": "#B1AD00",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#a09c00",
+                        "text": "> 12 < 25<br>Units",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl3",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 0,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Médiocre",
+                    "backgroundColor": "#FAC100",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#e9b000",
+                        "text": "> 9 < 12<br>Units",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl4",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": -80,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Mauvaise",
+                    "backgroundColor": "#EC7928",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#da6817",
+                        "text": "> 6 < 12<br>Units",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl5",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": -160,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Très mauvaise",
+                    "backgroundColor": "#FB0A02",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#ea0901",
+                        "text": "< 6<br>Units",
+                        "shadow": 0
+                    }
+                }
+            ],
+            "series": [
+                { "values": [b] }
+            ]
+        };
+
+
+        zingchart.render({
+            id: 'myChart2',
+            data: myConfig15,
+            height: "100%",
+            width: "100%"
+        });
+
+
+    }
+
+    function GetAttData(data) {
+        var dps = [];
+        var dps2 = [];
+        var a = [];
+        var b = [];
+        var maxDate = [];
+        for (i = 0; i < data.length; i++) {
+            var maxDate = data[1].DATE_SCAN;
+            dps.push({ x: new Date(parseInt(data[i].DATE_SCAN.split('(')[1].split(')')[0])), y: data[i].DWATTEN })
+            dps2.push({ x: new Date(parseInt(data[i].DATE_SCAN.split('(')[1].split(')')[0])), y: data[i].UPATTEN })
+
+            a = data[data.length - 1].DWATTEN;
+            b = data[data.length - 1].UPATTEN;
+
+        }
+        var chart = new CanvasJS.Chart("attchart", {
+            theme: "light2",
+            animationEnabled: true,
+            title: {
+                text: "Attenuation"
+            },
+            axisY: {
+                includeZero: false,
+                title: "attenuation value ",
+                suffix: "db",
+                stripLines: [{
+                    value: 34,
+                    label: "Average"
+                }]
+            },
+            toolTip: {
+                shared: "true"
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: toggleDataSeries
+            },
+            data: [{
+                type: "spline",
+                visible: true,
+                showInLegend: true,
+                valueFormatString: "DD MMM",
+                name: "UPATTEN",
+                dataPoints: dps2
+
+
+            },
+            {
+                type: "spline",
+                showInLegend: true,
+                visible: true,
+                valueFormatString: "DD MMM",
+                name: "DWATTEN",
+                dataPoints: dps
+
+
+            }
+            ]
+        });
+        chart.render();
+
+        function toggleDataSeries(e) {
+            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            } else {
+                e.dataSeries.visible = true;
+            }
+            chart.render();
+        }
+
+
+
+        var myConfig15 = {
+            "type": "gauge",
+            "scale-r": {
+                "aperture": 200,
+                "values": "0:100:10",
+                "center": {
+                    "size": 12,
+                    "background-color": "#66CCFF #FFCCFF",
+                    "border-color": "none"
+                },
+                "ring": {
+                    "size": 10,
+                    "rules": [
+                        {
+                            "rule": "%v >=55",
+                            "background-color": "#FB0A02"
+                        },
+                        {
+                            "rule": "%v >= 42 && %v < 55",
+                            "background-color": "#EC7928"
+                        },
+                        {
+                            "rule": "%v >= 34 && %v < 42",
+                            "background-color": "#FAC100"
+                        },
+                        {
+                            "rule": "%v >= 17 && %v < 34",
+                            "background-color": "#B1AD00"
+                        },
+                        {
+                            "rule": "%v >= 0 && %v < 17",
+                            "background-color": "#348D00"
+                        }
+                    ]
+                },
+                "guide": {
+                    "background-color": "#66CCFF #FFCCFF",
+                    "alpha": 0.2
+                },
+                "tick": {
+                    "line-color": "#66CCFF",
+                    "line-style": "solid",
+                    "line-width": 3,
+                    "size": 15,
+                    "placement": "inner"
+                },
+                "minor-ticks": 4,
+                "minor-tick": {
+                    "line-color": "#FFFFFF",
+                    "line-style": "solid",
+                    "line-width": 2,
+                    "size": 10,
+                    "placement": "inner"
+                }
+            },
+            "plot": {
+                "csize": "5%",
+                "size": "80%",
+                "background-color": "#000000",
+                "value-box": { //Value Boxes
+                    "placement": "center",  //Specify "center", "tip", or "edge".
+                    "text": "%v",
+                    "font-color": "blue"
+                }
+            },
+            "labels": [
+                {
+                    "id": "lbl1",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": -160,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Excelente",
+                    "backgroundColor": "#348D00",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#237b00",
+                        "text": "0< 17 <br>Units",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl2",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": -80,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Moyenne",
+                    "backgroundColor": "#B1AD00",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#a09c00",
+                        "text": "> 17 < 32 <br>Units",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl3",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 0,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Mediocre",
+                    "backgroundColor": "#FAC100",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#e9b000",
+                        "text": "> 32 < 42<br>Units",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl4",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 80,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Mauvaise",
+                    "backgroundColor": "#EC7928",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#da6817",
+                        "text": "> 42 < 55<br>Units",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl5",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 160,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "tres mauvaise",
+                    "backgroundColor": "#FB0A02",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#ea0901",
+                        "text": ">55<br>Units",
+                        "shadow": 0
+                    }
+                }
+            ],
+            "series": [
+                { "values": [a] }
+            ]
+        };
+
+
+        zingchart.render({
+            id: 'myChartAtt',
+            data: myConfig15,
+            height: "100%",
+            width: "100%"
+        });
+
+        /***************************************************************************************************/
+
+        var myConfig15 = {
+            "type": "gauge",
+            "scale-r": {
+                "aperture": 200,
+                "values": "0:100:10",
+                "center": {
+                    "size": 12,
+                    "background-color": "#66CCFF #FFCCFF",
+                    "border-color": "none"
+                },
+                "ring": {
+                    "size": 10,
+                    "rules": [
+                        {
+                            "rule": "%v >=55",
+                            "background-color": "#FB0A02"
+                        },
+                        {
+                            "rule": "%v >= 42 && %v < 55",
+                            "background-color": "#EC7928"
+                        },
+                        {
+                            "rule": "%v >= 34 && %v < 42",
+                            "background-color": "#FAC100"
+                        },
+                        {
+                            "rule": "%v >= 17 && %v < 34",
+                            "background-color": "#B1AD00"
+                        },
+                        {
+                            "rule": "%v >= 0 && %v < 17",
+                            "background-color": "#348D00"
+                        }
+                    ]
+                },
+                "guide": {
+                    "background-color": "#66CCFF #FFCCFF",
+                    "alpha": 0.2
+                },
+                "tick": {
+                    "line-color": "#66CCFF",
+                    "line-style": "solid",
+                    "line-width": 3,
+                    "size": 15,
+                    "placement": "inner"
+                },
+                "minor-ticks": 4,
+                "minor-tick": {
+                    "line-color": "#FFFFFF",
+                    "line-style": "solid",
+                    "line-width": 2,
+                    "size": 10,
+                    "placement": "inner"
+                }
+            },
+            "plot": {
+                "csize": "5%",
+                "size": "80%",
+                "background-color": "#000000",
+                "value-box": { //Value Boxes
+                    "placement": "center",  //Specify "center", "tip", or "edge".
+                    "text": "%v",
+                    "font-color": "blue"
+                }
+            },
+            "labels": [
+                {
+                    "id": "lbl1",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": -160,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Excelente",
+                    "backgroundColor": "#348D00",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#237b00",
+                        "text": "0< 17 <br>Units",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl2",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": -80,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Moyenne",
+                    "backgroundColor": "#B1AD00",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#a09c00",
+                        "text": "> 17 < 32 <br>Units",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl3",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 0,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Mediocre",
+                    "backgroundColor": "#FAC100",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#e9b000",
+                        "text": "> 32 < 42<br>Units",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl4",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 80,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "Mauvaise",
+                    "backgroundColor": "#EC7928",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#da6817",
+                        "text": "> 42 < 55<br>Units",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl5",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 160,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "tres mauvaise",
+                    "backgroundColor": "#FB0A02",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#ea0901",
+                        "text": ">55<br>Units",
+                        "shadow": 0
+                    }
+                }
+            ],
+            "series": [
+                { "values": [b] }
+            ]
+        };
+
+
+        zingchart.render({
+            id: 'myChartAtt2',
+            data: myConfig15,
+            height: "100%",
+            width: "100%"
+        });
+
+
+    }
+
+
+
+    /******************************************************/
+
+        var result = @Html.Raw(ViewBag.DataPoints);
+
+    var borneDebut;
+    var borneMoyenne;
+    var borneFin;
+    var nomKPI;
+    var pourcentageMin;
+    var pourcentageAVG;
+    var pourcentageMAX;
+
+        for(var i = 0; i < result.length; i++){
+            borneDebut = result[i].borneDebut;
+            borneMoyenne = result[i].borneMoyenne;
+            borneFin = result[i].borneFin;
+            nomKPI = result[i].nomKPI;
+            pourcentageMin = result[i].pourcentageMin;
+            pourcentageAVG = result[i].pourcentageAVG;
+            pourcentageMAX = result[i].pourcentageMAX;
+
+         //   document.write("<center><strong>"+nomKPI+"</strong></center><br/><br/>");
+    }
+
+
+        var resultMax = @Html.Raw(ViewBag.DataPointsMax);
+
+        var borneDebutMax;
+        var borneMoyenneMax;
+        var borneFinMax;
+
+        for (var i = 0; i < resultMax.length; i++){
+            borneDebutMax = resultMax[i].borneDebut;
+            borneMoyenneMax = resultMax[i].borneMoyenne;
+            borneFinMax = resultMax[i].borneFin;
+
+        }
+
+
+       var resultNB = @Html.Raw(ViewBag.DataPointsnB);
+
+        var borneDebutNB;
+        var borneMoyenneNB;
+        var borneFinNB;
+
+        for (var i = 0; i < resultNB.length; i++){
+            borneDebutNB = resultNB[i].borneDebut;
+            borneMoyenneNB = resultNB[i].borneMoyenne;
+            borneFinNB = resultNB[i].borneFin;
+
+        }
+
+        var resultMin =  @Html.Raw(ViewBag.DataPointsMin);
+        var borneDebutMin;
+        var borneMoyenneMin;
+        var borneFinMin;
+        for (var i = 0; i < resultMin.length; i++) {
+            borneDebutMin = resultMin[i].borneDebut;
+            borneMoyenneMin = resultMin[i].borneMoyenne;
+            borneFinMin = resultMin[i].borneFin;
+        }
+    /**
+     * *******************************************************************************************************************************
+     *
+     */
+    function GetResultProgessBarre(data) {
+        var borneResultat;
+        var borneResultatPourcentage;
+
+        for (var i = 0; i < data.length; i++) {
+            borneResultat = data[i].moyConnexion;
+            borneResultatPourcentage = data[i].pourcentageValeur;
+
+       //     document.write(borneResultatPourcentage);
+        }
+
+           var myConfig15 = {
+            "type": "gauge",
+            "scale-r": {
+                "aperture": 200,
+                "values": "0:100000:20000",
+                "center": {
+                    "size": 12,
+                    "background-color": "#66CCFF #FFCCFF",
+                    "border-color": "none"
+                },
+                "ring": {
+                    "size": 10,
+                    "rules": [
+                        {
+                            "rule": "%v >= 0 && %v < " + borneDebut,
+                            "background-color": "red"
+                        },
+                        {
+                            "rule": "%v >=" + borneDebut + " && %v < " + borneMoyenne,
+                            "background-color": "orange"
+                        },
+                        {
+                            "rule": "%v >= " + borneMoyenne + " && %v < " + borneFin,
+                            "background-color": "#9EFD38"
+                        },
+                        {
+                            "rule": "%v >= " + borneFin + " && %v < 100000",
+                            "background-color": "green"
+                        }
+                    ]
+                },
+                "guide": {
+                    "background-color": "#66CCFF #FFCCFF",
+                    "alpha": 0.2
+                },
+                "tick": {
+                    "line-color": "#66CCFF",
+                    "line-style": "solid",
+                    "line-width": 3,
+                    "size": 15,
+                    "placement": "inner"
+                },
+                "minor-ticks": 4,
+                "minor-tick": {
+                    "line-color": "#FFFFFF",
+                    "line-style": "solid",
+                    "line-width": 2,
+                    "size": 10,
+                    "placement": "inner"
+                }
+            },
+            "plot": {
+                "csize": "5%",
+                "size": "80%",
+                "background-color": "#000000",
+                "value-box": { //Value Boxes
+                    "placement": "center",  //Specify "center", "tip", or "edge".
+                    "text": "%v",
+                    "font-color": "blue"
+                }
+            },
+             "labels": [
+                        {
+                            "id": "lbl1",
+                            "x": "50%",
+                            "y": "90%",
+                            "width": 80,
+                            "offsetX":120,
+                            "textAlign": "center",
+                            "padding": 10,
+                            "anchor": "c",
+                            "text": " Excelente",
+                            "backgroundColor": "#348D00",
+                            "tooltip": {
+                                "padding": 10,
+                                "backgroundColor": "#237b00",
+                                "text": "<" + borneFin + " secondes",
+                                "shadow": 0
+                            }
+                        },
+
+                        {
+                            "id": "lbl3",
+                            "x": "50%",
+                            "y": "90%",
+                            "width": 80,
+                            "offsetX":60 ,
+                            "textAlign": "center",
+                            "padding": 10,
+                            "anchor": "c",
+                            "text": " bonne",
+                            "backgroundColor": "#9EFD38",
+                            "tooltip": {
+                                "padding": 10,
+                                "backgroundColor": "#9EFD38",
+                                "text": ">" + borneMoyenne + " < " + borneFin + "<br>secondes",
+                                "shadow": 0
+                            }
+                        },
+                        {
+                            "id": "lbl4",
+                            "x": "50%",
+                            "y": "90%",
+                            "width": 80,
+                            "offsetX": 0,
+                            "textAlign": "center",
+                            "padding": 10,
+                            "anchor": "c",
+                            "text": " moyenne",
+                            "backgroundColor": "#EC7928",
+                            "tooltip": {
+                                "padding": 10,
+                                "backgroundColor": "#da6817",
+                                "text": "> " + borneDebut + " < " + borneMoyenne + "<br>secondes",
+                                "shadow": 0
+                            }
+                        },
+                        {
+                            "id": "lbl5",
+                            "x": "50%",
+                            "y": "90%",
+                            "width": 80,
+                            "offsetX": -60,
+                            "textAlign": "center",
+                            "padding": 10,
+                            "anchor": "c",
+                            "text": "mauvaise",
+                            "backgroundColor": "#FB0A02",
+                            "tooltip": {
+                                "padding": 10,
+                                "backgroundColor": "#ea0901",
+                                "text": "< " + borneDebut + "<br>secondes",
+                                "shadow": 0
+                            }
+                        }
+                    ],
+            "series": [
+                { "values": [borneResultat] }
+            ]
+        };
+
+
+        zingchart.render({
+            id: 'chartRefSession',
+            data: myConfig15,
+            height: "100%",
+            width: "100%"
+        });
+
+
+    }
+
+
+
+
+    /**
+     * ************MIN REF
+     */
+
+    function GetResultGaugeMIN(data) {
+        var borneResultat;
+        var borneResultatPourcentage;
+
+        for (var i = 0; i < data.length; i++) {
+            borneResultat = data[i].moyConnexion;
+            borneResultatPourcentage = data[i].pourcentageValeur;
+          //  document.write(borneResultat);
+        }
+
+        var myConfig15 = {
+            "type": "gauge",
+            "scale-r": {
+                "aperture": 200,
+                "values": "0:100000:20000",
+                "center": {
+                    "size": 12,
+                    "background-color": "#66CCFF #FFCCFF",
+                    "border-color": "none"
+                },
+                "ring": {
+                    "size": 10,
+                    "rules": [
+                        {
+                            "rule": "%v >= 0 && %v < " + borneDebutMin,
+                            "background-color": "red"
+                        },
+                        {
+                            "rule": "%v >=" + borneDebutMin + " && %v < " + borneMoyenneMin,
+                            "background-color": "orange"
+                        },
+                        {
+                            "rule": "%v >= " + borneMoyenneMin + " && %v < " + borneFinMin,
+                            "background-color": "#9EFD38"
+                        },
+                        {
+                            "rule": "%v >= " + borneFinMin + " && %v < 100000",
+                            "background-color": "green"
+                        }
+                    ]
+                },
+                "guide": {
+                    "background-color": "#66CCFF #FFCCFF",
+                    "alpha": 0.2
+                },
+                "tick": {
+                    "line-color": "#66CCFF",
+                    "line-style": "solid",
+                    "line-width": 3,
+                    "size": 15,
+                    "placement": "inner"
+                },
+                "minor-ticks": 4,
+                "minor-tick": {
+                    "line-color": "#FFFFFF",
+                    "line-style": "solid",
+                    "line-width": 2,
+                    "size": 10,
+                    "placement": "inner"
+                }
+            },
+            "plot": {
+                "csize": "5%",
+                "size": "80%",
+                "background-color": "#000000",
+                "value-box": { //Value Boxes
+                    "placement": "center",  //Specify "center", "tip", or "edge".
+                    "text": "%v",
+                    "font-color": "blue"
+                }
+            },
+            "labels": [
+                {
+                    "id": "lbl1",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 120,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": " Excelente",
+                    "backgroundColor": "#348D00",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#237b00",
+                        "text": "<" + borneFinMin + " < br > secondes",
+                        "shadow": 0
+                    }
+                },
+
+                {
+                    "id": "lbl3",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 60,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": " bonne",
+                    "backgroundColor": "#9EFD38",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#9EFD38",
+                        "text": ">" + borneMoyenneMin + " < " + borneFinMin + "<br>secondes",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl4",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 0,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": " moyenne",
+                    "backgroundColor": "#EC7928",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#da6817",
+                        "text": "> " + borneDebutMin + " < " + borneMoyenneMin + "<br>secondes",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl5",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": -60,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "mauvaise",
+                    "backgroundColor": "#FB0A02",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#ea0901",
+                        "text": "< " + borneDebutMin + "<br>secondes",
+                        "shadow": 0
+                    }
+                }
+            ],
+            "series": [
+                { "values": [borneResultat] }
+            ]
+        };
+
+
+        zingchart.render({
+            id: 'chartRefMin',
+            data: myConfig15,
+            height: "100%",
+            width: "100%"
+        });
+
+
+    }
+
+    /**
+     * ****************************************Ref Max
+     */
+    function GetResultProgessBarreMax(data) {
+        var borneResultat;
+        var borneResultatPourcentage;
+
+        for (var i = 0; i < data.length; i++) {
+            borneResultat = data[i].moyConnexion;
+            borneResultatPourcentage = data[i].pourcentageValeur;
+
+            //     document.write(borneResultatPourcentage);
+        }
+
+        var myConfig15 = {
+            "type": "gauge",
+            "scale-r": {
+                "aperture": 200,
+                "values": "0:100000:20000",
+                "center": {
+                    "size": 12,
+                    "background-color": "#66CCFF #FFCCFF",
+                    "border-color": "none"
+                },
+                "ring": {
+                    "size": 10,
+                    "rules": [
+                        {
+                            "rule": "%v >= 0 && %v < " + borneDebutMax,
+                            "background-color": "red"
+                        },
+                        {
+                            "rule": "%v >=" + borneDebutMax + " && %v < " + borneMoyenneMax,
+                            "background-color": "orange"
+                        },
+                        {
+                            "rule": "%v >= " + borneMoyenneMax + " && %v < " + borneFinMax,
+                            "background-color": "#9EFD38"
+                        },
+                        {
+                            "rule": "%v >= " + borneFinMax + " && %v < 100000",
+                            "background-color": "green"
+                        }
+                    ]
+                },
+                "guide": {
+                    "background-color": "#66CCFF #FFCCFF",
+                    "alpha": 0.2
+                },
+                "tick": {
+                    "line-color": "#66CCFF",
+                    "line-style": "solid",
+                    "line-width": 3,
+                    "size": 15,
+                    "placement": "inner"
+                },
+                "minor-ticks": 4,
+                "minor-tick": {
+                    "line-color": "#FFFFFF",
+                    "line-style": "solid",
+                    "line-width": 2,
+                    "size": 10,
+                    "placement": "inner"
+                }
+            },
+            "plot": {
+                "csize": "5%",
+                "size": "80%",
+                "background-color": "#000000",
+                "value-box": { //Value Boxes
+                    "placement": "center",  //Specify "center", "tip", or "edge".
+                    "text": "%v",
+                    "font-color": "blue"
+                }
+            },
+            "labels": [
+                {
+                    "id": "lbl1",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 120,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": " Excelente",
+                    "backgroundColor": "#348D00",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#237b00",
+                        "text": "<" + borneFinMax + " < br > secondes",
+                        "shadow": 0
+                    }
+                },
+
+                {
+                    "id": "lbl3",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 60,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": " bonne",
+                    "backgroundColor": "#9EFD38",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#9EFD38",
+                        "text": ">" + borneMoyenneMax + " < " + borneFinMax + "<br>secondes",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl4",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 0,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": " moyenne",
+                    "backgroundColor": "#EC7928",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#da6817",
+                        "text": "> " + borneDebutMax + " < " + borneMoyenneMax + "<br>secondes",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl5",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": -60,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "mauvaise",
+                    "backgroundColor": "#FB0A02",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#ea0901",
+                        "text": "< " + borneDebutMax + "<br>secondes",
+                        "shadow": 0
+                    }
+                }
+            ],
+            "series": [
+                { "values": [borneResultat] }
+            ]
+        };
+
+
+        zingchart.render({
+            id: 'chartRefMax',
+            data: myConfig15,
+            height: "100%",
+            width: "100%"
+        });
+
+
+    }
+
+    /**
+    * ****************************************Ref Nb DECONNEXION
+    */
+    function GetResultProgessBarrenbDex(data) {
+
+        var myConfig15 = {
+            "type": "gauge",
+            "scale-r": {
+                "aperture": 200,
+                "values": "0:60:5",
+                "center": {
+                    "size": 12,
+                    "background-color": "#66CCFF #FFCCFF",
+                    "border-color": "none"
+                },
+                "ring": {
+                    "size": 10,
+                    "rules": [
+                        {
+                            "rule": "%v >= 0 && %v < " + borneFinNB,
+                            "background-color": "green"
+                        },
+                        {
+                            "rule": "%v >=" + borneFinNB + " && %v < " + borneMoyenneNB,
+                            "background-color": "#9EFD38"
+                        },
+                        {
+                            "rule": "%v >= " + borneMoyenneNB + " && %v < " + borneDebutNB,
+                            "background-color": "orange"
+                        },
+                        {
+                            "rule": "%v >= " + borneDebutNB + " && %v < 60",
+                            "background-color": "red"
+                        }
+                    ]
+                },
+                "guide": {
+                    "background-color": "#66CCFF #FFCCFF",
+                    "alpha": 0.2
+                },
+                "tick": {
+                    "line-color": "#66CCFF",
+                    "line-style": "solid",
+                    "line-width": 3,
+                    "size": 15,
+                    "placement": "inner"
+                },
+                "minor-ticks": 4,
+                "minor-tick": {
+                    "line-color": "#FFFFFF",
+                    "line-style": "solid",
+                    "line-width": 2,
+                    "size": 10,
+                    "placement": "inner"
+                }
+            },
+            "plot": {
+                "csize": "5%",
+                "size": "80%",
+                "background-color": "#000000",
+                "value-box": { //Value Boxes
+                    "placement": "center",  //Specify "center", "tip", or "edge".
+                    "text": "%v",
+                    "font-color": "blue"
+                }
+            },
+            "labels": [
+                {
+                    "id": "lbl5",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 120,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "mauvaise",
+                    "backgroundColor": "#FB0A02",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#ea0901",
+                        "text": "< " + borneDebutNB + "<br>déconnexions",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl4",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 60,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": " moyenne",
+                    "backgroundColor": "#EC7928",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#da6817",
+                        "text": "> " + borneDebutNB + " < " + borneMoyenneNB + "<br>déconnexions",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl3",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 0,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": " bonne",
+                    "backgroundColor": "#9EFD38",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#9EFD38",
+                        "text": ">" + borneMoyenneNB + " < " + borneFinNB + "<br>déconnexions",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl1",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": -60,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": " Excelente",
+                    "backgroundColor": "#348D00",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#237b00",
+                        "text": "< " + borneFinNB + " déconnexions",
+                        "shadow": 0
+                    }
+                }
+
+            ],
+            "series": [
+                { "values": data }
+            ]
+        };
+
+
+        zingchart.render({
+            id: 'chartRefNB',
+            data: myConfig15,
+            height: "100%",
+            width: "100%"
+        });
+
+
+    }
+</script>
+
+<center>
+    <h2>
+        Du  <strong><i> @ViewBag.dateSemainedeb </i> </strong> jusqu'au <strong><i>  @ViewBag.dateSemainefin </i></strong>
+    </h2>
+</center>
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Générer tableau de bord d'un login</h3>
+    </div>
+    <form class="form-horizontal">
+        <div class="box-body">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Login</label>
+                <div class="col-sm-10">
+                    @Html.DropDownList("ddlUsers", ViewBag.users as IEnumerable<SelectListItem>, new { @id = "ddlUsers", style = "width:50%", @class = "form-control select2" })
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="box-footer">
+            <button id="genDash" type="button" value="submit" onclick="generateDashboard();" class="btn btn-info pull-right">Generate</button>
+
+        </div>
+    </form>
+</div>
+
+
+<div style="clear:both;"></div>
+<div class="row" id="icon">
+
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>
+                    @Html.Label("0", (string)ViewBag.nbDeconnexion, new { @id = "nbDeconnexion" })
+                </h3>
+                <p>
+                    Nombre moyen des déconnexions
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+            @*<a href='@Url.Action("Index","MoreInfo")' onclick='navigate(this.href);' class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>*@
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>
+
+                    @Html.Label("0", (string)ViewBag.moySession, new { @id = "moySession" })
+                </h3>
+                <p>
+                    Duree moyenne d'une session
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            @*<a href='@Url.Action("Index","MoreInfoMoyDure")' onclick='navigate1(this.href);' class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>*@
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>
+                    @Html.Label("0", (string)ViewBag.maxSession, new { @id = "maxSession" })
+                </h3>
+                <p>Duée maximale d'une session
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            @*
+                <a href='@Url.Action("MinSessionUser","Dashboard")' onclick='navigate(this.href);' class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>*@
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>
+                    @Html.Label("0", (string)ViewBag.minSession, new { @id = "minSession" })
+                </h3>
+                <p>
+                    Duée minimale d'une session
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+            @*<a href='@Url.Action("Index","MoreInfo")' onclick='navigate(this.href);' class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>*@
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Référence des KPIs</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <p class="text-center">
+                            <strong>Nombre de déconnexions</strong>
+                        </p>
+                        <div id="chartRefNB" style="width:300px; height:300px"></div>
+
+                    </div>
+                    <div class="col-md-3">
+
+                        <p class="text-center">
+                            <strong>Durée moyenne de session</strong>
+                            <div id="chartRefSession" style="width:300px; height:300px"></div>
+                        </p>
+
+                    </div>
+                    <div class="col-md-3">
+                        <p class="text-center">
+                            <strong>Durée maximale de session</strong>
+                            <div id='chartRefMax' style="width:300px; height:300px"></div>
+                        </p>
+
+
+                    </div>
+                    <div class="col-md-3">
+                        <p class="text-center">
+                            <strong>Durée minimale de session</strong>
+                            <div id='chartRefMin' style="width:300px; height:300px"></div>
+                        </p>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Suivi des durées de session</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+                    <div>
+                        <p class="text-center">
+                            @*<strong>
+                                    <script>
+                                        var sdate = $('#startDate').val();
+                                        var edate = $('#endDate').val();
+                                        "From " + sdate +"to "+ edate;
+                                    </script>
+
+                                </strong>*@
+                        </p>
+
+                        <div class="box-body">
+                            <div class="chart">
+                                <div id="durchart" style="height: 400px; width: 100%; float:left;"></div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+            </div>
+            <div class="box-footer">
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-6">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Suivi du nombre de déconnexion</h3>
+                <div class="box-tools pull-right">
+                    @*<span class="label label-danger">8 New Members</span>*@
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="chart">
+                    <div id="numchart" style="height: 400px; width: 100%; float:right;"></div>
+                </div>
+            </div>
+            @*<div class="box-footer text-center">
+                    <a href="javascript::" class="uppercase">View All Users</a>
+                </div>*@
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Suivi marge SNR</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="text-center">
+                            @*  <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>*@
+                        </p>
+                        <div class="chart">
+                            <div id="dwsnrchart" style="height: 400px; width: 100%; float:left;"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <p class="text-center">
+                            <strong>Comparaison de la valeur actuelle de la marge SNR par rapport à sa référence</strong>
+                        </p>
+                        <div class="col-md-6">
+                            <p class="text-center">
+                                <strong>DW marge SNR</strong>
+                            </p>
+                            <div class="chart">
+                                <div id='myChart' style="width:450px; height:300px"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p class="text-center">
+                                <strong>UP marge SNR</strong>
+                            </p>
+                            <div class="chart">
+                                <div id='myChart2' style="width:450px; height:300px"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Suivi Atténuation</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="text-center">
+                            @* <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>*@
+                        </p>
+                        <div class="chart">
+                            <div id="attchart" style="height: 400px; width: 100%; float:right;"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="text-center">
+                            <strong>Comparaison de la valeur actuelle de l'atténuation par rapport à sa référence</strong>
+                        </p>
+                        <div class="col-md-6">
+                            <p class="text-center">
+                                <strong>DW attenuation</strong>
+                            </p>
+                            <div class="chart">
+                                <div id='myChartAtt' style="width:450px; height:300px"></div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <p class="text-center">
+                                <strong>UP attenuation</strong>
+                            </p>
+                            <div class="chart">
+                                <div id='myChartAtt2' style="width:450px; height:300px"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div style="clear:both;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/select2/js")
+    @Scripts.Render("~/AdminLTE/plugins/input-mask/js")
+    @Scripts.Render("~/AdminLTE/plugins/momentjs/js")
+    @Scripts.Render("~/AdminLTE/plugins/daterangepicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/colorpicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/timepicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/icheck/js")
+    @Scripts.Render("~/Scripts/Forms/Advanced")
+    @Scripts.Render("~/AdminLTE/plugins/knob/js")
+    @Scripts.Render("~/AdminLTE/plugins/sparkline/js")
+    @Scripts.Render("~/Scripts/Charts/Inline")
+}
+
+

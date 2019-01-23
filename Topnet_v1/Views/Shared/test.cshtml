@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Topnet_v1.historiqueSession>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.dateDebutSession)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dateFinSession)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nasIdentifier)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.calling)
+        </th>
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateDebutSession)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateFinSession)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nasIdentifier)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.calling)
+        </td>
+       
+    </tr>
+}
+
+</table>

@@ -1,0 +1,165 @@
+﻿@{
+    ViewBag.Title = "Ajouter";
+    ViewBag.SubTitle = "Référence KPI";
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Menu {
+    @Scripts.Render("~/Scripts/Forms/General/menu")
+    @Scripts.Render("~/Scripts/Forms/Advanced/menu")
+}
+
+
+
+@Styles.Render("~/AdminLTE/plugins/daterangepicker/css")
+@Styles.Render("~/AdminLTE/plugins/icheck/css")
+@Styles.Render("~/AdminLTE/plugins/colorpicker/css")
+@Styles.Render("~/AdminLTE/plugins/timepicker/css")
+@Styles.Render("~/AdminLTE/plugins/select2/css")
+@Styles.Render("~/AdminLTE/dist/css")
+@Styles.Render("~/AdminLTE/dist/css/skins")
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function create() {
+        var nom = $('#nom').val();
+        var bornDeb = $('#bornDeb').val();
+        var nomKPI = $('#nomKPI').val();
+        var bornFin = $('#bornFin').val();
+        var bornMoy = $('#bornMoy').val();
+
+        $.ajax({
+            url: "/reference/insertData",
+
+            data: {
+                nom: nom,
+                nomKPI: nomKPI,
+                bornDeb: bornDeb,
+                bornFin: bornFin,
+                bornMoy: bornMoy
+
+            },
+
+            success: function () {
+                $('#myModal1').modal("show");
+
+            },
+            error: function () {
+                $('#myModal').modal("show");
+            }
+
+        });
+
+    }
+</script>
+
+<body>
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Ajouter référence KPI</h3>
+        </div>
+
+        <div class="box-body">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">KPI</label>
+                <div class="col-sm-10">
+
+                    @Html.DropDownList("nomKPI", ViewBag.nomKPIs as IEnumerable<SelectListItem>, new { @id = "nomKPI", style = "width:50%", @class = "form-control select2" })
+                </div>
+            </div>
+
+            <div class="form-group">
+
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Borne Mauvaise</label>
+                <div class="col-sm-10">
+                    <input type="text" id="bornDeb" class="form-control" style="width:50%" />
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Borne moyenne</label>
+                <div class="col-sm-10">
+                    <input type="text" id="bornMoy" class="form-control" style="width:50%" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Borne bonne</label>
+                <div class="col-sm-10">
+                    <input type="text" id="bornFin" class="form-control" style="width:50%" />
+                </div>
+            </div>
+
+
+        </div>
+        <div class="box-footer">
+            <input type="submit" value="Create" class="btn btn-info pull-right" onclick="create()" />
+            <div>
+                @Html.ActionLink("Annuler",
+                                                                 "Index",
+                                                                 null,
+                                                                 new { @class = "btn btn-default" })
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="modal fade " id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content panel-warning">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Attention</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="error">Vous devez remplir tous les champs</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade " id="myModal1" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content panel-warning">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Attention</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="error">Ajout avec succes</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/select2/js")
+    @Scripts.Render("~/AdminLTE/plugins/input-mask/js")
+    @Scripts.Render("~/AdminLTE/plugins/momentjs/js")
+    @Scripts.Render("~/AdminLTE/plugins/daterangepicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/colorpicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/timepicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/icheck/js")
+    @Scripts.Render("~/Scripts/Forms/Advanced")
+}
+
+
+
+
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

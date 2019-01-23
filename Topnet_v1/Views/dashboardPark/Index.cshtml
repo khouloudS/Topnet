@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Forms/Advanced/menu")
+}
+
+@Styles.Render("~/AdminLTE/plugins/daterangepicker/css")
+@Styles.Render("~/AdminLTE/plugins/icheck/css")
+@Styles.Render("~/AdminLTE/plugins/colorpicker/css")
+@Styles.Render("~/AdminLTE/plugins/timepicker/css")
+@Styles.Render("~/AdminLTE/plugins/select2/css")
+@Styles.Render("~/AdminLTE/dist/css")
+@Styles.Render("~/AdminLTE/dist/css/skins")
+<style>
+    .canvasjs-chart-credit {
+        display: none;
+    }
+
+    table tr td {
+        padding-top: 5px;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function generateDashboard() {
+        var gouvernerat = $('#gouvernerat').val();
+        var sdate = $('#startDate').val();
+        var edate = $('#endDate').val();
+        $.ajax({
+            url: "/dashboardPark/GetData",
+            data: {
+                gouvernerat: gouvernerat,
+                d1: sdate,
+                d2: edate
+            },
+            success: function (result) {
+                GetDurationData(result[0].Value);
+
+            }
+        });
+    }
+
+    function GetDurationData(data) {
+        var dps = []; var dps2 = [];
+        for (i = 0; i < data.length; i++) {
+            dps.push({ x: new Date(parseInt(data[i].date.split('(')[1].split(')')[0])), y: data[i].dureeConnexionParJour })
+            dps2.push({ x: new Date(parseInt(data[i].date.split('(')[1].split(')')[0])), y: data[i].dureeDeconnexionParJour })
+        }
+        console.log(dps);
+        var chart = new CanvasJS.Chart("durchart",
+            {
+                animationEnabled: true,
+                title: {
+                    text: "Region duration"
+                },
+                axisX: {
+                    title: "Date"
+                },
+                axisY: {
+                    title: "Duration",
+                    suffix: "s"
+                },
+                legend: {
+                    cursor: "pointer",
+                    itemclick: toggleDataSeries
+                },
+                data: [{
+                    type: "scatter",
+                    name: "Session",
+                    showInLegend: true,
+                    toolTipContent: "<span style=\"color:#4F81BC \">{name}</span><br>Date: {x}<br>Duration: {y}s",
+                    dataPoints:dps
+                },
+                {
+                    type: "scatter",
+                    name: "Deconnection",
+                    showInLegend: true,
+                    markerType: "triangle",
+                    toolTipContent: "<span style=\"color:#C0504E \">{name}</span><br>Date: {x}<br>Duration: {y}s",
+                    dataPoints: dps2
+                }]
+            });
+        chart.render();
+
+        function toggleDataSeries(e) {
+            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            } else {
+                e.dataSeries.visible = true;
+            }
+            e.chart.render();
+        }
+
+    }
+</script>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Generate park dashboards</h3>
+    </div>
+    <form class="form-horizontal">
+        <div class="box-body">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Gouvernerat</label>
+                <div class="col-sm-10">
+                    @Html.DropDownList("gouvernerat", ViewBag.gouvernerat as IEnumerable<SelectListItem>, new { @id = "gouvernerat", style = "width:50%", @class = "form-control select2" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Start day</label>
+                <div class="col-sm-10">
+                    <input type="text" id="startDate" class="form-control" style="width:50%" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">End day</label>
+                <div class="col-sm-10">
+                    <input type="text" id="endDate" class="form-control" style="width:50%" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
+                </div>
+            </div>
+
+        </div>
+        <div class="box-footer">
+            <button id="genDash" type="button" value="submit" onclick="generateDashboard();" class="btn btn-info pull-right">Generate</button>
+
+        </div>
+    </form>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div id="durchart" style="height: 400px; width: 100%; float:left;"></div>
+    </div>
+</div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    @section Scripts {
+        @Scripts.Render("~/AdminLTE/plugins/select2/js")
+        @Scripts.Render("~/AdminLTE/plugins/input-mask/js")
+        @Scripts.Render("~/AdminLTE/plugins/momentjs/js")
+        @Scripts.Render("~/AdminLTE/plugins/daterangepicker/js")
+        @Scripts.Render("~/AdminLTE/plugins/colorpicker/js")
+        @Scripts.Render("~/AdminLTE/plugins/timepicker/js")
+        @Scripts.Render("~/AdminLTE/plugins/icheck/js")
+        @Scripts.Render("~/Scripts/Forms/Advanced")
+    }
+
+
+

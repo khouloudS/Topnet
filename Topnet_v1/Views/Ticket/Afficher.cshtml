@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Topnet_v1.ticketdate_Result>
+
+<div id="div1">
+	<table id="example" class="table table-bordered table-striped">
+		<tr>
+			<th>
+				Login
+			</th>
+			<th>
+		    	Statut
+			</th>
+            <th>
+                Description
+            </th>
+			<th>
+				Motif
+			</th>
+			<th>
+			    Date
+			</th>
+
+		</tr>
+
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.userName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.statut)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.description)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.nomMotif)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.date)
+				</td>
+
+			</tr>
+		}
+
+	</table>
+</div>

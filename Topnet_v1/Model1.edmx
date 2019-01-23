@@ -1,0 +1,2340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="topnetDATAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="attenuation">
+          <Key>
+            <PropertyRef Name="idAttenuation" />
+          </Key>
+          <Property Name="idAttenuation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DWMAXRATE" Type="int" />
+          <Property Name="DWSNR" Type="float" />
+          <Property Name="DWATTEN" Type="float" />
+          <Property Name="UPMAXRATE" Type="int" />
+          <Property Name="UPSNR" Type="float" />
+          <Property Name="UPATTEN" Type="float" />
+          <Property Name="SYNCHRO" Type="varchar" MaxLength="254" />
+          <Property Name="DEBIT" Type="int" />
+          <Property Name="DATE_SCAN" Type="date" />
+          <Property Name="numSequence" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="codeClient" />
+          </Key>
+          <Property Name="codeClient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomClient" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <EntityType Name="deligation">
+          <Key>
+            <PropertyRef Name="idDeligation" />
+          </Key>
+          <Property Name="idDeligation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idGouvernerat" Type="int" Nullable="false" />
+          <Property Name="nomDeligation" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <EntityType Name="gouvernerat">
+          <Key>
+            <PropertyRef Name="idGouvernerat" />
+          </Key>
+          <Property Name="idGouvernerat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomGouvernerat" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'topnetDATA.dbo.historiqueKPI' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="historiqueKPI">
+          <Key>
+            <PropertyRef Name="idKPI" />
+            <PropertyRef Name="numSequence" />
+          </Key>
+          <Property Name="idKPI" Type="int" Nullable="false" />
+          <Property Name="valeurKPI" Type="float" />
+          <Property Name="dateHistoriqueKPI" Type="datetime" />
+          <Property Name="dureeKPI" Type="int" />
+          <Property Name="numSequence" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="historiqueKPIGlobal">
+          <Key>
+            <PropertyRef Name="idHistoriqueKPIGlobal" />
+          </Key>
+          <Property Name="idHistoriqueKPIGlobal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idKPI" Type="int" Nullable="false" />
+          <Property Name="valeurKPIGlobal" Type="float" />
+          <Property Name="dateHistoriqueKPIGlobal" Type="datetime" />
+          <Property Name="dateFinHistoriqueKPIGlobal" Type="datetime" />
+        </EntityType>
+        <EntityType Name="historiqueSession">
+          <Key>
+            <PropertyRef Name="idSession" />
+          </Key>
+          <Property Name="idSession" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dateDebutSession" Type="datetime" />
+          <Property Name="dateFinSession" Type="datetime" />
+          <Property Name="nasIdentifier" Type="varchar" MaxLength="254" />
+          <Property Name="calling" Type="varchar" MaxLength="254" />
+          <Property Name="numSequence" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KPI">
+          <Key>
+            <PropertyRef Name="idKPI" />
+          </Key>
+          <Property Name="idKPI" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="formule" Type="varchar" MaxLength="254" />
+          <Property Name="nomKPI" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ligneADSL">
+          <Key>
+            <PropertyRef Name="numSequence" />
+          </Key>
+          <Property Name="numSequence" Type="int" Nullable="false" />
+          <Property Name="nature_part_pro_" Type="varchar" MaxLength="254" />
+          <Property Name="userName" Type="varchar" MaxLength="254" />
+          <Property Name="debit" Type="int" />
+          <Property Name="gouvernerat" Type="varchar" MaxLength="50" />
+          <Property Name="delegation" Type="varchar" MaxLength="50" />
+          <Property Name="localite" Type="varchar" MaxLength="50" />
+          <Property Name="codePostal" Type="int" />
+          <Property Name="codeGouv" Type="varchar" MaxLength="50" />
+          <Property Name="codeClient" Type="int" />
+        </EntityType>
+        <EntityType Name="ligneADSLtypeReseau">
+          <Key>
+            <PropertyRef Name="numSequence" />
+            <PropertyRef Name="idTypeReseau" />
+          </Key>
+          <Property Name="numSequence" Type="int" Nullable="false" />
+          <Property Name="idTypeReseau" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="localite">
+          <Key>
+            <PropertyRef Name="idLocalite" />
+          </Key>
+          <Property Name="idLocalite" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idDeligation" Type="int" Nullable="false" />
+          <Property Name="nomLocalite" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <EntityType Name="modem">
+          <Key>
+            <PropertyRef Name="numSerieModem" />
+          </Key>
+          <Property Name="numSerieModem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="marque" Type="varchar" MaxLength="254" />
+          <Property Name="debit" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="dateEchange" Type="datetime" />
+          <Property Name="model" Type="int" />
+          <Property Name="numSequence" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="motif">
+          <Key>
+            <PropertyRef Name="idMotif" />
+          </Key>
+          <Property Name="idMotif" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomMotif" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <EntityType Name="reference">
+          <Key>
+            <PropertyRef Name="idReference" />
+          </Key>
+          <Property Name="idReference" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="borneDebut" Type="int" />
+          <Property Name="borneFin" Type="int" />
+          <Property Name="borneMoyenne" Type="int" />
+          <Property Name="idKPI" Type="int" Nullable="false" />
+          <Property Name="dateReference" Type="date" />
+          <Property Name="nomReference" Type="varchar" MaxLength="254" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="ticket">
+          <Key>
+            <PropertyRef Name="idTicket" />
+          </Key>
+          <Property Name="idTicket" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idMotif" Type="int" Nullable="false" />
+          <Property Name="statut" Type="varchar" MaxLength="254" />
+          <Property Name="description" Type="varchar" MaxLength="254" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="numSequence" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypeReseau">
+          <Key>
+            <PropertyRef Name="idTypeReseau" />
+          </Key>
+          <Property Name="idTypeReseau" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomReseau" Type="varchar" MaxLength="254" />
+          <Property Name="datereseau" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'topnetDATA.dbo.dailyParameter' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="dailyParameter">
+          <Key>
+            <PropertyRef Name="numSequence" />
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="numSequence" Type="int" Nullable="false" />
+          <Property Name="userName" Type="varchar" MaxLength="254" />
+          <Property Name="gouvernerat" Type="varchar" MaxLength="50" />
+          <Property Name="delegation" Type="varchar" MaxLength="50" />
+          <Property Name="localite" Type="varchar" MaxLength="50" />
+          <Property Name="codePostal" Type="int" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="nbDeconnexionParJour" Type="int" />
+          <Property Name="dureeDeconnexionParJour" Type="int" />
+          <Property Name="dureeConnexionParJour" Type="int" />
+          <Property Name="RowID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'topnetDATA.dbo.notexiste' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="notexiste">
+          <Key>
+            <PropertyRef Name="numSequence" />
+          </Key>
+          <Property Name="userName" Type="varchar" MaxLength="254" />
+          <Property Name="numSequence" Type="int" Nullable="false" />
+          <Property Name="nbDeconnexionParJour" Type="int" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="DureeDeconnection" Type="time" Precision="0" />
+          <Property Name="DureeConnection" Type="time" Precision="0" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'topnetDATA.dbo.ticketGeneres' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ticketGeneres">
+          <Key>
+            <PropertyRef Name="numSequence" />
+          </Key>
+          <Property Name="userName" Type="varchar" MaxLength="254" />
+          <Property Name="numSequence" Type="int" Nullable="false" />
+          <Property Name="nbDeconnexionParJour" Type="int" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="DureeDeconnection" Type="time" Precision="0" />
+          <Property Name="DureeConnection" Type="time" Precision="0" />
+        </EntityType>
+        <Association Name="FK_ATTENUATION_ASSOCIATI_LIGNEADS">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="attenuation" Type="Self.attenuation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="attenuation">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DELIGATI_ASSOCIATI_GOUVERNE">
+          <End Role="gouvernerat" Type="Self.gouvernerat" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="deligation" Type="Self.deligation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gouvernerat">
+              <PropertyRef Name="idGouvernerat" />
+            </Principal>
+            <Dependent Role="deligation">
+              <PropertyRef Name="idGouvernerat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HISTORIQ_ASSOCIATI_KPI">
+          <End Role="KPI" Type="Self.KPI" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="historiqueKPIGlobal" Type="Self.historiqueKPIGlobal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KPI">
+              <PropertyRef Name="idKPI" />
+            </Principal>
+            <Dependent Role="historiqueKPIGlobal">
+              <PropertyRef Name="idKPI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HISTORIQ_ASSOCIATI_LIGNEADS">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="historiqueSession" Type="Self.historiqueSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="historiqueSession">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HISTORIQ_AVOIR_LIGNEADS">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="historiqueKPI" Type="Self.historiqueKPI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="historiqueKPI">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HISTORIQ_CORRESPON_KPI">
+          <End Role="KPI" Type="Self.KPI" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="historiqueKPI" Type="Self.historiqueKPI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KPI">
+              <PropertyRef Name="idKPI" />
+            </Principal>
+            <Dependent Role="historiqueKPI">
+              <PropertyRef Name="idKPI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LIGNEADS_ASSOCIATI_LIGNEADS">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ligneADSLtypeReseau" Type="Self.ligneADSLtypeReseau" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="ligneADSLtypeReseau">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LIGNEADS_ASSOCIATI_TYPERESE">
+          <End Role="TypeReseau" Type="Self.TypeReseau" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ligneADSLtypeReseau" Type="Self.ligneADSLtypeReseau" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeReseau">
+              <PropertyRef Name="idTypeReseau" />
+            </Principal>
+            <Dependent Role="ligneADSLtypeReseau">
+              <PropertyRef Name="idTypeReseau" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LOCALITE_ASSOCIATI_DELIGATI">
+          <End Role="deligation" Type="Self.deligation" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="localite" Type="Self.localite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="deligation">
+              <PropertyRef Name="idDeligation" />
+            </Principal>
+            <Dependent Role="localite">
+              <PropertyRef Name="idDeligation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MODEM_ASSOCIATI_LIGNEADS">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="modem" Type="Self.modem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="modem">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ref_ASSOCIATI_KPI">
+          <End Role="KPI" Type="Self.KPI" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="reference" Type="Self.reference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KPI">
+              <PropertyRef Name="idKPI" />
+            </Principal>
+            <Dependent Role="reference">
+              <PropertyRef Name="idKPI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TICKET_ASSOCIATI_LIGNEADS">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TICKET_ASSOCIATI_MOTIF">
+          <End Role="motif" Type="Self.motif" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="motif">
+              <PropertyRef Name="idMotif" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="idMotif" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="carteGeoChartMoyConnexionNbPersonne" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="cherche" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="num" Type="int" Mode="In" />
+        </Function>
+        <Function Name="createTicket" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="numsequence" Type="int" Mode="In" />
+          <Parameter Name="idMotif" Type="int" Mode="In" />
+          <Parameter Name="description" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DetailBarreReference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idReference" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DetailBarreReferenceAvecDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nomKPI" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DetailBarreReferenceNbDeconnexion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idReference" Type="int" Mode="In" />
+        </Function>
+        <Function Name="historiqueConnexion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userName" Type="varchar" Mode="In" />
+          <Parameter Name="dateDeb" Type="date" Mode="In" />
+          <Parameter Name="dateFin" Type="date" Mode="In" />
+        </Function>
+        <Function Name="historiqueConnexionDetaille" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userName" Type="varchar" Mode="In" />
+          <Parameter Name="dateDeb" Type="datetime" Mode="In" />
+          <Parameter Name="dateFin" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="insertReference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="bornDeb" Type="int" Mode="In" />
+          <Parameter Name="bornFin" Type="int" Mode="In" />
+          <Parameter Name="bornMoy" Type="int" Mode="In" />
+          <Parameter Name="nomKPI" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="insertTicket" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="numsequence" Type="int" Mode="In" />
+          <Parameter Name="idMotif" Type="int" Mode="In" />
+          <Parameter Name="description" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="listeTicket" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="maxConnexionSemaineDynamicDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dateDeb" Type="date" Mode="In" />
+          <Parameter Name="dateFin" Type="date" Mode="In" />
+          <Parameter Name="gouvernerat" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="maxDureeConnexionSemaine" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="maxDureeConnexionSemaineUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="minConnexionSemaineDynamicDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dateDeb" Type="date" Mode="In" />
+          <Parameter Name="dateFin" Type="date" Mode="In" />
+          <Parameter Name="gouvernerat" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="minDureeConnexionDynamique" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nomKPI" Type="varchar" Mode="In" />
+          <Parameter Name="dateDeb" Type="date" Mode="In" />
+          <Parameter Name="dateFin" Type="date" Mode="In" />
+        </Function>
+        <Function Name="minDureeConnexionSemaine" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="minDureeConnexionSemaineUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="minDureeConnexionUserDynamique" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nomKPI" Type="varchar" Mode="In" />
+          <Parameter Name="dateDeb" Type="date" Mode="In" />
+          <Parameter Name="dateFin" Type="date" Mode="In" />
+        </Function>
+        <Function Name="modifTicket" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="numSequence" Type="int" Mode="In" />
+          <Parameter Name="description" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="moyDureeConnexionParJourParGouvernerat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="moyDureeConnexionParJourParGouverneratHHmmSS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="moyDureeConnexionSemaine" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="moyDureeConnexionSemaineDynamicDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dateDeb" Type="date" Mode="In" />
+          <Parameter Name="dateFin" Type="date" Mode="In" />
+          <Parameter Name="gouvernerat" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="moyDureeConnexionSemaineUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="moyNbDeconnexionSemaineParGouvernerat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="moyNBdeonnexionSemaine" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="moyNBdeonnexionSemaineDynamicDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dateDeb" Type="date" Mode="In" />
+          <Parameter Name="dateFin" Type="date" Mode="In" />
+          <Parameter Name="gouvernerat" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="moyNBdeonnexionSemaineDynamicGouvernerat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dateDeb" Type="date" Mode="In" />
+          <Parameter Name="dateFin" Type="date" Mode="In" />
+        </Function>
+        <Function Name="moyNBdeonnexionSemaineUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="moySessionDeconnexionSemaine" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="referenceDureeMaximalConnexion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dateDeb" Type="date" Mode="In" />
+          <Parameter Name="dateFin" Type="date" Mode="In" />
+          <Parameter Name="userName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="referenceDureeMinimalConnexion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dateDeb" Type="date" Mode="In" />
+          <Parameter Name="dateFin" Type="date" Mode="In" />
+          <Parameter Name="userName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="referenceDureeMoyenneConnexion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dateDeb" Type="date" Mode="In" />
+          <Parameter Name="dateFin" Type="date" Mode="In" />
+          <Parameter Name="userName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="referenceKPIDureeMaximale" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nomKPI" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="referenceKPIDureeMinimale" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nomKPI" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="referenceKPINbDeconnexion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nomKPI" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="referenceNbDeconnexionConnexion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dateDeb" Type="date" Mode="In" />
+          <Parameter Name="dateFin" Type="date" Mode="In" />
+          <Parameter Name="userName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sessionTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userName" Type="varchar" Mode="In" />
+          <Parameter Name="dateDeb" Type="date" Mode="In" />
+          <Parameter Name="dateFin" Type="date" Mode="In" />
+        </Function>
+        <Function Name="sumNbDeconnexionGlobal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="gouvernerat" Type="varchar" Mode="In" />
+          <Parameter Name="dateDeb" Type="date" Mode="In" />
+          <Parameter Name="dateFin" Type="date" Mode="In" />
+          <Parameter Name="nomKPI" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="test" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="testdes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="testnotEXISTE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ticketdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="date1" Type="date" Mode="In" />
+          <Parameter Name="date2" Type="date" Mode="In" />
+        </Function>
+        <Function Name="USERkpi" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userName" Type="varchar" Mode="In" />
+          <Parameter Name="nomKPI" Type="varchar" Mode="In" />
+          <Parameter Name="dateDeb" Type="date" Mode="In" />
+          <Parameter Name="dateFin" Type="date" Mode="In" />
+        </Function>
+        <EntityContainer Name="topnetDATAModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="attenuation" EntityType="Self.attenuation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="deligation" EntityType="Self.deligation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="gouvernerat" EntityType="Self.gouvernerat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="historiqueKPIGlobal" EntityType="Self.historiqueKPIGlobal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="historiqueSession" EntityType="Self.historiqueSession" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KPI" EntityType="Self.KPI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ligneADSL" EntityType="Self.ligneADSL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ligneADSLtypeReseau" EntityType="Self.ligneADSLtypeReseau" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="localite" EntityType="Self.localite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="modem" EntityType="Self.modem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="motif" EntityType="Self.motif" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reference" EntityType="Self.reference" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ticket" EntityType="Self.ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeReseau" EntityType="Self.TypeReseau" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="historiqueKPI" EntityType="Self.historiqueKPI" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [historiqueKPI].[idKPI] AS [idKPI], 
+    [historiqueKPI].[valeurKPI] AS [valeurKPI], 
+    [historiqueKPI].[dateHistoriqueKPI] AS [dateHistoriqueKPI], 
+    [historiqueKPI].[dureeKPI] AS [dureeKPI], 
+    [historiqueKPI].[numSequence] AS [numSequence]
+    FROM [dbo].[historiqueKPI] AS [historiqueKPI]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="dailyParameter" EntityType="Self.dailyParameter" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [dailyParameter].[numSequence] AS [numSequence], 
+    [dailyParameter].[userName] AS [userName], 
+    [dailyParameter].[gouvernerat] AS [gouvernerat], 
+    [dailyParameter].[delegation] AS [delegation], 
+    [dailyParameter].[localite] AS [localite], 
+    [dailyParameter].[codePostal] AS [codePostal], 
+    [dailyParameter].[date] AS [date], 
+    [dailyParameter].[nbDeconnexionParJour] AS [nbDeconnexionParJour], 
+    [dailyParameter].[dureeDeconnexionParJour] AS [dureeDeconnexionParJour], 
+    [dailyParameter].[dureeConnexionParJour] AS [dureeConnexionParJour], 
+    [dailyParameter].[RowID] AS [RowID]
+    FROM [dbo].[dailyParameter] AS [dailyParameter]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="notexiste" EntityType="Self.notexiste" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [notexiste].[userName] AS [userName], 
+    [notexiste].[numSequence] AS [numSequence], 
+    [notexiste].[nbDeconnexionParJour] AS [nbDeconnexionParJour], 
+    [notexiste].[date] AS [date], 
+    [notexiste].[DureeDeconnection] AS [DureeDeconnection], 
+    [notexiste].[DureeConnection] AS [DureeConnection]
+    FROM [dbo].[notexiste] AS [notexiste]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ticketGeneres" EntityType="Self.ticketGeneres" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ticketGeneres].[userName] AS [userName], 
+    [ticketGeneres].[numSequence] AS [numSequence], 
+    [ticketGeneres].[nbDeconnexionParJour] AS [nbDeconnexionParJour], 
+    [ticketGeneres].[date] AS [date], 
+    [ticketGeneres].[DureeDeconnection] AS [DureeDeconnection], 
+    [ticketGeneres].[DureeConnection] AS [DureeConnection]
+    FROM [dbo].[ticketGeneres] AS [ticketGeneres]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_ATTENUATION_ASSOCIATI_LIGNEADS" Association="Self.FK_ATTENUATION_ASSOCIATI_LIGNEADS">
+            <End Role="ligneADSL" EntitySet="ligneADSL" />
+            <End Role="attenuation" EntitySet="attenuation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DELIGATI_ASSOCIATI_GOUVERNE" Association="Self.FK_DELIGATI_ASSOCIATI_GOUVERNE">
+            <End Role="gouvernerat" EntitySet="gouvernerat" />
+            <End Role="deligation" EntitySet="deligation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HISTORIQ_ASSOCIATI_KPI" Association="Self.FK_HISTORIQ_ASSOCIATI_KPI">
+            <End Role="KPI" EntitySet="KPI" />
+            <End Role="historiqueKPIGlobal" EntitySet="historiqueKPIGlobal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HISTORIQ_ASSOCIATI_LIGNEADS" Association="Self.FK_HISTORIQ_ASSOCIATI_LIGNEADS">
+            <End Role="ligneADSL" EntitySet="ligneADSL" />
+            <End Role="historiqueSession" EntitySet="historiqueSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HISTORIQ_AVOIR_LIGNEADS" Association="Self.FK_HISTORIQ_AVOIR_LIGNEADS">
+            <End Role="ligneADSL" EntitySet="ligneADSL" />
+            <End Role="historiqueKPI" EntitySet="historiqueKPI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HISTORIQ_CORRESPON_KPI" Association="Self.FK_HISTORIQ_CORRESPON_KPI">
+            <End Role="KPI" EntitySet="KPI" />
+            <End Role="historiqueKPI" EntitySet="historiqueKPI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LIGNEADS_ASSOCIATI_LIGNEADS" Association="Self.FK_LIGNEADS_ASSOCIATI_LIGNEADS">
+            <End Role="ligneADSL" EntitySet="ligneADSL" />
+            <End Role="ligneADSLtypeReseau" EntitySet="ligneADSLtypeReseau" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LIGNEADS_ASSOCIATI_TYPERESE" Association="Self.FK_LIGNEADS_ASSOCIATI_TYPERESE">
+            <End Role="TypeReseau" EntitySet="TypeReseau" />
+            <End Role="ligneADSLtypeReseau" EntitySet="ligneADSLtypeReseau" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LOCALITE_ASSOCIATI_DELIGATI" Association="Self.FK_LOCALITE_ASSOCIATI_DELIGATI">
+            <End Role="deligation" EntitySet="deligation" />
+            <End Role="localite" EntitySet="localite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MODEM_ASSOCIATI_LIGNEADS" Association="Self.FK_MODEM_ASSOCIATI_LIGNEADS">
+            <End Role="ligneADSL" EntitySet="ligneADSL" />
+            <End Role="modem" EntitySet="modem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ref_ASSOCIATI_KPI" Association="Self.FK_ref_ASSOCIATI_KPI">
+            <End Role="KPI" EntitySet="KPI" />
+            <End Role="reference" EntitySet="reference" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TICKET_ASSOCIATI_LIGNEADS" Association="Self.FK_TICKET_ASSOCIATI_LIGNEADS">
+            <End Role="ligneADSL" EntitySet="ligneADSL" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TICKET_ASSOCIATI_MOTIF" Association="Self.FK_TICKET_ASSOCIATI_MOTIF">
+            <End Role="motif" EntitySet="motif" />
+            <End Role="ticket" EntitySet="ticket" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="topnetDATAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="attenuation">
+          <Key>
+            <PropertyRef Name="idAttenuation" />
+          </Key>
+          <Property Name="idAttenuation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DWMAXRATE" Type="Int32" />
+          <Property Name="DWSNR" Type="Double" />
+          <Property Name="DWATTEN" Type="Double" />
+          <Property Name="UPMAXRATE" Type="Int32" />
+          <Property Name="UPSNR" Type="Double" />
+          <Property Name="UPATTEN" Type="Double" />
+          <Property Name="SYNCHRO" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="DEBIT" Type="Int32" />
+          <Property Name="DATE_SCAN" Type="DateTime" Precision="0" />
+          <Property Name="numSequence" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ligneADSL" Relationship="Self.FK_ATTENUATION_ASSOCIATI_LIGNEADS" FromRole="attenuation" ToRole="ligneADSL" />
+        </EntityType>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="codeClient" />
+          </Key>
+          <Property Name="codeClient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomClient" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="deligation">
+          <Key>
+            <PropertyRef Name="idDeligation" />
+          </Key>
+          <Property Name="idDeligation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idGouvernerat" Type="Int32" Nullable="false" />
+          <Property Name="nomDeligation" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="gouvernerat" Relationship="Self.FK_DELIGATI_ASSOCIATI_GOUVERNE" FromRole="deligation" ToRole="gouvernerat" />
+          <NavigationProperty Name="localites" Relationship="Self.FK_LOCALITE_ASSOCIATI_DELIGATI" FromRole="deligation" ToRole="localite" />
+        </EntityType>
+        <EntityType Name="gouvernerat">
+          <Key>
+            <PropertyRef Name="idGouvernerat" />
+          </Key>
+          <Property Name="idGouvernerat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomGouvernerat" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="deligations" Relationship="Self.FK_DELIGATI_ASSOCIATI_GOUVERNE" FromRole="gouvernerat" ToRole="deligation" />
+        </EntityType>
+        <EntityType Name="historiqueKPIGlobal">
+          <Key>
+            <PropertyRef Name="idHistoriqueKPIGlobal" />
+          </Key>
+          <Property Name="idHistoriqueKPIGlobal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idKPI" Type="Int32" Nullable="false" />
+          <Property Name="valeurKPIGlobal" Type="Double" />
+          <Property Name="dateHistoriqueKPIGlobal" Type="DateTime" Precision="3" />
+          <Property Name="dateFinHistoriqueKPIGlobal" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="KPI" Relationship="Self.FK_HISTORIQ_ASSOCIATI_KPI" FromRole="historiqueKPIGlobal" ToRole="KPI" />
+        </EntityType>
+        <EntityType Name="historiqueSession">
+          <Key>
+            <PropertyRef Name="idSession" />
+          </Key>
+          <Property Name="idSession" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dateDebutSession" Type="DateTime" Precision="3" />
+          <Property Name="dateFinSession" Type="DateTime" Precision="3" />
+          <Property Name="nasIdentifier" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="calling" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="numSequence" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ligneADSL" Relationship="Self.FK_HISTORIQ_ASSOCIATI_LIGNEADS" FromRole="historiqueSession" ToRole="ligneADSL" />
+        </EntityType>
+        <EntityType Name="KPI">
+          <Key>
+            <PropertyRef Name="idKPI" />
+          </Key>
+          <Property Name="idKPI" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="formule" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="nomKPI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="historiqueKPIGlobals" Relationship="Self.FK_HISTORIQ_ASSOCIATI_KPI" FromRole="KPI" ToRole="historiqueKPIGlobal" />
+          <NavigationProperty Name="historiqueKPIs" Relationship="Self.FK_HISTORIQ_CORRESPON_KPI" FromRole="KPI" ToRole="historiqueKPI" />
+          <NavigationProperty Name="references" Relationship="Self.FK_ref_ASSOCIATI_KPI" FromRole="KPI" ToRole="reference" />
+        </EntityType>
+        <EntityType Name="ligneADSL">
+          <Key>
+            <PropertyRef Name="numSequence" />
+          </Key>
+          <Property Name="numSequence" Type="Int32" Nullable="false" />
+          <Property Name="nature_part_pro_" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="userName" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="debit" Type="Int32" />
+          <Property Name="gouvernerat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="delegation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="localite" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="codePostal" Type="Int32" />
+          <Property Name="codeGouv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="codeClient" Type="Int32" />
+          <NavigationProperty Name="attenuations" Relationship="Self.FK_ATTENUATION_ASSOCIATI_LIGNEADS" FromRole="ligneADSL" ToRole="attenuation" />
+          <NavigationProperty Name="historiqueSessions" Relationship="Self.FK_HISTORIQ_ASSOCIATI_LIGNEADS" FromRole="ligneADSL" ToRole="historiqueSession" />
+          <NavigationProperty Name="historiqueKPIs" Relationship="Self.FK_HISTORIQ_AVOIR_LIGNEADS" FromRole="ligneADSL" ToRole="historiqueKPI" />
+          <NavigationProperty Name="modems" Relationship="Self.FK_MODEM_ASSOCIATI_LIGNEADS" FromRole="ligneADSL" ToRole="modem" />
+          <NavigationProperty Name="tickets" Relationship="Self.FK_TICKET_ASSOCIATI_LIGNEADS" FromRole="ligneADSL" ToRole="ticket" />
+          <NavigationProperty Name="TypeReseaux" Relationship="Self.ligneADSLtypeReseau" FromRole="ligneADSL" ToRole="TypeReseau" />
+        </EntityType>
+        <EntityType Name="localite">
+          <Key>
+            <PropertyRef Name="idLocalite" />
+          </Key>
+          <Property Name="idLocalite" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idDeligation" Type="Int32" Nullable="false" />
+          <Property Name="nomLocalite" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="deligation" Relationship="Self.FK_LOCALITE_ASSOCIATI_DELIGATI" FromRole="localite" ToRole="deligation" />
+        </EntityType>
+        <EntityType Name="modem">
+          <Key>
+            <PropertyRef Name="numSerieModem" />
+          </Key>
+          <Property Name="numSerieModem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="marque" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="debit" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="dateEchange" Type="DateTime" Precision="3" />
+          <Property Name="model" Type="Int32" />
+          <Property Name="numSequence" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ligneADSL" Relationship="Self.FK_MODEM_ASSOCIATI_LIGNEADS" FromRole="modem" ToRole="ligneADSL" />
+        </EntityType>
+        <EntityType Name="motif">
+          <Key>
+            <PropertyRef Name="idMotif" />
+          </Key>
+          <Property Name="idMotif" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomMotif" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tickets" Relationship="Self.FK_TICKET_ASSOCIATI_MOTIF" FromRole="motif" ToRole="ticket" />
+        </EntityType>
+        <EntityType Name="reference">
+          <Key>
+            <PropertyRef Name="idReference" />
+          </Key>
+          <Property Name="idReference" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="borneDebut" Type="Int32" />
+          <Property Name="borneFin" Type="Int32" />
+          <Property Name="borneMoyenne" Type="Int32" />
+          <Property Name="idKPI" Type="Int32" Nullable="false" />
+          <Property Name="dateReference" Type="DateTime" Precision="0" />
+          <Property Name="nomReference" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="KPI" Relationship="Self.FK_ref_ASSOCIATI_KPI" FromRole="reference" ToRole="KPI" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="ticket">
+          <Key>
+            <PropertyRef Name="idTicket" />
+          </Key>
+          <Property Name="idTicket" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idMotif" Type="Int32" Nullable="false" />
+          <Property Name="statut" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="numSequence" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ligneADSL" Relationship="Self.FK_TICKET_ASSOCIATI_LIGNEADS" FromRole="ticket" ToRole="ligneADSL" />
+          <NavigationProperty Name="motif" Relationship="Self.FK_TICKET_ASSOCIATI_MOTIF" FromRole="ticket" ToRole="motif" />
+        </EntityType>
+        <EntityType Name="TypeReseau">
+          <Key>
+            <PropertyRef Name="idTypeReseau" />
+          </Key>
+          <Property Name="idTypeReseau" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomReseau" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="datereseau" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ligneADSLs" Relationship="Self.ligneADSLtypeReseau" FromRole="TypeReseau" ToRole="ligneADSL" />
+        </EntityType>
+        <EntityType Name="historiqueKPI">
+          <Key>
+            <PropertyRef Name="idKPI" />
+            <PropertyRef Name="numSequence" />
+          </Key>
+          <Property Name="idKPI" Type="Int32" Nullable="false" />
+          <Property Name="valeurKPI" Type="Double" />
+          <Property Name="dateHistoriqueKPI" Type="DateTime" Precision="3" />
+          <Property Name="dureeKPI" Type="Int32" />
+          <Property Name="numSequence" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="KPI" Relationship="Self.FK_HISTORIQ_CORRESPON_KPI" FromRole="historiqueKPI" ToRole="KPI" />
+          <NavigationProperty Name="ligneADSL" Relationship="Self.FK_HISTORIQ_AVOIR_LIGNEADS" FromRole="historiqueKPI" ToRole="ligneADSL" />
+        </EntityType>
+        <EntityType Name="dailyParameter">
+          <Key>
+            <PropertyRef Name="numSequence" />
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="numSequence" Type="Int32" Nullable="false" />
+          <Property Name="userName" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="gouvernerat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="delegation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="localite" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="codePostal" Type="Int32" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="nbDeconnexionParJour" Type="Int32" />
+          <Property Name="dureeDeconnexionParJour" Type="Int32" />
+          <Property Name="dureeConnexionParJour" Type="Int32" />
+          <Property Name="RowID" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="notexiste">
+          <Key>
+            <PropertyRef Name="numSequence" />
+          </Key>
+          <Property Name="userName" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="numSequence" Type="Int32" Nullable="false" />
+          <Property Name="nbDeconnexionParJour" Type="Int32" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="DureeDeconnection" Type="Time" Precision="0" />
+          <Property Name="DureeConnection" Type="Time" Precision="0" />
+        </EntityType>
+        <EntityType Name="ticketGenere">
+          <Key>
+            <PropertyRef Name="numSequence" />
+          </Key>
+          <Property Name="userName" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="numSequence" Type="Int32" Nullable="false" />
+          <Property Name="nbDeconnexionParJour" Type="Int32" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="DureeDeconnection" Type="Time" Precision="0" />
+          <Property Name="DureeConnection" Type="Time" Precision="0" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ATTENUATION_ASSOCIATI_LIGNEADS">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="attenuation" Type="Self.attenuation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="attenuation">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DELIGATI_ASSOCIATI_GOUVERNE">
+          <End Role="gouvernerat" Type="Self.gouvernerat" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="deligation" Type="Self.deligation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gouvernerat">
+              <PropertyRef Name="idGouvernerat" />
+            </Principal>
+            <Dependent Role="deligation">
+              <PropertyRef Name="idGouvernerat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LOCALITE_ASSOCIATI_DELIGATI">
+          <End Role="deligation" Type="Self.deligation" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="localite" Type="Self.localite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="deligation">
+              <PropertyRef Name="idDeligation" />
+            </Principal>
+            <Dependent Role="localite">
+              <PropertyRef Name="idDeligation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HISTORIQ_ASSOCIATI_KPI">
+          <End Role="KPI" Type="Self.KPI" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="historiqueKPIGlobal" Type="Self.historiqueKPIGlobal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KPI">
+              <PropertyRef Name="idKPI" />
+            </Principal>
+            <Dependent Role="historiqueKPIGlobal">
+              <PropertyRef Name="idKPI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HISTORIQ_ASSOCIATI_LIGNEADS">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="historiqueSession" Type="Self.historiqueSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="historiqueSession">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HISTORIQ_CORRESPON_KPI">
+          <End Role="KPI" Type="Self.KPI" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="historiqueKPI" Type="Self.historiqueKPI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KPI">
+              <PropertyRef Name="idKPI" />
+            </Principal>
+            <Dependent Role="historiqueKPI">
+              <PropertyRef Name="idKPI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ref_ASSOCIATI_KPI">
+          <End Role="KPI" Type="Self.KPI" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="reference" Type="Self.reference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KPI">
+              <PropertyRef Name="idKPI" />
+            </Principal>
+            <Dependent Role="reference">
+              <PropertyRef Name="idKPI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HISTORIQ_AVOIR_LIGNEADS">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="historiqueKPI" Type="Self.historiqueKPI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="historiqueKPI">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MODEM_ASSOCIATI_LIGNEADS">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="modem" Type="Self.modem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="modem">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TICKET_ASSOCIATI_LIGNEADS">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TICKET_ASSOCIATI_MOTIF">
+          <End Role="motif" Type="Self.motif" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ticket" Type="Self.ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="motif">
+              <PropertyRef Name="idMotif" />
+            </Principal>
+            <Dependent Role="ticket">
+              <PropertyRef Name="idMotif" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+        </Association>
+        <Association Name="ligneADSLtypeReseau">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="*" />
+          <End Role="TypeReseau" Type="Self.TypeReseau" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="topnetDATAEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="attenuations" EntityType="Self.attenuation" />
+          <EntitySet Name="clients" EntityType="Self.client" />
+          <EntitySet Name="deligations" EntityType="Self.deligation" />
+          <EntitySet Name="gouvernerats" EntityType="Self.gouvernerat" />
+          <EntitySet Name="historiqueKPIGlobals" EntityType="Self.historiqueKPIGlobal" />
+          <EntitySet Name="historiqueSessions" EntityType="Self.historiqueSession" />
+          <EntitySet Name="KPIs" EntityType="Self.KPI" />
+          <EntitySet Name="ligneADSLs" EntityType="Self.ligneADSL" />
+          <EntitySet Name="localites" EntityType="Self.localite" />
+          <EntitySet Name="modems" EntityType="Self.modem" />
+          <EntitySet Name="motifs" EntityType="Self.motif" />
+          <EntitySet Name="references" EntityType="Self.reference" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="tickets" EntityType="Self.ticket" />
+          <EntitySet Name="TypeReseaux" EntityType="Self.TypeReseau" />
+          <EntitySet Name="historiqueKPIs" EntityType="Self.historiqueKPI" />
+          <EntitySet Name="dailyParameters" EntityType="Self.dailyParameter" />
+          <EntitySet Name="notexistes" EntityType="Self.notexiste" />
+          <EntitySet Name="ticketGeneres" EntityType="Self.ticketGenere" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ATTENUATION_ASSOCIATI_LIGNEADS" Association="Self.FK_ATTENUATION_ASSOCIATI_LIGNEADS">
+            <End Role="ligneADSL" EntitySet="ligneADSLs" />
+            <End Role="attenuation" EntitySet="attenuations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DELIGATI_ASSOCIATI_GOUVERNE" Association="Self.FK_DELIGATI_ASSOCIATI_GOUVERNE">
+            <End Role="gouvernerat" EntitySet="gouvernerats" />
+            <End Role="deligation" EntitySet="deligations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LOCALITE_ASSOCIATI_DELIGATI" Association="Self.FK_LOCALITE_ASSOCIATI_DELIGATI">
+            <End Role="deligation" EntitySet="deligations" />
+            <End Role="localite" EntitySet="localites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HISTORIQ_ASSOCIATI_KPI" Association="Self.FK_HISTORIQ_ASSOCIATI_KPI">
+            <End Role="KPI" EntitySet="KPIs" />
+            <End Role="historiqueKPIGlobal" EntitySet="historiqueKPIGlobals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HISTORIQ_ASSOCIATI_LIGNEADS" Association="Self.FK_HISTORIQ_ASSOCIATI_LIGNEADS">
+            <End Role="ligneADSL" EntitySet="ligneADSLs" />
+            <End Role="historiqueSession" EntitySet="historiqueSessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HISTORIQ_CORRESPON_KPI" Association="Self.FK_HISTORIQ_CORRESPON_KPI">
+            <End Role="KPI" EntitySet="KPIs" />
+            <End Role="historiqueKPI" EntitySet="historiqueKPIs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ref_ASSOCIATI_KPI" Association="Self.FK_ref_ASSOCIATI_KPI">
+            <End Role="KPI" EntitySet="KPIs" />
+            <End Role="reference" EntitySet="references" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HISTORIQ_AVOIR_LIGNEADS" Association="Self.FK_HISTORIQ_AVOIR_LIGNEADS">
+            <End Role="ligneADSL" EntitySet="ligneADSLs" />
+            <End Role="historiqueKPI" EntitySet="historiqueKPIs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MODEM_ASSOCIATI_LIGNEADS" Association="Self.FK_MODEM_ASSOCIATI_LIGNEADS">
+            <End Role="ligneADSL" EntitySet="ligneADSLs" />
+            <End Role="modem" EntitySet="modems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TICKET_ASSOCIATI_LIGNEADS" Association="Self.FK_TICKET_ASSOCIATI_LIGNEADS">
+            <End Role="ligneADSL" EntitySet="ligneADSLs" />
+            <End Role="ticket" EntitySet="tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TICKET_ASSOCIATI_MOTIF" Association="Self.FK_TICKET_ASSOCIATI_MOTIF">
+            <End Role="motif" EntitySet="motifs" />
+            <End Role="ticket" EntitySet="tickets" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="ligneADSLtypeReseau" Association="Self.ligneADSLtypeReseau">
+            <End Role="ligneADSL" EntitySet="ligneADSLs" />
+            <End Role="TypeReseau" EntitySet="TypeReseaux" />
+          </AssociationSet>
+          <FunctionImport Name="carteGeoChartMoyConnexionNbPersonne" ReturnType="Collection(topnetDATAModel.carteGeoChartMoyConnexionNbPersonne_Result)" />
+          <FunctionImport Name="cherche" ReturnType="Collection(topnetDATAModel.cherche_Result)">
+            <Parameter Name="num" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="createTicket">
+            <Parameter Name="numsequence" Mode="In" Type="Int32" />
+            <Parameter Name="idMotif" Mode="In" Type="Int32" />
+            <Parameter Name="description" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DetailBarreReference" ReturnType="Collection(topnetDATAModel.DetailBarreReference_Result)">
+            <Parameter Name="idReference" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DetailBarreReferenceAvecDate" ReturnType="Collection(topnetDATAModel.DetailBarreReferenceAvecDate_Result)">
+            <Parameter Name="nomKPI" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DetailBarreReferenceNbDeconnexion" ReturnType="Collection(topnetDATAModel.DetailBarreReferenceNbDeconnexion_Result)">
+            <Parameter Name="idReference" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="historiqueConnexion" ReturnType="Collection(topnetDATAModel.historiqueConnexion_Result)">
+            <Parameter Name="userName" Mode="In" Type="String" />
+            <Parameter Name="dateDeb" Mode="In" Type="DateTime" />
+            <Parameter Name="dateFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="historiqueConnexionDetaille" ReturnType="Collection(topnetDATAModel.historiqueConnexionDetaille_Result)">
+            <Parameter Name="userName" Mode="In" Type="String" />
+            <Parameter Name="dateDeb" Mode="In" Type="DateTime" />
+            <Parameter Name="dateFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="insertReference">
+            <Parameter Name="bornDeb" Mode="In" Type="Int32" />
+            <Parameter Name="bornFin" Mode="In" Type="Int32" />
+            <Parameter Name="bornMoy" Mode="In" Type="Int32" />
+            <Parameter Name="nomKPI" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="insertTicket">
+            <Parameter Name="numsequence" Mode="In" Type="Int32" />
+            <Parameter Name="idMotif" Mode="In" Type="Int32" />
+            <Parameter Name="description" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="listeTicket" ReturnType="Collection(topnetDATAModel.listeTicket_Result)" />
+          <FunctionImport Name="maxConnexionSemaineDynamicDate" ReturnType="Collection(topnetDATAModel.maxConnexionSemaineDynamicDate_Result)">
+            <Parameter Name="dateDeb" Mode="In" Type="DateTime" />
+            <Parameter Name="dateFin" Mode="In" Type="DateTime" />
+            <Parameter Name="gouvernerat" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="maxDureeConnexionSemaine" ReturnType="Collection(String)" />
+          <FunctionImport Name="maxDureeConnexionSemaineUser" ReturnType="Collection(String)">
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="minConnexionSemaineDynamicDate" ReturnType="Collection(topnetDATAModel.minConnexionSemaineDynamicDate_Result)">
+            <Parameter Name="dateDeb" Mode="In" Type="DateTime" />
+            <Parameter Name="dateFin" Mode="In" Type="DateTime" />
+            <Parameter Name="gouvernerat" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="minDureeConnexionDynamique">
+            <Parameter Name="nomKPI" Mode="In" Type="String" />
+            <Parameter Name="dateDeb" Mode="In" Type="DateTime" />
+            <Parameter Name="dateFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="minDureeConnexionSemaine" ReturnType="Collection(String)" />
+          <FunctionImport Name="minDureeConnexionSemaineUser" ReturnType="Collection(String)">
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="minDureeConnexionUserDynamique">
+            <Parameter Name="nomKPI" Mode="In" Type="String" />
+            <Parameter Name="dateDeb" Mode="In" Type="DateTime" />
+            <Parameter Name="dateFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="modifTicket">
+            <Parameter Name="numSequence" Mode="In" Type="Int32" />
+            <Parameter Name="description" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="moyDureeConnexionParJourParGouvernerat" ReturnType="Collection(topnetDATAModel.moyDureeConnexionParJourParGouvernerat_Result)" />
+          <FunctionImport Name="moyDureeConnexionParJourParGouverneratHHmmSS" ReturnType="Collection(topnetDATAModel.moyDureeConnexionParJourParGouverneratHHmmSS_Result)" />
+          <FunctionImport Name="moyDureeConnexionSemaine" ReturnType="Collection(String)" />
+          <FunctionImport Name="moyDureeConnexionSemaineDynamicDate" ReturnType="Collection(topnetDATAModel.moyDureeConnexionSemaineDynamicDate_Result)">
+            <Parameter Name="dateDeb" Mode="In" Type="DateTime" />
+            <Parameter Name="dateFin" Mode="In" Type="DateTime" />
+            <Parameter Name="gouvernerat" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="moyDureeConnexionSemaineUser" ReturnType="Collection(String)">
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="moyNbDeconnexionSemaineParGouvernerat" ReturnType="Collection(topnetDATAModel.moyNbDeconnexionSemaineParGouvernerat_Result)" />
+          <FunctionImport Name="moyNBdeonnexionSemaine" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="moyNBdeonnexionSemaineDynamicDate" ReturnType="Collection(topnetDATAModel.moyNBdeonnexionSemaineDynamicDate_Result)">
+            <Parameter Name="dateDeb" Mode="In" Type="DateTime" />
+            <Parameter Name="dateFin" Mode="In" Type="DateTime" />
+            <Parameter Name="gouvernerat" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="moyNBdeonnexionSemaineDynamicGouvernerat" ReturnType="Collection(topnetDATAModel.moyNBdeonnexionSemaineDynamicGouvernerat_Result)">
+            <Parameter Name="dateDeb" Mode="In" Type="DateTime" />
+            <Parameter Name="dateFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="moyNBdeonnexionSemaineUser" ReturnType="Collection(Int32)">
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="moySessionDeconnexionSemaine" ReturnType="Collection(topnetDATAModel.moySessionDeconnexionSemaine_Result)" />
+          <FunctionImport Name="referenceDureeMaximalConnexion" ReturnType="Collection(topnetDATAModel.referenceDureeMaximalConnexion_Result)">
+            <Parameter Name="dateDeb" Mode="In" Type="DateTime" />
+            <Parameter Name="dateFin" Mode="In" Type="DateTime" />
+            <Parameter Name="userName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="referenceDureeMinimalConnexion" ReturnType="Collection(topnetDATAModel.referenceDureeMinimalConnexion_Result)">
+            <Parameter Name="dateDeb" Mode="In" Type="DateTime" />
+            <Parameter Name="dateFin" Mode="In" Type="DateTime" />
+            <Parameter Name="userName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="referenceDureeMoyenneConnexion" ReturnType="Collection(topnetDATAModel.referenceDureeMoyenneConnexion_Result)">
+            <Parameter Name="dateDeb" Mode="In" Type="DateTime" />
+            <Parameter Name="dateFin" Mode="In" Type="DateTime" />
+            <Parameter Name="userName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="referenceKPIDureeMaximale" ReturnType="Collection(topnetDATAModel.referenceKPIDureeMaximale_Result)">
+            <Parameter Name="nomKPI" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="referenceKPIDureeMinimale" ReturnType="Collection(topnetDATAModel.referenceKPIDureeMinimale_Result)">
+            <Parameter Name="nomKPI" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="referenceKPINbDeconnexion" ReturnType="Collection(topnetDATAModel.referenceKPINbDeconnexion_Result)">
+            <Parameter Name="nomKPI" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="referenceNbDeconnexionConnexion" ReturnType="Collection(Int32)">
+            <Parameter Name="dateDeb" Mode="In" Type="DateTime" />
+            <Parameter Name="dateFin" Mode="In" Type="DateTime" />
+            <Parameter Name="userName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sessionTime" ReturnType="Collection(topnetDATAModel.sessionTime_Result)">
+            <Parameter Name="userName" Mode="In" Type="String" />
+            <Parameter Name="dateDeb" Mode="In" Type="DateTime" />
+            <Parameter Name="dateFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sumNbDeconnexionGlobal">
+            <Parameter Name="gouvernerat" Mode="In" Type="String" />
+            <Parameter Name="dateDeb" Mode="In" Type="DateTime" />
+            <Parameter Name="dateFin" Mode="In" Type="DateTime" />
+            <Parameter Name="nomKPI" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="test" ReturnType="Collection(topnetDATAModel.test_Result)" />
+          <FunctionImport Name="testdes" ReturnType="Collection(topnetDATAModel.testdes_Result)" />
+          <FunctionImport Name="testnotEXISTE" ReturnType="Collection(topnetDATAModel.testnotEXISTE_Result)" />
+          <FunctionImport Name="ticketdate" ReturnType="Collection(topnetDATAModel.ticketdate_Result)">
+            <Parameter Name="date1" Mode="In" Type="DateTime" />
+            <Parameter Name="date2" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="USERkpi">
+            <Parameter Name="userName" Mode="In" Type="String" />
+            <Parameter Name="nomKPI" Mode="In" Type="String" />
+            <Parameter Name="dateDeb" Mode="In" Type="DateTime" />
+            <Parameter Name="dateFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="carteGeoChartMoyConnexionNbPersonne_Result">
+          <Property Type="String" Name="codeGouv" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="gouvernerat" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="nbPersonne" Nullable="true" />
+          <Property Type="Int32" Name="dureeDeconnexion" Nullable="true" />
+          <Property Type="Int32" Name="nbDeconnexion" Nullable="true" />
+          <Property Type="Int32" Name="moydureeConnexionParJour" Nullable="true" />
+          <Property Type="String" Name="dexConv" Nullable="true" MaxLength="18" />
+        </ComplexType>
+        <ComplexType Name="cherche_Result">
+          <Property Type="Int32" Name="idTicket" Nullable="false" />
+          <Property Type="Int32" Name="idMotif" Nullable="false" />
+          <Property Type="String" Name="statut" Nullable="true" MaxLength="254" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="254" />
+          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="numSequence" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="DetailBarreReference_Result">
+          <Property Type="Int32" Name="borneDebut" Nullable="true" />
+          <Property Type="Int32" Name="borneMoyenne" Nullable="true" />
+          <Property Type="Int32" Name="borneFin" Nullable="true" />
+          <Property Type="String" Name="nomKPI" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="pourcentageMin" Nullable="true" />
+          <Property Type="Int32" Name="pourcentageAVG" Nullable="true" />
+          <Property Type="Int32" Name="pourcentageMAX" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="DetailBarreReferenceAvecDate_Result">
+          <Property Type="Int32" Name="borneDebut" Nullable="true" />
+          <Property Type="Int32" Name="borneMoyenne" Nullable="true" />
+          <Property Type="Int32" Name="borneFin" Nullable="true" />
+          <Property Type="String" Name="nomKPI" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="pourcentageMin" Nullable="true" />
+          <Property Type="Int32" Name="pourcentageAVG" Nullable="true" />
+          <Property Type="Int32" Name="pourcentageMAX" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="DetailBarreReferenceNbDeconnexion_Result">
+          <Property Type="Int32" Name="borneDebut" Nullable="true" />
+          <Property Type="Int32" Name="borneMoyenne" Nullable="true" />
+          <Property Type="Int32" Name="borneFin" Nullable="true" />
+          <Property Type="String" Name="nomKPI" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="historiqueConnexion_Result">
+          <Property Type="String" Name="userName" Nullable="true" MaxLength="254" />
+          <Property Type="Int32" Name="numSequence" Nullable="false" />
+          <Property Type="Int32" Name="startTimeSeconde" Nullable="true" />
+          <Property Type="Int32" Name="stopTimeSeconde" Nullable="true" />
+          <Property Type="DateTime" Name="startSession" Nullable="true" />
+          <Property Type="DateTime" Name="endSession" Nullable="true" />
+          <Property Type="Time" Name="startTime" Nullable="true" />
+          <Property Type="Time" Name="endTime" Nullable="true" />
+          <Property Type="DateTime" Name="dateDebutSession" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="dateFinSession" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="historiqueConnexionDetaille_Result">
+          <Property Type="String" Name="userName" Nullable="true" MaxLength="254" />
+          <Property Type="Int32" Name="numSequence" Nullable="false" />
+          <Property Type="Int32" Name="startTimeSeconde" Nullable="true" />
+          <Property Type="Int32" Name="stopTimeSeconde" Nullable="true" />
+          <Property Type="DateTime" Name="startSession" Nullable="true" />
+          <Property Type="DateTime" Name="endSession" Nullable="true" />
+          <Property Type="Time" Name="startTime" Nullable="true" />
+          <Property Type="Time" Name="endTime" Nullable="true" />
+          <Property Type="DateTime" Name="dateDebutSession" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="dateFinSession" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="listeTicket_Result">
+          <Property Type="String" Name="userName" Nullable="true" MaxLength="254" />
+          <Property Type="String" Name="statut" Nullable="true" MaxLength="254" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="254" />
+          <Property Type="String" Name="nomMotif" Nullable="true" MaxLength="254" />
+          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="maxConnexionSemaineDynamicDate_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="Int32" Name="dureeConnexionParJour" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="minConnexionSemaineDynamicDate_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="Int32" Name="dureeConnexionParJour" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="moyDureeConnexionParJourParGouvernerat_Result">
+          <Property Type="String" Name="gouvernerat" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="nbPersonne" Nullable="true" />
+          <Property Type="Int32" Name="dureeConnexionParJour" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="moyDureeConnexionParJourParGouverneratHHmmSS_Result">
+          <Property Type="String" Name="gouvernerat" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="dureeConnexionParJour" Nullable="true" MaxLength="18" />
+        </ComplexType>
+        <ComplexType Name="moyDureeConnexionSemaineDynamicDate_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="Int32" Name="dureeConnexionParJour" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="moyNbDeconnexionSemaineParGouvernerat_Result">
+          <Property Type="String" Name="gouvernerat" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="moynbDeconnexionParJour" Nullable="true" />
+          <Property Type="Int32" Name="nbPersonne" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="moyNBdeonnexionSemaineDynamicDate_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="Int32" Name="moynbDeconnexionParJour" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="moyNBdeonnexionSemaineDynamicGouvernerat_Result">
+          <Property Type="String" Name="gouvernerat" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="moynbDeconnexionParJour" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="moySessionDeconnexionSemaine_Result">
+          <Property Type="String" Name="dureeConnexionParJour" Nullable="true" MaxLength="18" />
+          <Property Type="String" Name="dureeDeconnexionParJour" Nullable="true" MaxLength="18" />
+        </ComplexType>
+        <ComplexType Name="referenceDureeMaximalConnexion_Result">
+          <Property Type="Int32" Name="moyConnexion" Nullable="true" />
+          <Property Type="Int32" Name="pourcentageValeur" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="referenceDureeMinimalConnexion_Result">
+          <Property Type="Int32" Name="moyConnexion" Nullable="true" />
+          <Property Type="Int32" Name="pourcentageValeur" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="referenceDureeMoyenneConnexion_Result">
+          <Property Type="Int32" Name="moyConnexion" Nullable="true" />
+          <Property Type="Int32" Name="pourcentageValeur" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="referenceKPIDureeMaximale_Result">
+          <Property Type="Int32" Name="borneDebut" Nullable="true" />
+          <Property Type="Int32" Name="borneMoyenne" Nullable="true" />
+          <Property Type="Int32" Name="borneFin" Nullable="true" />
+          <Property Type="String" Name="nomKPI" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="pourcentageMin" Nullable="true" />
+          <Property Type="Int32" Name="pourcentageAVG" Nullable="true" />
+          <Property Type="Int32" Name="pourcentageMAX" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="referenceKPIDureeMinimale_Result">
+          <Property Type="Int32" Name="borneDebut" Nullable="true" />
+          <Property Type="Int32" Name="borneMoyenne" Nullable="true" />
+          <Property Type="Int32" Name="borneFin" Nullable="true" />
+          <Property Type="String" Name="nomKPI" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="pourcentageMin" Nullable="true" />
+          <Property Type="Int32" Name="pourcentageAVG" Nullable="true" />
+          <Property Type="Int32" Name="pourcentageMAX" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="referenceKPINbDeconnexion_Result">
+          <Property Type="Int32" Name="borneDebut" Nullable="true" />
+          <Property Type="Int32" Name="borneMoyenne" Nullable="true" />
+          <Property Type="Int32" Name="borneFin" Nullable="true" />
+          <Property Type="String" Name="nomKPI" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sessionTime_Result">
+          <Property Type="String" Name="userName" Nullable="true" MaxLength="254" />
+          <Property Type="Int32" Name="numSequence" Nullable="false" />
+          <Property Type="Time" Name="startTime" Nullable="true" />
+          <Property Type="Time" Name="stopTime" Nullable="true" />
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="DateTime" Name="dateDebutSession" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="dateFinSession" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="test_Result">
+          <Property Type="String" Name="userName" Nullable="true" MaxLength="254" />
+          <Property Type="Int32" Name="numSequence" Nullable="false" />
+          <Property Type="Int32" Name="nbDeconnexionParJour" Nullable="true" />
+          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+          <Property Type="Time" Name="DureeDeconnection" Nullable="true" />
+          <Property Type="Time" Name="DureeConnection" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="testdes_Result">
+          <Property Type="String" Name="userName" Nullable="true" MaxLength="254" />
+          <Property Type="Int32" Name="numSequence" Nullable="false" />
+          <Property Type="Int32" Name="nbDeconnexionParJour" Nullable="true" />
+          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+          <Property Type="Time" Name="DureeDeconnection" Nullable="true" />
+          <Property Type="Time" Name="DureeConnection" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="testnotEXISTE_Result">
+          <Property Type="String" Name="userName" Nullable="true" MaxLength="254" />
+          <Property Type="Int32" Name="numSequence" Nullable="false" />
+          <Property Type="Int32" Name="nbDeconnexionParJour" Nullable="true" />
+          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+          <Property Type="Time" Name="DureeDeconnection" Nullable="true" />
+          <Property Type="Time" Name="DureeConnection" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ticketdate_Result">
+          <Property Type="String" Name="userName" Nullable="true" MaxLength="254" />
+          <Property Type="String" Name="statut" Nullable="true" MaxLength="254" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="254" />
+          <Property Type="String" Name="nomMotif" Nullable="true" MaxLength="254" />
+          <Property Type="DateTime" Name="date" Nullable="true" Precision="23" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="topnetDATAModelStoreContainer" CdmEntityContainer="topnetDATAEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="topnetDATAModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="topnetDATAModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="topnetDATAModel.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="topnetDATAModel.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="topnetDATAModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="attenuations">
+            <EntityTypeMapping TypeName="topnetDATAModel.attenuation">
+              <MappingFragment StoreEntitySet="attenuation">
+                <ScalarProperty Name="idAttenuation" ColumnName="idAttenuation" />
+                <ScalarProperty Name="DWMAXRATE" ColumnName="DWMAXRATE" />
+                <ScalarProperty Name="DWSNR" ColumnName="DWSNR" />
+                <ScalarProperty Name="DWATTEN" ColumnName="DWATTEN" />
+                <ScalarProperty Name="UPMAXRATE" ColumnName="UPMAXRATE" />
+                <ScalarProperty Name="UPSNR" ColumnName="UPSNR" />
+                <ScalarProperty Name="UPATTEN" ColumnName="UPATTEN" />
+                <ScalarProperty Name="SYNCHRO" ColumnName="SYNCHRO" />
+                <ScalarProperty Name="DEBIT" ColumnName="DEBIT" />
+                <ScalarProperty Name="DATE_SCAN" ColumnName="DATE_SCAN" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="clients">
+            <EntityTypeMapping TypeName="topnetDATAModel.client">
+              <MappingFragment StoreEntitySet="client">
+                <ScalarProperty Name="codeClient" ColumnName="codeClient" />
+                <ScalarProperty Name="nomClient" ColumnName="nomClient" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="deligations">
+            <EntityTypeMapping TypeName="topnetDATAModel.deligation">
+              <MappingFragment StoreEntitySet="deligation">
+                <ScalarProperty Name="idDeligation" ColumnName="idDeligation" />
+                <ScalarProperty Name="idGouvernerat" ColumnName="idGouvernerat" />
+                <ScalarProperty Name="nomDeligation" ColumnName="nomDeligation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="gouvernerats">
+            <EntityTypeMapping TypeName="topnetDATAModel.gouvernerat">
+              <MappingFragment StoreEntitySet="gouvernerat">
+                <ScalarProperty Name="idGouvernerat" ColumnName="idGouvernerat" />
+                <ScalarProperty Name="nomGouvernerat" ColumnName="nomGouvernerat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="historiqueKPIGlobals">
+            <EntityTypeMapping TypeName="topnetDATAModel.historiqueKPIGlobal">
+              <MappingFragment StoreEntitySet="historiqueKPIGlobal">
+                <ScalarProperty Name="idHistoriqueKPIGlobal" ColumnName="idHistoriqueKPIGlobal" />
+                <ScalarProperty Name="idKPI" ColumnName="idKPI" />
+                <ScalarProperty Name="valeurKPIGlobal" ColumnName="valeurKPIGlobal" />
+                <ScalarProperty Name="dateHistoriqueKPIGlobal" ColumnName="dateHistoriqueKPIGlobal" />
+                <ScalarProperty Name="dateFinHistoriqueKPIGlobal" ColumnName="dateFinHistoriqueKPIGlobal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="historiqueSessions">
+            <EntityTypeMapping TypeName="topnetDATAModel.historiqueSession">
+              <MappingFragment StoreEntitySet="historiqueSession">
+                <ScalarProperty Name="idSession" ColumnName="idSession" />
+                <ScalarProperty Name="dateDebutSession" ColumnName="dateDebutSession" />
+                <ScalarProperty Name="dateFinSession" ColumnName="dateFinSession" />
+                <ScalarProperty Name="nasIdentifier" ColumnName="nasIdentifier" />
+                <ScalarProperty Name="calling" ColumnName="calling" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KPIs">
+            <EntityTypeMapping TypeName="topnetDATAModel.KPI">
+              <MappingFragment StoreEntitySet="KPI">
+                <ScalarProperty Name="idKPI" ColumnName="idKPI" />
+                <ScalarProperty Name="formule" ColumnName="formule" />
+                <ScalarProperty Name="nomKPI" ColumnName="nomKPI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ligneADSLs">
+            <EntityTypeMapping TypeName="topnetDATAModel.ligneADSL">
+              <MappingFragment StoreEntitySet="ligneADSL">
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+                <ScalarProperty Name="nature_part_pro_" ColumnName="nature_part_pro_" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="debit" ColumnName="debit" />
+                <ScalarProperty Name="gouvernerat" ColumnName="gouvernerat" />
+                <ScalarProperty Name="delegation" ColumnName="delegation" />
+                <ScalarProperty Name="localite" ColumnName="localite" />
+                <ScalarProperty Name="codePostal" ColumnName="codePostal" />
+                <ScalarProperty Name="codeGouv" ColumnName="codeGouv" />
+                <ScalarProperty Name="codeClient" ColumnName="codeClient" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="localites">
+            <EntityTypeMapping TypeName="topnetDATAModel.localite">
+              <MappingFragment StoreEntitySet="localite">
+                <ScalarProperty Name="idLocalite" ColumnName="idLocalite" />
+                <ScalarProperty Name="idDeligation" ColumnName="idDeligation" />
+                <ScalarProperty Name="nomLocalite" ColumnName="nomLocalite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="modems">
+            <EntityTypeMapping TypeName="topnetDATAModel.modem">
+              <MappingFragment StoreEntitySet="modem">
+                <ScalarProperty Name="numSerieModem" ColumnName="numSerieModem" />
+                <ScalarProperty Name="marque" ColumnName="marque" />
+                <ScalarProperty Name="debit" ColumnName="debit" />
+                <ScalarProperty Name="dateEchange" ColumnName="dateEchange" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="motifs">
+            <EntityTypeMapping TypeName="topnetDATAModel.motif">
+              <MappingFragment StoreEntitySet="motif">
+                <ScalarProperty Name="idMotif" ColumnName="idMotif" />
+                <ScalarProperty Name="nomMotif" ColumnName="nomMotif" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="references">
+            <EntityTypeMapping TypeName="topnetDATAModel.reference">
+              <MappingFragment StoreEntitySet="reference">
+                <ScalarProperty Name="idReference" ColumnName="idReference" />
+                <ScalarProperty Name="borneDebut" ColumnName="borneDebut" />
+                <ScalarProperty Name="borneFin" ColumnName="borneFin" />
+                <ScalarProperty Name="borneMoyenne" ColumnName="borneMoyenne" />
+                <ScalarProperty Name="idKPI" ColumnName="idKPI" />
+                <ScalarProperty Name="dateReference" ColumnName="dateReference" />
+                <ScalarProperty Name="nomReference" ColumnName="nomReference" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="topnetDATAModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tickets">
+            <EntityTypeMapping TypeName="topnetDATAModel.ticket">
+              <MappingFragment StoreEntitySet="ticket">
+                <ScalarProperty Name="idTicket" ColumnName="idTicket" />
+                <ScalarProperty Name="idMotif" ColumnName="idMotif" />
+                <ScalarProperty Name="statut" ColumnName="statut" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeReseaux">
+            <EntityTypeMapping TypeName="topnetDATAModel.TypeReseau">
+              <MappingFragment StoreEntitySet="TypeReseau">
+                <ScalarProperty Name="idTypeReseau" ColumnName="idTypeReseau" />
+                <ScalarProperty Name="nomReseau" ColumnName="nomReseau" />
+                <ScalarProperty Name="datereseau" ColumnName="datereseau" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="historiqueKPIs">
+            <EntityTypeMapping TypeName="topnetDATAModel.historiqueKPI">
+              <MappingFragment StoreEntitySet="historiqueKPI">
+                <ScalarProperty Name="idKPI" ColumnName="idKPI" />
+                <ScalarProperty Name="valeurKPI" ColumnName="valeurKPI" />
+                <ScalarProperty Name="dateHistoriqueKPI" ColumnName="dateHistoriqueKPI" />
+                <ScalarProperty Name="dureeKPI" ColumnName="dureeKPI" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dailyParameters">
+            <EntityTypeMapping TypeName="topnetDATAModel.dailyParameter">
+              <MappingFragment StoreEntitySet="dailyParameter">
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="gouvernerat" ColumnName="gouvernerat" />
+                <ScalarProperty Name="delegation" ColumnName="delegation" />
+                <ScalarProperty Name="localite" ColumnName="localite" />
+                <ScalarProperty Name="codePostal" ColumnName="codePostal" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="nbDeconnexionParJour" ColumnName="nbDeconnexionParJour" />
+                <ScalarProperty Name="dureeDeconnexionParJour" ColumnName="dureeDeconnexionParJour" />
+                <ScalarProperty Name="dureeConnexionParJour" ColumnName="dureeConnexionParJour" />
+                <ScalarProperty Name="RowID" ColumnName="RowID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notexistes">
+            <EntityTypeMapping TypeName="topnetDATAModel.notexiste">
+              <MappingFragment StoreEntitySet="notexiste">
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+                <ScalarProperty Name="nbDeconnexionParJour" ColumnName="nbDeconnexionParJour" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="DureeDeconnection" ColumnName="DureeDeconnection" />
+                <ScalarProperty Name="DureeConnection" ColumnName="DureeConnection" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ticketGeneres">
+            <EntityTypeMapping TypeName="topnetDATAModel.ticketGenere">
+              <MappingFragment StoreEntitySet="ticketGeneres">
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+                <ScalarProperty Name="nbDeconnexionParJour" ColumnName="nbDeconnexionParJour" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="DureeDeconnection" ColumnName="DureeDeconnection" />
+                <ScalarProperty Name="DureeConnection" ColumnName="DureeConnection" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="topnetDATAModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ligneADSLtypeReseau" TypeName="topnetDATAModel.ligneADSLtypeReseau" StoreEntitySet="ligneADSLtypeReseau">
+            <EndProperty Name="ligneADSL">
+              <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+            </EndProperty>
+            <EndProperty Name="TypeReseau">
+              <ScalarProperty Name="idTypeReseau" ColumnName="idTypeReseau" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="carteGeoChartMoyConnexionNbPersonne" FunctionName="topnetDATAModel.Store.carteGeoChartMoyConnexionNbPersonne">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.carteGeoChartMoyConnexionNbPersonne_Result">
+                <ScalarProperty Name="codeGouv" ColumnName="codeGouv" />
+                <ScalarProperty Name="gouvernerat" ColumnName="gouvernerat" />
+                <ScalarProperty Name="nbPersonne" ColumnName="nbPersonne" />
+                <ScalarProperty Name="dureeDeconnexion" ColumnName="dureeDeconnexion" />
+                <ScalarProperty Name="nbDeconnexion" ColumnName="nbDeconnexion" />
+                <ScalarProperty Name="moydureeConnexionParJour" ColumnName="moydureeConnexionParJour" />
+                <ScalarProperty Name="dexConv" ColumnName="dexConv" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="cherche" FunctionName="topnetDATAModel.Store.cherche">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.cherche_Result">
+                <ScalarProperty Name="idTicket" ColumnName="idTicket" />
+                <ScalarProperty Name="idMotif" ColumnName="idMotif" />
+                <ScalarProperty Name="statut" ColumnName="statut" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="createTicket" FunctionName="topnetDATAModel.Store.createTicket" />
+          <FunctionImportMapping FunctionImportName="DetailBarreReference" FunctionName="topnetDATAModel.Store.DetailBarreReference">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.DetailBarreReference_Result">
+                <ScalarProperty Name="borneDebut" ColumnName="borneDebut" />
+                <ScalarProperty Name="borneMoyenne" ColumnName="borneMoyenne" />
+                <ScalarProperty Name="borneFin" ColumnName="borneFin" />
+                <ScalarProperty Name="nomKPI" ColumnName="nomKPI" />
+                <ScalarProperty Name="pourcentageMin" ColumnName="pourcentageMin" />
+                <ScalarProperty Name="pourcentageAVG" ColumnName="pourcentageAVG" />
+                <ScalarProperty Name="pourcentageMAX" ColumnName="pourcentageMAX" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DetailBarreReferenceAvecDate" FunctionName="topnetDATAModel.Store.DetailBarreReferenceAvecDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.DetailBarreReferenceAvecDate_Result">
+                <ScalarProperty Name="borneDebut" ColumnName="borneDebut" />
+                <ScalarProperty Name="borneMoyenne" ColumnName="borneMoyenne" />
+                <ScalarProperty Name="borneFin" ColumnName="borneFin" />
+                <ScalarProperty Name="nomKPI" ColumnName="nomKPI" />
+                <ScalarProperty Name="pourcentageMin" ColumnName="pourcentageMin" />
+                <ScalarProperty Name="pourcentageAVG" ColumnName="pourcentageAVG" />
+                <ScalarProperty Name="pourcentageMAX" ColumnName="pourcentageMAX" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DetailBarreReferenceNbDeconnexion" FunctionName="topnetDATAModel.Store.DetailBarreReferenceNbDeconnexion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.DetailBarreReferenceNbDeconnexion_Result">
+                <ScalarProperty Name="borneDebut" ColumnName="borneDebut" />
+                <ScalarProperty Name="borneMoyenne" ColumnName="borneMoyenne" />
+                <ScalarProperty Name="borneFin" ColumnName="borneFin" />
+                <ScalarProperty Name="nomKPI" ColumnName="nomKPI" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="historiqueConnexion" FunctionName="topnetDATAModel.Store.historiqueConnexion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.historiqueConnexion_Result">
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+                <ScalarProperty Name="startTimeSeconde" ColumnName="startTimeSeconde" />
+                <ScalarProperty Name="stopTimeSeconde" ColumnName="stopTimeSeconde" />
+                <ScalarProperty Name="startSession" ColumnName="startSession" />
+                <ScalarProperty Name="endSession" ColumnName="endSession" />
+                <ScalarProperty Name="startTime" ColumnName="startTime" />
+                <ScalarProperty Name="endTime" ColumnName="endTime" />
+                <ScalarProperty Name="dateDebutSession" ColumnName="dateDebutSession" />
+                <ScalarProperty Name="dateFinSession" ColumnName="dateFinSession" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="historiqueConnexionDetaille" FunctionName="topnetDATAModel.Store.historiqueConnexionDetaille">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.historiqueConnexionDetaille_Result">
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+                <ScalarProperty Name="startTimeSeconde" ColumnName="startTimeSeconde" />
+                <ScalarProperty Name="stopTimeSeconde" ColumnName="stopTimeSeconde" />
+                <ScalarProperty Name="startSession" ColumnName="startSession" />
+                <ScalarProperty Name="endSession" ColumnName="endSession" />
+                <ScalarProperty Name="startTime" ColumnName="startTime" />
+                <ScalarProperty Name="endTime" ColumnName="endTime" />
+                <ScalarProperty Name="dateDebutSession" ColumnName="dateDebutSession" />
+                <ScalarProperty Name="dateFinSession" ColumnName="dateFinSession" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="insertReference" FunctionName="topnetDATAModel.Store.insertReference" />
+          <FunctionImportMapping FunctionImportName="insertTicket" FunctionName="topnetDATAModel.Store.insertTicket" />
+          <FunctionImportMapping FunctionImportName="listeTicket" FunctionName="topnetDATAModel.Store.listeTicket">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.listeTicket_Result">
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="statut" ColumnName="statut" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="nomMotif" ColumnName="nomMotif" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="maxConnexionSemaineDynamicDate" FunctionName="topnetDATAModel.Store.maxConnexionSemaineDynamicDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.maxConnexionSemaineDynamicDate_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="dureeConnexionParJour" ColumnName="dureeConnexionParJour" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="maxDureeConnexionSemaine" FunctionName="topnetDATAModel.Store.maxDureeConnexionSemaine" />
+          <FunctionImportMapping FunctionImportName="maxDureeConnexionSemaineUser" FunctionName="topnetDATAModel.Store.maxDureeConnexionSemaineUser" />
+          <FunctionImportMapping FunctionImportName="minConnexionSemaineDynamicDate" FunctionName="topnetDATAModel.Store.minConnexionSemaineDynamicDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.minConnexionSemaineDynamicDate_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="dureeConnexionParJour" ColumnName="dureeConnexionParJour" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="minDureeConnexionDynamique" FunctionName="topnetDATAModel.Store.minDureeConnexionDynamique" />
+          <FunctionImportMapping FunctionImportName="minDureeConnexionSemaine" FunctionName="topnetDATAModel.Store.minDureeConnexionSemaine" />
+          <FunctionImportMapping FunctionImportName="minDureeConnexionSemaineUser" FunctionName="topnetDATAModel.Store.minDureeConnexionSemaineUser" />
+          <FunctionImportMapping FunctionImportName="minDureeConnexionUserDynamique" FunctionName="topnetDATAModel.Store.minDureeConnexionUserDynamique" />
+          <FunctionImportMapping FunctionImportName="modifTicket" FunctionName="topnetDATAModel.Store.modifTicket" />
+          <FunctionImportMapping FunctionImportName="moyDureeConnexionParJourParGouvernerat" FunctionName="topnetDATAModel.Store.moyDureeConnexionParJourParGouvernerat">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.moyDureeConnexionParJourParGouvernerat_Result">
+                <ScalarProperty Name="gouvernerat" ColumnName="gouvernerat" />
+                <ScalarProperty Name="nbPersonne" ColumnName="nbPersonne" />
+                <ScalarProperty Name="dureeConnexionParJour" ColumnName="dureeConnexionParJour" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="moyDureeConnexionParJourParGouverneratHHmmSS" FunctionName="topnetDATAModel.Store.moyDureeConnexionParJourParGouverneratHHmmSS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.moyDureeConnexionParJourParGouverneratHHmmSS_Result">
+                <ScalarProperty Name="gouvernerat" ColumnName="gouvernerat" />
+                <ScalarProperty Name="dureeConnexionParJour" ColumnName="dureeConnexionParJour" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="moyDureeConnexionSemaine" FunctionName="topnetDATAModel.Store.moyDureeConnexionSemaine" />
+          <FunctionImportMapping FunctionImportName="moyDureeConnexionSemaineDynamicDate" FunctionName="topnetDATAModel.Store.moyDureeConnexionSemaineDynamicDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.moyDureeConnexionSemaineDynamicDate_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="dureeConnexionParJour" ColumnName="dureeConnexionParJour" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="moyDureeConnexionSemaineUser" FunctionName="topnetDATAModel.Store.moyDureeConnexionSemaineUser" />
+          <FunctionImportMapping FunctionImportName="moyNbDeconnexionSemaineParGouvernerat" FunctionName="topnetDATAModel.Store.moyNbDeconnexionSemaineParGouvernerat">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.moyNbDeconnexionSemaineParGouvernerat_Result">
+                <ScalarProperty Name="gouvernerat" ColumnName="gouvernerat" />
+                <ScalarProperty Name="moynbDeconnexionParJour" ColumnName="moynbDeconnexionParJour" />
+                <ScalarProperty Name="nbPersonne" ColumnName="nbPersonne" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="moyNBdeonnexionSemaine" FunctionName="topnetDATAModel.Store.moyNBdeonnexionSemaine" />
+          <FunctionImportMapping FunctionImportName="moyNBdeonnexionSemaineDynamicDate" FunctionName="topnetDATAModel.Store.moyNBdeonnexionSemaineDynamicDate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.moyNBdeonnexionSemaineDynamicDate_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="moynbDeconnexionParJour" ColumnName="moynbDeconnexionParJour" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="moyNBdeonnexionSemaineDynamicGouvernerat" FunctionName="topnetDATAModel.Store.moyNBdeonnexionSemaineDynamicGouvernerat">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.moyNBdeonnexionSemaineDynamicGouvernerat_Result">
+                <ScalarProperty Name="gouvernerat" ColumnName="gouvernerat" />
+                <ScalarProperty Name="moynbDeconnexionParJour" ColumnName="moynbDeconnexionParJour" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="moyNBdeonnexionSemaineUser" FunctionName="topnetDATAModel.Store.moyNBdeonnexionSemaineUser" />
+          <FunctionImportMapping FunctionImportName="moySessionDeconnexionSemaine" FunctionName="topnetDATAModel.Store.moySessionDeconnexionSemaine">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.moySessionDeconnexionSemaine_Result">
+                <ScalarProperty Name="dureeConnexionParJour" ColumnName="dureeConnexionParJour" />
+                <ScalarProperty Name="dureeDeconnexionParJour" ColumnName="dureeDeconnexionParJour" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="referenceDureeMaximalConnexion" FunctionName="topnetDATAModel.Store.referenceDureeMaximalConnexion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.referenceDureeMaximalConnexion_Result">
+                <ScalarProperty Name="moyConnexion" ColumnName="moyConnexion" />
+                <ScalarProperty Name="pourcentageValeur" ColumnName="pourcentageValeur" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="referenceDureeMinimalConnexion" FunctionName="topnetDATAModel.Store.referenceDureeMinimalConnexion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.referenceDureeMinimalConnexion_Result">
+                <ScalarProperty Name="moyConnexion" ColumnName="moyConnexion" />
+                <ScalarProperty Name="pourcentageValeur" ColumnName="pourcentageValeur" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="referenceDureeMoyenneConnexion" FunctionName="topnetDATAModel.Store.referenceDureeMoyenneConnexion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.referenceDureeMoyenneConnexion_Result">
+                <ScalarProperty Name="moyConnexion" ColumnName="moyConnexion" />
+                <ScalarProperty Name="pourcentageValeur" ColumnName="pourcentageValeur" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="referenceKPIDureeMaximale" FunctionName="topnetDATAModel.Store.referenceKPIDureeMaximale">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.referenceKPIDureeMaximale_Result">
+                <ScalarProperty Name="borneDebut" ColumnName="borneDebut" />
+                <ScalarProperty Name="borneMoyenne" ColumnName="borneMoyenne" />
+                <ScalarProperty Name="borneFin" ColumnName="borneFin" />
+                <ScalarProperty Name="nomKPI" ColumnName="nomKPI" />
+                <ScalarProperty Name="pourcentageMin" ColumnName="pourcentageMin" />
+                <ScalarProperty Name="pourcentageAVG" ColumnName="pourcentageAVG" />
+                <ScalarProperty Name="pourcentageMAX" ColumnName="pourcentageMAX" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="referenceKPIDureeMinimale" FunctionName="topnetDATAModel.Store.referenceKPIDureeMinimale">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.referenceKPIDureeMinimale_Result">
+                <ScalarProperty Name="borneDebut" ColumnName="borneDebut" />
+                <ScalarProperty Name="borneMoyenne" ColumnName="borneMoyenne" />
+                <ScalarProperty Name="borneFin" ColumnName="borneFin" />
+                <ScalarProperty Name="nomKPI" ColumnName="nomKPI" />
+                <ScalarProperty Name="pourcentageMin" ColumnName="pourcentageMin" />
+                <ScalarProperty Name="pourcentageAVG" ColumnName="pourcentageAVG" />
+                <ScalarProperty Name="pourcentageMAX" ColumnName="pourcentageMAX" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="referenceKPINbDeconnexion" FunctionName="topnetDATAModel.Store.referenceKPINbDeconnexion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.referenceKPINbDeconnexion_Result">
+                <ScalarProperty Name="borneDebut" ColumnName="borneDebut" />
+                <ScalarProperty Name="borneMoyenne" ColumnName="borneMoyenne" />
+                <ScalarProperty Name="borneFin" ColumnName="borneFin" />
+                <ScalarProperty Name="nomKPI" ColumnName="nomKPI" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="referenceNbDeconnexionConnexion" FunctionName="topnetDATAModel.Store.referenceNbDeconnexionConnexion" />
+          <FunctionImportMapping FunctionImportName="sessionTime" FunctionName="topnetDATAModel.Store.sessionTime">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.sessionTime_Result">
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+                <ScalarProperty Name="startTime" ColumnName="startTime" />
+                <ScalarProperty Name="stopTime" ColumnName="stopTime" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="dateDebutSession" ColumnName="dateDebutSession" />
+                <ScalarProperty Name="dateFinSession" ColumnName="dateFinSession" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sumNbDeconnexionGlobal" FunctionName="topnetDATAModel.Store.sumNbDeconnexionGlobal" />
+          <FunctionImportMapping FunctionImportName="test" FunctionName="topnetDATAModel.Store.test">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.test_Result">
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+                <ScalarProperty Name="nbDeconnexionParJour" ColumnName="nbDeconnexionParJour" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="DureeDeconnection" ColumnName="DureeDeconnection" />
+                <ScalarProperty Name="DureeConnection" ColumnName="DureeConnection" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="testdes" FunctionName="topnetDATAModel.Store.testdes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.testdes_Result">
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+                <ScalarProperty Name="nbDeconnexionParJour" ColumnName="nbDeconnexionParJour" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="DureeDeconnection" ColumnName="DureeDeconnection" />
+                <ScalarProperty Name="DureeConnection" ColumnName="DureeConnection" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="testnotEXISTE" FunctionName="topnetDATAModel.Store.testnotEXISTE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.testnotEXISTE_Result">
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+                <ScalarProperty Name="nbDeconnexionParJour" ColumnName="nbDeconnexionParJour" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="DureeDeconnection" ColumnName="DureeDeconnection" />
+                <ScalarProperty Name="DureeConnection" ColumnName="DureeConnection" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ticketdate" FunctionName="topnetDATAModel.Store.ticketdate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="topnetDATAModel.ticketdate_Result">
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="statut" ColumnName="statut" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="nomMotif" ColumnName="nomMotif" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="USERkpi" FunctionName="topnetDATAModel.Store.USERkpi" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

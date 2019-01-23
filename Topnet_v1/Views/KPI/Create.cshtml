@@ -1,0 +1,183 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Menu {
+    @Scripts.Render("~/Scripts/Forms/General/menu")
+    @Scripts.Render("~/Scripts/Forms/Advanced/menu")
+}
+
+
+
+@Styles.Render("~/AdminLTE/plugins/daterangepicker/css")
+@Styles.Render("~/AdminLTE/plugins/icheck/css")
+@Styles.Render("~/AdminLTE/plugins/colorpicker/css")
+@Styles.Render("~/AdminLTE/plugins/timepicker/css")
+@Styles.Render("~/AdminLTE/plugins/select2/css")
+@Styles.Render("~/AdminLTE/dist/css")
+@Styles.Render("~/AdminLTE/dist/css/skins")
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function generateDashboard() {
+        var username = $('#ddlUsers').val();
+        var nomKPI = $('#nomKPI').val();
+        var sdate = $('#startDate').val();
+        var edate = $('#endDate').val();
+
+        $.ajax({
+            url: "/KPI/insertData",
+            data: {
+                nomKPI: nomKPI,
+                username: username,
+                d1: sdate,
+                d2: edate
+            },
+            success: function (result) {
+
+                GetNumberData(result[1].Value);
+
+            }
+        });
+
+
+        function GetNumberData(data) {
+            var dps = [];
+            for (i = 0; i < data.length; i++) {
+                dps.push({ y: data[i].valeurKPI, label: new Date(parseInt(data[i].dateHistoriqueKPI.split('(')[1].split(')')[0])).toLocaleDateString() })
+            }
+            var chart = new CanvasJS.Chart("numchart", {
+
+                animationEnabled: true,
+                theme: "light2", // "light1", "light2", "dark1", "dark2"
+                title: {
+                    text: "KPI result"
+                },
+                axisY: {
+                    title: "KPI values",
+
+                },
+                data: [{
+                    type: "column",
+                    showInLegend: true,
+                    legendMarkerColor: "grey",
+                    legendText: "86400 s = 24 hours",
+                    dataPoints: dps
+                }]
+            });
+            chart.render();
+
+        }
+
+
+    }
+</script>
+
+<body>
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Calculate your KPI</h3>
+        </div>
+
+        <div class="box-body">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">KPI</label>
+                <div class="col-sm-10">
+
+                    @Html.DropDownList("nomKPI", ViewBag.nomKPIs as IEnumerable<SelectListItem>, new { @id = "nomKPI", style = "width:50%", @class = "form-control select2" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">UserName</label>
+                <div class="col-sm-10">
+                    @Html.DropDownList("ddlUsers", ViewBag.users as IEnumerable<SelectListItem>, new { @id = "ddlUsers", style = "width:50%", @class = "form-control select2" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Start day</label>
+                <div class="col-sm-10">
+                    <input type="text" id="startDate" class="form-control" style="width:50%" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">End day</label>
+                <div class="col-sm-10">
+                    <input type="text" id="endDate" class="form-control" style="width:50%" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
+                </div>
+            </div>
+
+
+
+
+        </div>
+        <div class="box-footer">
+            <input type="submit" value="Calculate" class="btn btn-info pull-right" onclick="generateDashboard()" />
+        </div>
+
+
+    </div>
+    <div style="clear:both;"></div>
+    <div id="numchart" style="height: 400px; width: 100%;"></div>
+    <div style="clear:both;"></div>
+</body>
+
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/select2/js")
+    @Scripts.Render("~/AdminLTE/plugins/input-mask/js")
+    @Scripts.Render("~/AdminLTE/plugins/momentjs/js")
+    @Scripts.Render("~/AdminLTE/plugins/daterangepicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/colorpicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/timepicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/icheck/js")
+    @Scripts.Render("~/Scripts/Forms/Advanced")
+}
+
+@*<script>
+        $(document).ready(function () {
+            $("#nomKPI").change(function () {
+                var selectedValue = $(this).find('option:selected').val();
+                alert(selectedValue);
+
+                $.ajax({
+                    url: "/KPI/Create",
+                    type: "GET",
+                    data: { nomKPI: selectedValue },
+                    success: function (result) {
+                        $("#example1").html(result);
+                    }
+                });
+            });
+        });
+        $(document).ready(function () {
+            $("#gouvernerat").change(function () {
+                var selectedValue = $(this).find('option:selected').val();
+                alert(selectedValue);
+                $.ajax({
+                    url: "/KPI/Create",
+                    type: "GET",
+                    data: { gouvernerat: selectedValue },
+                    success: function (result) {
+                        $("#example1").html(result);
+                    }
+
+                });
+            });
+        });
+
+
+        $('#dateDeb').dateText({
+            onSelect: function (dateText, inst) {
+                $("input[name='dateDeb']").val(dateText);
+            }
+        });
+
+
+        $('#dateFin').dateText({
+            onSelect: function (dateText, inst) {
+                $("input[name='dateFin']").val(dateText);
+            }
+        });
+    </script>*@
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

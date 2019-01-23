@@ -1,0 +1,318 @@
+﻿@model IEnumerable<Topnet_v1.listeTicket_Result>
+@{
+    ViewBag.Title = "Ticket";
+    ViewBag.SubTitle = "Historique des tickets";
+}
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    /**/
+
+    /**/
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
+    @Scripts.Render("~/Scripts/Elements/Icons/menu")
+    @Scripts.Render("~/Scripts/Elements/Buttons/menu")
+}
+
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
+
+@Styles.Render("~/Styles/Elements/Icons")
+
+@Styles.Render("~/AdminLTE/plugins/daterangepicker/css")
+@Styles.Render("~/AdminLTE/plugins/icheck/css")
+@Styles.Render("~/AdminLTE/plugins/colorpicker/css")
+@Styles.Render("~/AdminLTE/plugins/timepicker/css")
+@Styles.Render("~/AdminLTE/plugins/select2/css")
+@Styles.Render("~/AdminLTE/dist/css")
+@Styles.Render("~/AdminLTE/dist/css/skins")
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $('#btnExport').click(function () {
+
+            window.location = '/Ticket/Export';
+
+
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $('#btnAffiche').click(function () {
+            var sdate = $('#startDate').val();
+            var edate = $('#endDate').val();
+            if (sdate > edate) {
+
+                // alert("La date début doit etre superieur que la date fin");
+                $('#myModal2').modal("show");
+            };
+
+            $.ajax({
+                url: "/Ticket/Afficher",
+                data: {
+
+                    d1: sdate,
+                    d2: edate
+
+                },
+                success: function (result) {
+                    $("#example1").html(result);
+                },
+                error: function () {
+                    // alert("Vous devez choisir la date debut et date fin ");
+
+                    $('#myModal').modal("show");
+                }
+            });
+        });
+    });
+</script>
+
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Afficher historique des tickets</h3>
+    </div>
+    <form class="form-horizontal">
+        <div class="box-body">
+
+
+            <div class="form-group col-md-4">
+                <label class="col-sm-2 control-label">Date début</label>
+                <div class="col-sm-10">
+                    <input type="text" id="startDate" class="form-control" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="col-sm-2 control-label">Date fin</label>
+                <div class="col-sm-10">
+                    <input type="text" id="endDate" class="form-control" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
+                </div>
+
+            </div>
+
+            <script type="text/javascript">
+                $('#startDate').datepicker({
+                    controlType: 'select',
+                    oneLine: true,
+                    format: 'yyyy/mm/dd',
+                    onSelect: function (selected) {
+                        var dt = new Date(selected);
+                        dt.setDate(dt.getDate() + 1);
+                        $("#endDate").datepicker("option", "minDate", dt);
+                    }
+                });
+                $('#endDate').datepicker({
+                    controlType: 'select',
+                    oneLine: true,
+                    format: 'yyyy/mm/dd',
+                    onSelect: function (selected) {
+                        var dt = new Date(selected);
+                        dt.setDate(dt.getDate() - 1);
+                        $("#startDate").datepicker("option", "maxDate", dt);
+                    }
+                });
+                                                                                                    //$("#txtFrom").datepicker({
+                                                                                                    //    numberOfMonths: 2,
+                                                                                                    //    format: 'yyyy/mm/dd',
+                                                                                                    //    onSelect: function (selected) {
+                                                                                                    //        //var dt = new Date(selected);
+                                                                                                    //        //dt.setDate(dt.getDate() + 1);
+                                                                                                    //        $("#txtTo").datepicker("option", "minDate", dt);
+                                                                                                    //    }
+                                                                                                    //});
+                                                                                                    //$("#txtTo").datepicker({
+                                                                                                    //    numberOfMonths: 2,
+                                                                                                    //    format: 'yyyy/mm/dd',
+                                                                                                    //    onSelect: function (selected) {
+                                                                                                    //        //var dt = new Date(selected);
+                                                                                                    //        //dt.setDate(dt.getDate() - 1);
+                                                                                                    //        $("#txtFrom").datepicker("option", "maxDate", dt);
+                                                                                                    //    }
+                                                                                                    //});
+
+
+
+            </script>
+
+        </div>
+
+
+
+        <div class="box-footer">
+            <input type="button" id="btnAffiche" value="Afficher" class="btn btn-info pull-right" />
+
+        </div>
+    </form>
+</div>
+
+
+@*<div class="box-body">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Start day</label>
+
+            <div class="col-sm-10">
+                <input type="text" id="startDate" class="form-control" style="width:50%" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">End day</label>
+            <div class="col-sm-10">
+                <input type="text" id="endDate" class="form-control" style="width:50%" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
+            </div>
+
+        </div>
+
+
+
+        <input type="button" id="btnAffiche" value="Afficher" class="btn btn-primary" />
+    </div>*@
+
+
+
+
+<div class="box">
+
+    <div class="box-body" id="Grid">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Login
+                    </th>
+                    <th>
+                        Statut
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Motif
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.userName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.statut)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nomMotif)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.date)
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+<input type="button" id="btnExport" value="Exporter" class="btn btn-danger" />
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content panel-warning">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Attention</h4>
+            </div>
+            <div class="modal-body">
+                <p id="error">Vous devez choisir une date début et une date fin</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content panel-warning">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Attention</h4>
+            </div>
+            <div class="modal-body">
+                <p id="error">La date début doit etre supérieure à la date fin</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+    @Scripts.Render("~/Scripts/Tables/Data")
+
+
+    @Scripts.Render("~/AdminLTE/plugins/select2/js")
+    @Scripts.Render("~/AdminLTE/plugins/input-mask/js")
+    @Scripts.Render("~/AdminLTE/plugins/momentjs/js")
+    @Scripts.Render("~/AdminLTE/plugins/daterangepicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/colorpicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/timepicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/icheck/js")
+    @Scripts.Render("~/Scripts/Forms/Advanced")
+    @Scripts.Render("~/AdminLTE/plugins/knob/js")
+    @Scripts.Render("~/AdminLTE/plugins/sparkline/js")
+    @Scripts.Render("~/Scripts/Charts/Inline")
+
+
+
+
+}

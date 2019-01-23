@@ -1,0 +1,136 @@
+﻿@model IEnumerable<Topnet_v1.notexiste>
+
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
+    @Scripts.Render("~/Scripts/Elements/Icons/menu")
+    @Scripts.Render("~/Scripts/Elements/Buttons/menu")
+
+}
+
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
+
+@Styles.Render("~/Styles/Elements/Icons")
+
+
+<script type="text/javascript">
+    var TeamDetailPostBackURL = '/GenererTicket/Add';
+    $(function () {
+        $(".anchorDetail").click(function () {
+
+
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var user = $buttonClicked.attr('data-id2');
+            var options = { "backdrop": "static", keyboard: true };
+
+
+            $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: {
+                    "Id": id,
+                    "User": user
+                },
+                datatype: "json",
+
+                success: function (data) {
+
+                    $('#form').html("form1");
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+
+
+            });
+
+        });
+    });
+</script>
+<div id='myModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4 id="ModalTicket"></h4>
+            </div>
+            <div class="modal-body" id='myModalContent'>
+                <form id="form"> </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box">
+  
+
+    <!-- /.box-header -->
+    <div class="box-body">
+
+
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+
+                <tr>
+                    <th>
+                        Numéro de séquence
+                    </th>
+                    <th>
+                        Login
+                    </th>
+                    <th>
+                        Nombre de déconnexion
+                    </th>
+
+                    <th>
+                        Durée de déconnexion
+                    </th>
+                    <th>
+                        Durée de session
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.numSequence)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.userName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nbDeconnexionParJour)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DureeDeconnection)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DureeConnection)
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" class="anchorDetail" onclick="selectRow(this)" data-id="@item.numSequence" data-id2="@item.userName"> Ticket </a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @Html.ActionLink("Retourner à la liste", "Index")
+    </div>
+
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+    @Scripts.Render("~/Scripts/Tables/Data")
+
+}

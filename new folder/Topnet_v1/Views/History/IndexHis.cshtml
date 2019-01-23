@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Topnet_v1.historiqueConnexion>
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+                /**/
+
+
+
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
+    @Scripts.Render("~/Scripts/Elements/Icons/menu")
+}
+
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
+
+@Styles.Render("~/Styles/Elements/Icons")
+
+<br />
+
+
+<div class="box">
+    <div>
+        <h3 class="box-title">Historique de connexion des lignes ADSL</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.startTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.stopTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Calling)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.numSequence)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.startTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.stopTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Calling)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.numSequence)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.idSession }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.idSession }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.idSession })
+                        </td>
+                    </tr>
+                }
+
+
+        </table>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+    @Scripts.Render("~/Scripts/Tables/Data")
+}
+

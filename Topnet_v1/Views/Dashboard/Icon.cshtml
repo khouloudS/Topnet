@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard v2";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Home/DashboardV2/menu")
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/gauge.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+
+
+<script>
+   
+</script>
+
+
+
+<div id="icon">
+    <div class="row" >
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>
+                        @Html.Label("nbDeconnexion", (string)ViewBag.nbDeconnexion, new { @id = "nbDeconnexion" })
+                    </h3>
+                    <p>
+                        Nommbre moyen des déconnexions
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+                <a href='@Url.Action("Index","MoreInfo")' onclick='navigate(this.href);' class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>
+
+                        @Html.Label("moySession", (string)ViewBag.moySession, new { @id = "moySession" })
+                    </h3>
+                    <p>
+                        Duree moyenne d'une session
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href='@Url.Action("Index","MoreInfoMoyDure")' onclick='navigate(this.href);' class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>
+                        @Html.Label("maxSession", (string)ViewBag.maxSession, new { @id = "maxSession" })
+                    </h3>
+                    <p>Duée maximale d'une session
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+             @*   <a href='@Url.Action("Index","MoreInfo")' onclick='navigate(this.href);' class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>*@
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>
+                        @Html.Label("minSession", (string)ViewBag.minSession, new { @id = "minSession" })
+                    </h3>
+                    <p>
+                        Duée minimale d'une session
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+              @*  <a href='@Url.Action("Index","MoreInfo")' onclick='navigate(this.href);' class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>*@
+            </div>
+        </div>
+    </div>
+ 
+</div>
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/jquery-ui/js")
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+    </script>
+
+    @Scripts.Render("~/AdminLTE/plugins/chartjs/js")
+    @Scripts.Render("~/AdminLTE/plugins/jvectormap/js")
+    @Scripts.Render("~/AdminLTE/plugins/sparkline/js")
+    @Scripts.Render("~/Scripts/Home/DashboardV2")
+}
+
+
+

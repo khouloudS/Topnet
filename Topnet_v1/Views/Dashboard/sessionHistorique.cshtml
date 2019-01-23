@@ -1,0 +1,305 @@
+﻿
+@{
+    ViewBag.Title = "Historique de session";
+    ViewBag.SubTitle = "Ligne ADSL";
+    //ViewBag.SubTitle = "Tableau de bord";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Forms/Advanced/menu")
+    @Scripts.Render("~/Scripts/Charts/Inline/menu")
+}
+
+@Styles.Render("~/AdminLTE/plugins/daterangepicker/css")
+@Styles.Render("~/AdminLTE/plugins/icheck/css")
+@Styles.Render("~/AdminLTE/plugins/colorpicker/css")
+@Styles.Render("~/AdminLTE/plugins/timepicker/css")
+@Styles.Render("~/AdminLTE/plugins/select2/css")
+@Styles.Render("~/AdminLTE/dist/css")
+@Styles.Render("~/AdminLTE/dist/css/skins")
+
+
+
+
+
+<script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="//code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.1/jquery-ui-sliderAccess.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.1/jquery-ui-timepicker-addon.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.1/jquery-ui-timepicker-addon.js"></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+
+
+    $(document).ready(function () {
+        $("#ddlUsers").change(function () {
+
+
+            var username = $(this).find('option:selected').val();
+
+            //  document.write(borneResultatreferenceKPIMoySession);
+
+
+            $.ajax({
+                url: "/Dashboard/Icon",
+                type: "GET",
+                data: {
+                    username: username,
+
+                },
+                /*****Success**/
+                success: function (result) {
+
+                    $("#icon").html(result);
+
+                }
+            });
+        });
+    });
+
+    function generateDashboard() {
+        var username = $('#ddlUsers').val();
+        var txtFrom = $('#txtFrom').val();
+        var txtTo = $('#txtTo').val();
+        if (txtFrom > txtTo) {
+
+            // alert("La date début doit etre superieur que la date fin");
+            $('#myModal2').modal("show");
+        };
+        $.ajax({
+            url: "/Dashboard/GetDataSession",
+            data: {
+                username: username,
+                d2: txtTo,
+                d1: txtFrom
+
+            },
+            success: function (result) {
+                sessionFn(result[0].Value);
+            },
+            error: function () {
+                // alert("Vous devez choisir la date debut et date fin ");
+
+                $('#myModal').modal("show");
+            }
+        });
+    }
+    google.charts.load("current", { packages: ["timeline"] });
+    var dps = [];
+    var x1;
+    var x2;
+    var x3; var x4;
+    function sessionFn(data) {
+
+        var anneeS;
+        var moisS;
+        var jourS;
+        var HeurS;
+        var minS;
+        var secS;
+
+        var anneeE;
+        var moisE;
+        var jourE;
+        var HeurE;
+        var minE;
+        var secE;
+
+        for (var i = 0; i < data.length; i++) {
+
+            //  document.write(new Date(parseInt(data[i].dateFinSession.split('(')[1].split(')')[0])).getDate());
+        }
+        //for (var i = 0; i < dps.length; i++) {
+        //    document.write(dps[i]);
+        //}
+
+        var container = document.getElementById('example3.1');
+        var chart = new google.visualization.Timeline(container);
+        var dataTable = new google.visualization.DataTable();
+        dataTable.addColumn({ type: 'string', id: 'Room' });
+        dataTable.addColumn({ type: 'string', id: 'Name' });
+        dataTable.addColumn({ type: 'date', id: 'Start' });
+        dataTable.addColumn({ type: 'date', id: 'End' });
+        for (var i = 0; i < data.length; i++) {
+            anneeS = new Date(parseInt(data[i].dateDebutSession.split('(')[1].split(')')[0])).getFullYear();
+            moisS = new Date(parseInt(data[i].dateDebutSession.split('(')[1].split(')')[0])).getMonth();
+            jourS = new Date(parseInt(data[i].dateDebutSession.split('(')[1].split(')')[0])).getDate();
+            HeurS = new Date(parseInt(data[i].dateDebutSession.split('(')[1].split(')')[0])).getHours();
+            minS = new Date(parseInt(data[i].dateDebutSession.split('(')[1].split(')')[0])).getMinutes();
+            secS = new Date(parseInt(data[i].dateDebutSession.split('(')[1].split(')')[0])).getSeconds();
+
+            anneeE = new Date(parseInt(data[i].dateFinSession.split('(')[1].split(')')[0])).getFullYear();
+            moisE = new Date(parseInt(data[i].dateFinSession.split('(')[1].split(')')[0])).getMonth();
+            jourE = new Date(parseInt(data[i].dateFinSession.split('(')[1].split(')')[0])).getDate();
+            HeurE = new Date(parseInt(data[i].dateFinSession.split('(')[1].split(')')[0])).getHours();
+            minE = new Date(parseInt(data[i].dateFinSession.split('(')[1].split(')')[0])).getMinutes();
+            secE = new Date(parseInt(data[i].dateFinSession.split('(')[1].split(')')[0])).getSeconds();
+            x1 = new Date(parseInt(data[i].dateDebutSession.split('(')[1].split(')')[0])).toDateString();
+            x2 = [i + 1] + "";
+            //  x3 = new Date(parseInt(data[i].dateDebutSession.split('(')[1].split(')')[0])).getTime();
+            x3 = new Date(anneeS, moisS, jourS, HeurS, minS, secS);
+
+            //  x4 = new Date(parseInt(data[i].dateFinSession.split('(')[1].split(')')[0])).getTime();
+            x4 = new Date(anneeE, moisE, jourE, HeurE, minE, secE);
+            dataTable.addRows([
+                [x1, x2, x3, x4]
+
+            ]
+            );
+        }
+        var options = {
+            timeline: { colorByRowLabel: true }
+        };
+
+        chart.draw(dataTable);
+        //  google.charts.setOnLoadCallback(drawChart);
+    }
+
+
+
+
+    function drawChart() {
+
+
+    }
+</script>
+
+<center>
+   @* <h2>
+        Du  <strong><i> @ViewBag.dateSemainedeb </i> </strong> jusqu'au <strong><i>  @ViewBag.dateSemainefin </i></strong>
+    </h2>*@
+</center>
+<br /><br />
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Afficher historique des sessions</h3>
+    </div>
+    <form class="form-horizontal">
+        <div class="box-body">
+
+            <div class="form-group col-md-4">
+                <label class="col-sm-2 control-label">Login</label>
+                <div class="col-sm-10">
+                    @Html.DropDownList("ddlUsers", ViewBag.users as IEnumerable<SelectListItem>, new { @id = "ddlUsers", @class = "form-control select2" })
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="col-sm-2 control-label">Date début</label>
+                <div class="col-sm-10">
+                    <input class="date form-control" type="text" id="txtFrom">
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="col-sm-2 control-label">Date fin</label>
+                <div class="col-sm-10">
+                    <input class="date form-control" type="text" id="txtTo">
+                </div>
+
+            </div>
+
+            <script type="text/javascript">
+                $('#txtFrom').datetimepicker({
+                    controlType: 'select',
+                    oneLine: true,
+                    dateFormat: 'yy/mm/dd',
+                    timeFormat: 'HH:mm:ss'
+                });
+                $('#txtTo').datetimepicker({
+                    controlType: 'select',
+                    oneLine: true,
+                    dateFormat: 'yy/mm/dd',
+                    timeFormat: 'HH:mm:ss'
+                });
+                //$("#txtFrom").datepicker({
+                //    numberOfMonths: 2,
+                //    format: 'yyyy/mm/dd',
+                //    onSelect: function (selected) {
+                //        //var dt = new Date(selected);
+                //        //dt.setDate(dt.getDate() + 1);
+                //        $("#txtTo").datepicker("option", "minDate", dt);
+                //    }
+                //});
+                //$("#txtTo").datepicker({
+                //    numberOfMonths: 2,
+                //    format: 'yyyy/mm/dd',
+                //    onSelect: function (selected) {
+                //        //var dt = new Date(selected);
+                //        //dt.setDate(dt.getDate() - 1);
+                //        $("#txtFrom").datepicker("option", "maxDate", dt);
+                //    }
+                //});
+
+
+
+            </script>
+
+        </div>
+
+
+
+        <div class="box-footer">
+            <button id="genDash" type="button" value="submit" onclick="generateDashboard();" class="btn btn-info pull-right">Generate</button>
+
+        </div>
+    </form>
+</div>
+<div id="example3.1" style="height:600px"></div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content panel-warning">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Attention</h4>
+            </div>
+            <div class="modal-body">
+                <p id="error">Vous devez choisir une date début et une date fin</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content panel-warning">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Attention</h4>
+            </div>
+            <div class="modal-body">
+                <p id="error">La date début doit etre supérieure à la date fin</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/select2/js")
+    @Scripts.Render("~/AdminLTE/plugins/input-mask/js")
+    @Scripts.Render("~/AdminLTE/plugins/momentjs/js")
+    @Scripts.Render("~/AdminLTE/plugins/daterangepicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/colorpicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/timepicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/icheck/js")
+    @Scripts.Render("~/Scripts/Forms/Advanced")
+    @Scripts.Render("~/AdminLTE/plugins/knob/js")
+    @Scripts.Render("~/AdminLTE/plugins/sparkline/js")
+    @Scripts.Render("~/Scripts/Charts/Inline")
+}
+
+

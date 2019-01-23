@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Topnet_v1.Models.RoleDTO>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
+    @Scripts.Render("~/Scripts/Elements/Icons/menu")
+}
+
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
+
+@Styles.Render("~/Styles/Elements/Icons")
+
+<br />
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<p>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Add Role", "AddRole", null, new { @class = "btn btn-default" })
+</p>
+
+<div class="col-md-6">
+
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Roles</h3>
+          
+        </div>
+        <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+
+                        <th>Role</th>
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RoleName)
+                            </td>
+                            <td>
+                                @if (item.RoleName.ToLower() != "administrator")
+                                {
+                                    @Html.ActionLink("  ", "DeleteUserRole",
+                                                          new { RoleName = item.RoleName },
+                                                          new
+                                                          {
+                                                              onclick =
+                                                          "return confirm('Are you sure you wish to delete this role?');",
+                                                              @class = "fa fa-fw fa-trash-o"
+                                                          })
+                                }
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr></tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </div>
+</div>
+<br />
+
+<hr />
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+    @Scripts.Render("~/Scripts/Tables/Data")
+}

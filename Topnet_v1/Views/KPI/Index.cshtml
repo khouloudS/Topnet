@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Topnet_v1.KPI>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nomKPI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.formule)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nomKPI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.formule)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.idKPI }) |
+            @Html.ActionLink("Details", "Details", new { id = item.idKPI }) |
+            @if ((item.nomKPI.ToLower() != this.User.Identity.Name.ToLower()))
+    {
+        @Html.ActionLink("  ", "DeleteUser", new { UserName = item.nomKPI },
+                                                      new { onclick = "return confirm('Are you sure you wish to delete this KPI?');", @class = "fa fa-fw fa-trash-o" })
+
+            }
+        </td>
+    </tr>
+}
+
+</table>

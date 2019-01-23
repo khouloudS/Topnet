@@ -1,0 +1,402 @@
+﻿<head>
+    @{
+        ViewBag.Title = "Durée de session";
+        ViewBag.SubTitle = "Ligne ADSL";
+        //ViewBag.SubTitle = "Tableau de bord";
+    }
+    @section Menu {
+        @Scripts.Render("~/Scripts/Forms/Advanced/menu")
+        @Scripts.Render("~/Scripts/Charts/Inline/menu")
+    }
+
+    @Styles.Render("~/AdminLTE/plugins/daterangepicker/css")
+    @Styles.Render("~/AdminLTE/plugins/icheck/css")
+    @Styles.Render("~/AdminLTE/plugins/colorpicker/css")
+    @Styles.Render("~/AdminLTE/plugins/timepicker/css")
+    @Styles.Render("~/AdminLTE/plugins/select2/css")
+    @Styles.Render("~/AdminLTE/dist/css")
+    @Styles.Render("~/AdminLTE/dist/css/skins")
+
+
+    <style>
+        .canvasjs-chart-credit {
+            display: none;
+        }
+
+        table tr td {
+            padding-top: 5px;
+        }
+    </style>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
+            type="text/javascript"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
+          rel="Stylesheet" type="text/css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+
+
+    <script type="text/javascript">
+
+     var result = @Html.Raw(ViewBag.DataPoints);
+
+    var borneDebut;
+    var borneMoyenne;
+    var borneFin;
+    var nomKPI;
+    var pourcentageMin;
+    var pourcentageAVG;
+    var pourcentageMAX;
+
+        for(var i = 0; i < result.length; i++){
+            borneDebut = result[i].borneDebut;
+            borneMoyenne = result[i].borneMoyenne;
+            borneFin = result[i].borneFin;
+            nomKPI = result[i].nomKPI;
+            pourcentageMin = result[i].pourcentageMin;
+            pourcentageAVG = result[i].pourcentageAVG;
+            pourcentageMAX = result[i].pourcentageMAX;
+           // document.write("<center><strong><h1>"+nomKPI+"</h1></strong></center><br/><br/>");
+    }
+
+        window.onload = function () {
+
+            var elemB = document.getElementById('chartBonne');
+            elemB.style.width = pourcentageMAX + "%";
+
+            var elemMoy = document.getElementById('chartMoy');
+            elemMoy.style.width = pourcentageAVG + "%";
+
+            var elemMauv = document.getElementById('chartMauv');
+            elemMauv.style.width = pourcentageMin + "%";
+
+            var borneDebut1 = document.getElementById('borneDebut');
+            borneDebut1.innerHTML = borneDebut;
+            var borneMoyenne1 = document.getElementById('borneMoyenne');
+            borneMoyenne1.innerHTML = borneMoyenne;
+            var borneFin1 = document.getElementById('borneFin');
+            borneFin1.innerHTML = borneFin;
+
+            var borne = document.getElementById('borne');
+            borne.innerHTML = 86400;
+
+
+
+        }
+    /**
+     * *************************************************************************************************
+     */
+
+
+
+	function generateDashboard() {
+		var username = $('#nouha').val();
+        var sdate = $('#txtFrom').val();
+        var edate = $('#txtTo').val();
+        if (sdate > edate) {
+
+          //  alert("La date début doit etre superieur que la date fin");
+            $('#myModal2').modal("show");
+        };
+		$.ajax({
+			url: "/MoreInfoMoyDure/GetData",
+			data: {
+				username: username,
+				d1: sdate,
+				d2: edate
+
+			},
+			success: function (result) {
+
+                GetDurationData(result[0].Value);
+                GetResultProgessBarre(result[1].Value)
+
+            },
+            error: function () {
+             //   alert("Vous devez choisir la date debut et date fin ");
+                $('#myModal').modal("show");
+            }
+		});
+	}
+
+    function GetResultProgessBarre(data) {
+        var borneResultat;
+        var borneResultatPourcentage;
+
+        for (var i = 0; i < data.length; i++) {
+            borneResultat = data[i].moyConnexion;
+            borneResultatPourcentage = data[i].pourcentageValeur;
+
+         //   document.write(borneResultat);
+        }
+
+        var res = document.getElementById('chartResultat');
+        res.style.width = borneResultatPourcentage + "%";
+
+        var borneRes = document.getElementById('borneRes');
+        borneRes.innerHTML = borneResultat;
+    }
+
+	function GetDurationData(data) {
+		var dps = [];
+		for (i = 0; i < data.length; i++) {
+			dps.push({ x: new Date(parseInt(data[i].date.split('(')[1].split(')')[0])), y: data[i].dureeConnexionParJour })
+		}
+		console.log(dps);
+		var chart2 = new CanvasJS.Chart("durchart",
+			{
+				title: {
+					text: "Duree des sessions"
+				},
+				axisY: {
+					includeZero: false,
+					title: "Duration",
+                    suffix: "s",
+                    labelFormatter: function (seconds) {
+                        return CanvasJS.formatDate(seconds.Value,
+                            (Math.floor(seconds.value / 3600)) + ":" + ("0" + Math.floor(seconds.value / 60) % 60).slice(-2)
+                            + ":" + ("0" + seconds.value % 60).slice(-2));
+                    }
+				},
+				axisX: {
+					title: "Date"
+				},
+				data: [
+					{
+						type: "line",
+						dataPoints: dps
+					}
+				]
+			});
+		chart2.render();
+	}
+
+    </script>
+</head>
+<body>
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Générer charte</h3>
+        </div>
+        <form class="form-horizontal">
+            <div class="box-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Login</label>
+                    <div class="col-sm-10">
+                        @Html.TextBox("aa", (string)ViewBag.usernam, new { @id = "nouha", disabled = "true", @class = "form-control", @style = "width:50%" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Date début</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="txtFrom" class="form-control" style="width:50%" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Date fin</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="txtTo" class="form-control" style="width:50%" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
+                    </div>
+
+                </div>
+
+                <script type="text/javascript">
+                    $('#startDate').datepicker({
+                        controlType: 'select',
+                        oneLine: true,
+                        format: 'yyyy/mm/dd'
+                    });
+                    $('#endDate').datepicker({
+                        controlType: 'select',
+                        oneLine: true,
+                        format: 'yyyy/mm/dd'
+
+                    });
+                </script>
+
+                <script>
+                    $(function () {
+                        $("#txtFrom").datepicker({
+                            numberOfMonths: 2,
+                            format: 'yyyy/mm/dd',
+                            onSelect: function (selected) {
+                                //var dt = new Date(selected);
+                                //dt.setDate(dt.getDate() + 1);
+                                $("#txtTo").datepicker("option", "minDate", dt);
+                            }
+                        });
+                        $("#txtTo").datepicker({
+                            numberOfMonths: 2,
+                            format: 'yyyy/mm/dd',
+                            onSelect: function (selected) {
+                                //var dt = new Date(selected);
+                                //dt.setDate(dt.getDate() - 1);
+                                $("#txtFrom").datepicker("option", "maxDate", dt);
+                            }
+                        });
+
+                </script>
+                <div class="box-footer">
+                    <button id="genDash" type="button" value="submit" onclick="generateDashboard();" class="btn btn-info pull-right">Générer</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div style="clear:both;"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Suivi de la durée de session d'une ligne ADSL</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div>
+                            <p class="text-center">
+                            </p>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div id="durchart" style="height: 400px; width: 100%; float:left;"></div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <p class="text-center">
+                                        <strong>Référence de la durée moyenne d'une session</strong>
+                                    </p>
+
+                                    <div class="progress-group">
+                                        <span class="progress-text">Une bonne qualité de connexion</span>
+                                        <span class="progress-number"><span id="borneFin"></span>/86400 s</span>
+
+                                        <div class="progress sm">
+                                            <div class="progress-bar progress-bar-green" id="chartBonne"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /.progress-group -->
+                                    <div class="progress-group">
+                                        <span class="progress-text">Une qualité de connexion moyenne </span>
+                                        <span class="progress-number"><span id="borneMoyenne"></span>/86400 s</span>
+
+                                        <div class="progress sm">
+                                            <div class="progress-bar progress-bar-yellow" id="chartMoy"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /.progress-group -->
+                                    <div class="progress-group">
+                                        <span class="progress-text">Une mauvaise qualité de connexion</span>
+                                        <span class="progress-number"><span id="borneDebut"></span>/86400 s</span>
+
+                                        <div class="progress sm">
+                                            <div class="progress-bar progress-bar-red" id="chartMauv"></div>
+                                        </div>
+                                    </div>
+                                    <p class="text-center">
+                                        <strong>Résultat </strong>
+                                    </p>
+                                    <!-- /.progress-group -->
+                                    <div class="progress-group">
+                                        <span class="progress-text">La durée moyenne des session de la ligne</span>
+                                        <span class="progress-number"><span id="borneRes"></span>/86400 s</span>
+
+                                        <div class="progress sm">
+                                            <div class="progress-bar progress-bar-aqua" id="chartResultat"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="box-footer">
+                    <a href='@Url.Action("Index","Dashboard")' class="btn btn-info pull-right">Tableau de bord de la ligne</a>
+
+                </div>
+            </div>
+            @*Html.ActionLink("Back to List user", "/Dashboard", "Index", new { @class = "btn btn-info pull-right" })*@
+           
+        </div>
+    </div>
+
+</body>
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content panel-warning">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Attention</h4>
+            </div>
+            <div class="modal-body">
+                <p id="error">Vous devez choisir une date début et une date fin</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content panel-warning">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Attention</h4>
+            </div>
+            <div class="modal-body">
+                <p id="error">La date début doit etre supérieure à la date fin</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+@section Scripts {
+
+
+    @Scripts.Render("~/AdminLTE/plugins/select2/js")
+    @Scripts.Render("~/AdminLTE/plugins/input-mask/js")
+    @Scripts.Render("~/AdminLTE/plugins/momentjs/js")
+    @Scripts.Render("~/AdminLTE/plugins/daterangepicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/colorpicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/timepicker/js")
+    @Scripts.Render("~/AdminLTE/plugins/icheck/js")
+    @Scripts.Render("~/Scripts/Forms/Advanced")
+    @Scripts.Render("~/AdminLTE/plugins/knob/js")
+    @Scripts.Render("~/AdminLTE/plugins/sparkline/js")
+    @Scripts.Render("~/Scripts/Charts/Inline")
+}
+
+
+

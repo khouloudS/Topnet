@@ -1,0 +1,108 @@
+﻿
+@model IEnumerable<Topnet_v1.dailyParameter>
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    /**/
+
+    /**/
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
+    @Scripts.Render("~/Scripts/Elements/Icons/menu")
+    @Scripts.Render("~/Scripts/Elements/Buttons/menu")
+}
+
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
+
+@Styles.Render("~/Styles/Elements/Icons")
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<br />
+
+<div>
+    @*@using (Html.BeginForm("Dashboard", "dailyParameter", FormMethod.Post, new { id = "userName", @class = "" }))
+    {
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-block btn-info btn-lg">Info</button>
+    }*@
+    </div>
+
+<div class="box">
+    <div>
+        <h3 class="box-title">Historique KPI d'une ligne</h3> 
+    </div>
+
+    <!-- /.box-header -->
+    <div class="box-body">
+
+
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                       Login
+                    </th>
+
+                    <th>
+                       Date
+                    </th>
+                    <th>
+                        Nombre de déconnexion par jour
+                    </th>
+                    <th>
+                       Duree de session par jour
+                    </th>
+                    <th>
+                        Duréé de déconnexion par jour
+                    </th>
+                    <th>
+                        Gouvernorat
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.userName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nbDeconnexionParJour)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dureeConnexionParJour)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dureeDeconnexionParJour)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.gouvernerat)
+                    </td>
+                </tr>
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+    @Scripts.Render("~/Scripts/Tables/Data")
+
+}
+

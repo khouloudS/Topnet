@@ -1,0 +1,401 @@
+﻿
+@{
+    ViewBag.Title = "Parc";
+    ViewBag.SubTitle = "Tableau de bord";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Home/DashboardV2/menu")
+}
+<style>
+    #container {
+        height: 500px;
+        min-width: 310px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .loading {
+        margin-top: 10em;
+        text-align: center;
+        color: gray;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+ var result = @Html.Raw(ViewBag.DataPoints);
+    var dataPoints = [];
+    var dataPoints2 = [];
+        for(var i = 0; i < result.length; i++){
+            dataPoints.push({ label: result[i].gouvernerat, y: result[i].moynbDeconnexionParJour });
+            dataPoints2.push({ label: result[i].gouvernerat, y: result[i].nbPersonne });
+        }
+
+
+     var result1 = @Html.Raw(ViewBag.DataPointsDureeSession);
+     var DataPointsDureeSession = [];
+     var DataPointsDureeSession2 = [];
+     for (var i = 0; i < result1.length; i++){
+         DataPointsDureeSession.push({ label: result1[i].gouvernerat, y: result1[i].dureeConnexionParJour });
+         DataPointsDureeSession2.push({ label: result[i].gouvernerat, y: result[i].nbPersonne });
+        }
+
+     var result2 = @Html.Raw(ViewBag.DataPointsGeoCarte);
+     var DataPointsGeoCarte = [];
+
+     for (var i = 0; i < result2.length; i++) {
+         DataPointsGeoCarte.push([result2[i].codeGouv, result2[i].dureeDeconnexion ]);
+
+     }
+
+
+        window.onload = function() {
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                title: {
+                    text: "Nombre moyen de deconnexion par gouvernorat"
+                },
+                axisX: {
+                    title: "Gouvernorat",
+                    interval: 1,
+                    labelAngle: -70
+
+                },
+                axisY: {
+                    title: "Nombre de déconnexions",
+
+                },
+
+                data: [{
+                    type: "scatter",
+                    name: "Nombre de deconnexions",
+                    legendText: "Nombre de deconnexions",
+                    color: "#369EAD",
+                    showInLegend: true,
+                    dataPoints: dataPoints
+                }]
+            });
+            chart.render();
+
+
+
+
+
+            /***********************************************************/
+            var chart1 = new CanvasJS.Chart("chartSession", {
+                animationEnabled: true,
+                zoomEnabled: true,
+                title: {
+                    text: "Durée moyenne des sessions par gouvernoart"
+                },
+                axisX: {
+                    title: "Gouvernorat",
+                    interval: 1,
+                    labelAngle: -70
+
+
+                },
+                axisY: {
+                    title: "Durée session( en seconde )",
+                    valueFormatString: "#,###s",
+                    labelFormatter: function (seconds) {
+                        return CanvasJS.formatDate(seconds.Value,
+                            (Math.floor(seconds.value / 3600)) + ":" + ("0" + Math.floor(seconds.value / 60) % 60).slice(-2)
+                            + ":" + ("0" + seconds.value % 60).slice(-2));
+                    }
+                },
+
+                data: [{
+                    type: "scatter",
+                    name: "Duree moyenne de session",
+                    color: "#369EAD",
+                    showInLegend: true,
+
+                    dataPoints: DataPointsDureeSession
+                }
+
+               ]
+            });
+            chart1.render();
+
+
+
+/**
+ * *********************************************************************************************/
+
+            //var a = 'tn-bj' ;
+            //var data = [
+            //    ['tn-4431', 0],
+            //    ['tn-sf', 1],
+            //    ['tn-me', 2],
+            //    ['tn-to', 3],
+            //    ['tn-mn', 4],
+            //    ['tn-bj', 5],
+            //    ['tn-ba', 6],
+            //    ['tn-bz', 7],
+            //    ['tn-je', 8],
+            //    ['tn-nb', 9],
+            //    ['tn-tu', 10],
+            //    ['tn-kf', 11],
+            //    ['tn-ks', 12],
+            //    ['tn-gb', 13],
+            //    ['tn-gf', 14],
+            //    ['tn-sz', 15],
+            //    ['tn-sl', 16],
+            //    ['tn-mh', 17],
+            //    ['tn-ms', 18],
+            //    ['tn-kr', 19],
+            //    ['tn-ss', 20],
+            //    ['tn-za', 21],
+            //    ['tn-kb', 22],
+            //    ['tn-ta', 23]
+            //];
+            var data = DataPointsGeoCarte
+
+            // Create the chart
+            Highcharts.mapChart('container', {
+                chart: {
+                    map: 'countries/tn/tn-all'
+                },
+
+                title: {
+                    text: 'Duree Moyenne de déconnexion'
+                },
+
+                subtitle: {
+                    text: 'carte de la <a href="http://code.highcharts.com/mapdata/countries/tn/tn-all.js">Tunisie</a>'
+                },
+
+                mapNavigation: {
+                    enabled: true,
+                    buttonOptions: {
+                        verticalAlign: 'bottom'
+                    }
+                },
+
+                colorAxis: {
+                    min: 0
+                },
+
+                series: [{
+                    data: data,
+                    name: 'Durée deconnexion en seconde',
+                    states: {
+                        hover: {
+                            color: '#BADA55'
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}'
+                    }
+                }]
+            });
+
+        };
+
+
+
+
+
+</script>
+
+<body>
+    <center>
+        <h2>
+            Du  <strong><i> @ViewBag.dateSemainedeb </i> </strong> jusqu'au <strong><i>  @ViewBag.dateSemainefin </i></strong>
+        </h2>
+    </center>
+
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>
+                        @Html.Label("nbDeconnexion", (string)ViewBag.nbDeconnexion, new { @id = "nbDeconnexion" })
+                    </h3>
+                    <p>
+                        Nombre moyen des déconnexions
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+                @*    <a class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>*@
+
+                @Html.ActionLink("Plus d'info",
+                                                                "NbDeconnexion",
+                                                                "dailParameter",
+                                                                new { @class = "fa fa-arrow-circle-right small-box-footer " })
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>
+
+                        @Html.Label("moySession", (string)ViewBag.moySession, new { @id = "moySession" })
+                    </h3>
+                    <p>
+                        Durée moyenne d'une session
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                @* <a href="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>*@
+                @Html.ActionLink("Plus d'info",
+                                                        "DureeConnexion",
+                                                        "dailParameter",
+                                                        new { @class = "fa fa-arrow-circle-right small-box-footer " })
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>
+                        @Html.Label("maxSession", (string)ViewBag.maxSession, new { @id = "maxSession" })
+                    </h3>
+                    <p>Durée maximale d'une session<br />
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+                @* <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>*@
+                @Html.ActionLink("Plus d'info",
+                                                "DureeMax",
+                                                "dailParameter",
+                                                new { @class = "fa fa-arrow-circle-right small-box-footer " })
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>
+                        @Html.Label("minSession", (string)ViewBag.minSession, new { @id = "minSession" })
+                    </h3>
+                    <p>
+                        Durée minimale d'une session
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                @* <a href="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>*@
+                @Html.ActionLink("Plus d'info",
+                                         "DureeMin",
+                                         "dailParameter",
+                                         new { @class = "fa fa-arrow-circle-right small-box-footer " })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <section class="col-lg-7 connectedSortable">
+            <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+            <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+            <script src="https://code.highcharts.com/mapdata/countries/tn/tn-all.js"></script>
+
+
+
+
+
+
+            <div>
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Carte géographique</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+
+                            <div class="pad">
+                                <div id="container"></div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </section>
+
+        <section class="col-lg-5 connectedSortable">
+
+
+
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Graphique de durée de session</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+
+                        <div class="pad">
+                            <div id="chartSession" style="height: 400px; width: 100%;"></div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+
+
+
+    </div>
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Graphique de nombre des déconnexions</h3>
+
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+
+                <div class="pad">
+                    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</body>
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/jquery-ui/js")
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+    </script>
+
+    @Scripts.Render("~/AdminLTE/plugins/chartjs/js")
+    @Scripts.Render("~/AdminLTE/plugins/jvectormap/js")
+    @Scripts.Render("~/AdminLTE/plugins/sparkline/js")
+    @Scripts.Render("~/Scripts/Home/DashboardV2")
+}
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

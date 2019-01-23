@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewBag.Title = "Détails";
+    ViewBag.SubTitle = "Référence KPI";
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Menu {
+    @Scripts.Render("~/Scripts/Forms/General/menu")
+    @Scripts.Render("~/Scripts/Forms/Advanced/menu")
+}
+
+
+
+@Styles.Render("~/AdminLTE/plugins/daterangepicker/css")
+@Styles.Render("~/AdminLTE/plugins/icheck/css")
+@Styles.Render("~/AdminLTE/plugins/colorpicker/css")
+@Styles.Render("~/AdminLTE/plugins/timepicker/css")
+@Styles.Render("~/AdminLTE/plugins/select2/css")
+@Styles.Render("~/AdminLTE/dist/css")
+@Styles.Render("~/AdminLTE/dist/css/skins")
+
+<script type="text/javascript">
+    var result = @Html.Raw(ViewBag.DataPoints);
+    var resultNB = @Html.Raw(ViewBag.DataPointsNBdeconnexion);
+
+    var borneDebut;
+    var borneMoyenne;
+    var borneFin;
+    var nomKPI;
+    var pourcentageMin;
+    var pourcentageAVG;
+    var pourcentageMAX;
+    var borne1;
+    var borne2;
+    var borne3;
+
+        for(var i = 0; i < result.length; i++){
+            borneDebut = result[i].borneDebut;
+            borneMoyenne = result[i].borneMoyenne;
+            borneFin = result[i].borneFin;
+            nomKPI = result[i].nomKPI;
+            pourcentageMin = result[i].pourcentageMin;
+            pourcentageAVG = result[i].pourcentageAVG;
+            pourcentageMAX = result[i].pourcentageMAX;
+           document.write("<center><strong>" + nomKPI + "</strong></center><br/><br/>");
+
+    }
+        if (nomKPI = "Nombre de déconnexion") {
+            for (var i = 0; i < resultNB.length; i++) {
+                nomKPI = resultNB[i].nomKPI;
+                borneDebut = resultNB[i].borneDebut;
+                borneMoyenne = resultNB[i].borneMoyenne;
+                borneFin = resultNB[i].borneFin;
+                pourcentageMin = resultNB[i].borneDebut;
+                pourcentageAVG = resultNB[i].borneMoyenne;
+                pourcentageMAX = resultNB[i].borneFin;
+                document.write("<center><strong>" + nomKPI + "</strong></center><br/><br/>");
+            }
+
+
+        }
+
+
+        window.onload = function () {
+
+            var elemB = document.getElementById('chartBonne');
+            elemB.style.width = pourcentageMAX + "%";
+
+            var elemMoy = document.getElementById('chartMoy');
+            elemMoy.style.width = pourcentageAVG + "%";
+
+            var elemMauv = document.getElementById('chartMauv');
+            elemMauv.style.width = pourcentageMin + "%";
+
+            var borneDebut1 = document.getElementById('borneDebut');
+            borneDebut1.innerHTML = borneDebut;
+            var borneMoyenne1 = document.getElementById('borneMoyenne');
+            borneMoyenne1.innerHTML = borneMoyenne;
+            var borneFin1 = document.getElementById('borneFin');
+            borneFin1.innerHTML = borneFin;
+
+            borne1 = document.getElementById('borne1');
+
+            borne1.innerHTML = 86400+" s";
+
+             borne2 = document.getElementById('borne2');
+             borne2.innerHTML = 86400 + " s";
+             borne3 = document.getElementById('borne3');
+             borne3.innerHTML = 86400 + " s";
+
+            // document.write("<center><strong>" + nomKPI + "</strong></center><br/><br/>");
+             if (nomKPI != "Nombre de déconnexion") {
+                borne1 = document.getElementById('borne1');
+                borne1.innerHTML = 300;
+
+            borne2 = document.getElementById('borne2');
+            borne2.innerHTML = 300
+            borne3 = document.getElementById('borne3');
+            borne3.innerHTML = 300;
+            }
+
+        }
+
+</script>
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Détails référence </h3>
+    </div>
+
+    <div class="box-body">
+        <div class="col-md-4">
+            <p class="text-center">
+                <strong>	 <span id="nomKPI"></span> </strong>
+            </p>
+
+            <div class="progress-group">
+                <span class="progress-text">Bonne ligne</span>
+                <span class="progress-number"><span id="borneFin"></span>/<span id="borne1"></span> </span>
+
+                <div class="progress sm">
+                    <div class="progress-bar progress-bar-green" id="chartBonne"></div>
+                </div>
+            </div>
+            <!-- /.progress-group -->
+            <div class="progress-group">
+                <span class="progress-text">Moyenne ligne </span>
+                <span class="progress-number"><span id="borneMoyenne"></span>/<span id="borne2"></span> </span>
+
+                <div class="progress sm">
+                    <div class="progress-bar progress-bar-yellow" id="chartMoy"></div>
+                </div>
+            </div>
+            <!-- /.progress-group -->
+            <div class="progress-group">
+                <span class="progress-text">Mauvaise ligne</span>
+                <span class="progress-number"><span id="borneDebut"></span>/<span id="borne3"></span> </span>
+
+                <div class="progress sm">
+                    <div class="progress-bar progress-bar-red" id="chartMauv"></div>
+                </div>
+            </div>
+            <!-- /.progress-group -->
+
+       </div> </div>
+
+        <div class="box-footer">
+            
+            <div>
+                @Html.ActionLink("Précédent",
+                                                                      "Index",
+                                                                      null,
+                                                                      new { @class = "btn btn-default pull-right" })
+            </div>
+        </div>
+
+
+    </div>
+
+
+    @*<div class="progress">
+            <div class="progress-bar progress-bar-success"  id = "chartBonne"  role="progressbar" >
+                    Bonne
+                </div>
+            <div class="progress-bar progress-bar-warning"  id="chartMoy" role="progressbar">
+                    moyenne
+                </div>
+                <div class="progress-bar progress-bar-danger" id="chartMauv" role="progressbar" >
+                    mauvaise
+                </div>
+        </div>*@
+

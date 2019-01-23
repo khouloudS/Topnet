@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b06e8ff1e3bc423a9eade941b5535877" Name="Diagram1">
+        <EntityTypeShape EntityType="topnetBDModel.client" Width="1.5" PointX="3.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetBDModel.historiqueConnexion" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetBDModel.historiqueKPI" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetBDModel.KPI" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetBDModel.ligneADSL" Width="1.5" PointX="6" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetBDModel.modem" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetBDModel.motif" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetBDModel.Panne" Width="1.5" PointX="6" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetBDModel.panneLigneADSL" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetBDModel.reference" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetBDModel.sysdiagrams" Width="1.5" PointX="4.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetBDModel.ticket" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetBDModel.typeReseau" Width="1.5" PointX="8.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="topnetBDModel.userLigneADSL" Width="1.5" PointX="8.25" PointY="9.875" IsExpanded="true" />
+        <AssociationConnector Association="topnetBDModel.FK_ligneADSL_client" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetBDModel.FK_historiqueKPI_KPI" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetBDModel.FK_historiqueKPI_reference" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetBDModel.FK_panneLigneADSL_ligneADSL" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetBDModel.FK_userLigneADSL_ligneADSL" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetBDModel.FK_panneLigneADSL_Panne" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetBDModel.FK_panneLigneADSL_panneLigneADSL" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetBDModel.FK_userLigneADSL_userLigneADSL" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetBDModel.KPILigneADSL" ManuallyRouted="false" />
+        <AssociationConnector Association="topnetBDModel.typeReseauLigneADSL" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

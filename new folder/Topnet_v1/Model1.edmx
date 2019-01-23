@@ -1,0 +1,870 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="topnetBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="codeClient" />
+          </Key>
+          <Property Name="codeClient" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="gouvernorat" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ville" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="delegation" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="localite" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="historiqueConnexion">
+          <Key>
+            <PropertyRef Name="idSession" />
+          </Key>
+          <Property Name="idSession" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="startTime" Type="datetime" Nullable="false" />
+          <Property Name="stopTime" Type="datetime" Nullable="false" />
+          <Property Name="Calling" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="numSequence" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="historiqueKPI">
+          <Key>
+            <PropertyRef Name="idHistoriqueKPI" />
+          </Key>
+          <Property Name="idHistoriqueKPI" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="valeurHisKPI" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="dateHisKPI" Type="date" Nullable="false" />
+          <Property Name="idKPI" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="idReference" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KPI">
+          <Key>
+            <PropertyRef Name="idKPI" />
+          </Key>
+          <Property Name="idKPI" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomKPI" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="formuleKPI" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="resultatKPI" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="per" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="KPILigneADSL">
+          <Key>
+            <PropertyRef Name="idKPI" />
+            <PropertyRef Name="numSequence" />
+          </Key>
+          <Property Name="idKPI" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="numSequence" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ligneADSL">
+          <Key>
+            <PropertyRef Name="numSequence" />
+          </Key>
+          <Property Name="numSequence" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="nature" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="codeClient" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="modem">
+          <Key>
+            <PropertyRef Name="numSerieModem" />
+          </Key>
+          <Property Name="numSerieModem" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="marqueModem" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="debitModem" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="dateEchangeModem" Type="date" Nullable="false" />
+          <Property Name="modelModem" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="numSequence" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="motif">
+          <Key>
+            <PropertyRef Name="idMotif" />
+          </Key>
+          <Property Name="idMotif" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="descriptionMotif" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Panne">
+          <Key>
+            <PropertyRef Name="idPanne" />
+          </Key>
+          <Property Name="idPanne" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="typePanne" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="valeurPanne" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="debutPanne" Type="datetime" Nullable="false" />
+          <Property Name="finPanne" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="panneLigneADSL">
+          <Key>
+            <PropertyRef Name="idPanne" />
+            <PropertyRef Name="numSequence" />
+          </Key>
+          <Property Name="idPanne" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="numSequence" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="reference">
+          <Key>
+            <PropertyRef Name="idReference" />
+          </Key>
+          <Property Name="idReference" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bornedebutReference" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="bornefinReference" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="descriptionReference" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="ticket">
+          <Key>
+            <PropertyRef Name="idTicket" />
+          </Key>
+          <Property Name="idTicket" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="statutTicket" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="descriptionTicket" Type="varchar(max)" Nullable="false" />
+          <Property Name="numSequence" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="idMotif" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="typeReseau">
+          <Key>
+            <PropertyRef Name="idReseau" />
+          </Key>
+          <Property Name="idReseau" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomReseau" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="dateReseau" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="typeReseauLigneADSL">
+          <Key>
+            <PropertyRef Name="idReseau" />
+            <PropertyRef Name="numSequence" />
+          </Key>
+          <Property Name="idReseau" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="numSequence" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="userLigneADSL">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="numSequence" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="numSequence" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_historiqueKPI_KPI">
+          <End Role="KPI" Type="Self.KPI" Multiplicity="1" />
+          <End Role="historiqueKPI" Type="Self.historiqueKPI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KPI">
+              <PropertyRef Name="idKPI" />
+            </Principal>
+            <Dependent Role="historiqueKPI">
+              <PropertyRef Name="idKPI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_historiqueKPI_reference">
+          <End Role="reference" Type="Self.reference" Multiplicity="1" />
+          <End Role="historiqueKPI" Type="Self.historiqueKPI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="reference">
+              <PropertyRef Name="idReference" />
+            </Principal>
+            <Dependent Role="historiqueKPI">
+              <PropertyRef Name="idReference" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KPILigneADSL_KPI">
+          <End Role="KPI" Type="Self.KPI" Multiplicity="1" />
+          <End Role="KPILigneADSL" Type="Self.KPILigneADSL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KPI">
+              <PropertyRef Name="idKPI" />
+            </Principal>
+            <Dependent Role="KPILigneADSL">
+              <PropertyRef Name="idKPI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KPILigneADSL_ligneADSL">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1" />
+          <End Role="KPILigneADSL" Type="Self.KPILigneADSL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="KPILigneADSL">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ligneADSL_client">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="codeClient" />
+            </Principal>
+            <Dependent Role="ligneADSL">
+              <PropertyRef Name="codeClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_panneLigneADSL_ligneADSL">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1" />
+          <End Role="panneLigneADSL" Type="Self.panneLigneADSL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="panneLigneADSL">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_panneLigneADSL_Panne">
+          <End Role="Panne" Type="Self.Panne" Multiplicity="1" />
+          <End Role="panneLigneADSL" Type="Self.panneLigneADSL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Panne">
+              <PropertyRef Name="idPanne" />
+            </Principal>
+            <Dependent Role="panneLigneADSL">
+              <PropertyRef Name="idPanne" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_panneLigneADSL_panneLigneADSL">
+          <End Role="panneLigneADSL" Type="Self.panneLigneADSL" Multiplicity="1" />
+          <End Role="panneLigneADSL1" Type="Self.panneLigneADSL" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="panneLigneADSL">
+              <PropertyRef Name="idPanne" />
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="panneLigneADSL1">
+              <PropertyRef Name="idPanne" />
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_typeReseauLigneADSL_ligneADSL">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1" />
+          <End Role="typeReseauLigneADSL" Type="Self.typeReseauLigneADSL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="typeReseauLigneADSL">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_typeReseauLigneADSL_typeReseau">
+          <End Role="typeReseau" Type="Self.typeReseau" Multiplicity="1" />
+          <End Role="typeReseauLigneADSL" Type="Self.typeReseauLigneADSL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="typeReseau">
+              <PropertyRef Name="idReseau" />
+            </Principal>
+            <Dependent Role="typeReseauLigneADSL">
+              <PropertyRef Name="idReseau" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userLigneADSL_ligneADSL">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1" />
+          <End Role="userLigneADSL" Type="Self.userLigneADSL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="userLigneADSL">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userLigneADSL_userLigneADSL">
+          <End Role="userLigneADSL" Type="Self.userLigneADSL" Multiplicity="1" />
+          <End Role="userLigneADSL1" Type="Self.userLigneADSL" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="userLigneADSL">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="userLigneADSL1">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="topnetBDModelStoreContainer">
+          <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="historiqueConnexion" EntityType="Self.historiqueConnexion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="historiqueKPI" EntityType="Self.historiqueKPI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KPI" EntityType="Self.KPI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KPILigneADSL" EntityType="Self.KPILigneADSL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ligneADSL" EntityType="Self.ligneADSL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="modem" EntityType="Self.modem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="motif" EntityType="Self.motif" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Panne" EntityType="Self.Panne" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="panneLigneADSL" EntityType="Self.panneLigneADSL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reference" EntityType="Self.reference" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ticket" EntityType="Self.ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="typeReseau" EntityType="Self.typeReseau" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="typeReseauLigneADSL" EntityType="Self.typeReseauLigneADSL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userLigneADSL" EntityType="Self.userLigneADSL" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_historiqueKPI_KPI" Association="Self.FK_historiqueKPI_KPI">
+            <End Role="KPI" EntitySet="KPI" />
+            <End Role="historiqueKPI" EntitySet="historiqueKPI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_historiqueKPI_reference" Association="Self.FK_historiqueKPI_reference">
+            <End Role="reference" EntitySet="reference" />
+            <End Role="historiqueKPI" EntitySet="historiqueKPI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KPILigneADSL_KPI" Association="Self.FK_KPILigneADSL_KPI">
+            <End Role="KPI" EntitySet="KPI" />
+            <End Role="KPILigneADSL" EntitySet="KPILigneADSL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KPILigneADSL_ligneADSL" Association="Self.FK_KPILigneADSL_ligneADSL">
+            <End Role="ligneADSL" EntitySet="ligneADSL" />
+            <End Role="KPILigneADSL" EntitySet="KPILigneADSL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ligneADSL_client" Association="Self.FK_ligneADSL_client">
+            <End Role="client" EntitySet="client" />
+            <End Role="ligneADSL" EntitySet="ligneADSL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_panneLigneADSL_ligneADSL" Association="Self.FK_panneLigneADSL_ligneADSL">
+            <End Role="ligneADSL" EntitySet="ligneADSL" />
+            <End Role="panneLigneADSL" EntitySet="panneLigneADSL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_panneLigneADSL_Panne" Association="Self.FK_panneLigneADSL_Panne">
+            <End Role="Panne" EntitySet="Panne" />
+            <End Role="panneLigneADSL" EntitySet="panneLigneADSL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_panneLigneADSL_panneLigneADSL" Association="Self.FK_panneLigneADSL_panneLigneADSL">
+            <End Role="panneLigneADSL" EntitySet="panneLigneADSL" />
+            <End Role="panneLigneADSL1" EntitySet="panneLigneADSL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_typeReseauLigneADSL_ligneADSL" Association="Self.FK_typeReseauLigneADSL_ligneADSL">
+            <End Role="ligneADSL" EntitySet="ligneADSL" />
+            <End Role="typeReseauLigneADSL" EntitySet="typeReseauLigneADSL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_typeReseauLigneADSL_typeReseau" Association="Self.FK_typeReseauLigneADSL_typeReseau">
+            <End Role="typeReseau" EntitySet="typeReseau" />
+            <End Role="typeReseauLigneADSL" EntitySet="typeReseauLigneADSL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userLigneADSL_ligneADSL" Association="Self.FK_userLigneADSL_ligneADSL">
+            <End Role="ligneADSL" EntitySet="ligneADSL" />
+            <End Role="userLigneADSL" EntitySet="userLigneADSL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userLigneADSL_userLigneADSL" Association="Self.FK_userLigneADSL_userLigneADSL">
+            <End Role="userLigneADSL" EntitySet="userLigneADSL" />
+            <End Role="userLigneADSL1" EntitySet="userLigneADSL" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="topnetBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="codeClient" />
+          </Key>
+          <Property Name="codeClient" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="gouvernorat" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ville" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="delegation" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="localite" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ligneADSL" Relationship="Self.FK_ligneADSL_client" FromRole="client" ToRole="ligneADSL" />
+        </EntityType>
+        <EntityType Name="historiqueConnexion">
+          <Key>
+            <PropertyRef Name="idSession" />
+          </Key>
+          <Property Name="idSession" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="startTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="stopTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Calling" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="numSequence" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="historiqueKPI">
+          <Key>
+            <PropertyRef Name="idHistoriqueKPI" />
+          </Key>
+          <Property Name="idHistoriqueKPI" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="valeurHisKPI" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="dateHisKPI" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="idKPI" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="idReference" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="KPI" Relationship="Self.FK_historiqueKPI_KPI" FromRole="historiqueKPI" ToRole="KPI" />
+          <NavigationProperty Name="reference" Relationship="Self.FK_historiqueKPI_reference" FromRole="historiqueKPI" ToRole="reference" />
+        </EntityType>
+        <EntityType Name="KPI">
+          <Key>
+            <PropertyRef Name="idKPI" />
+          </Key>
+          <Property Name="idKPI" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomKPI" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="formuleKPI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="resultatKPI" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="historiqueKPI" Relationship="Self.FK_historiqueKPI_KPI" FromRole="KPI" ToRole="historiqueKPI" />
+          <NavigationProperty Name="ligneADSL" Relationship="Self.KPILigneADSL" FromRole="KPI" ToRole="ligneADSL" />
+          <Property Name="per" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ligneADSL">
+          <Key>
+            <PropertyRef Name="numSequence" />
+          </Key>
+          <Property Name="numSequence" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nature" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="codeClient" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="client" Relationship="Self.FK_ligneADSL_client" FromRole="ligneADSL" ToRole="client" />
+          <NavigationProperty Name="panneLigneADSL" Relationship="Self.FK_panneLigneADSL_ligneADSL" FromRole="ligneADSL" ToRole="panneLigneADSL" />
+          <NavigationProperty Name="userLigneADSL" Relationship="Self.FK_userLigneADSL_ligneADSL" FromRole="ligneADSL" ToRole="userLigneADSL" />
+          <NavigationProperty Name="KPI" Relationship="Self.KPILigneADSL" FromRole="ligneADSL" ToRole="KPI" />
+          <NavigationProperty Name="typeReseau" Relationship="Self.typeReseauLigneADSL" FromRole="ligneADSL" ToRole="typeReseau" />
+        </EntityType>
+        <EntityType Name="modem">
+          <Key>
+            <PropertyRef Name="numSerieModem" />
+          </Key>
+          <Property Name="numSerieModem" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="marqueModem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="debitModem" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="dateEchangeModem" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="modelModem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="numSequence" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="motif">
+          <Key>
+            <PropertyRef Name="idMotif" />
+          </Key>
+          <Property Name="idMotif" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="descriptionMotif" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Panne">
+          <Key>
+            <PropertyRef Name="idPanne" />
+          </Key>
+          <Property Name="idPanne" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="typePanne" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="valeurPanne" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="debutPanne" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="finPanne" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="panneLigneADSL" Relationship="Self.FK_panneLigneADSL_Panne" FromRole="Panne" ToRole="panneLigneADSL" />
+        </EntityType>
+        <EntityType Name="panneLigneADSL">
+          <Key>
+            <PropertyRef Name="idPanne" />
+            <PropertyRef Name="numSequence" />
+          </Key>
+          <Property Name="idPanne" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="numSequence" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ligneADSL" Relationship="Self.FK_panneLigneADSL_ligneADSL" FromRole="panneLigneADSL" ToRole="ligneADSL" />
+          <NavigationProperty Name="Panne" Relationship="Self.FK_panneLigneADSL_Panne" FromRole="panneLigneADSL" ToRole="Panne" />
+          <NavigationProperty Name="panneLigneADSL1" Relationship="Self.FK_panneLigneADSL_panneLigneADSL" FromRole="panneLigneADSL" ToRole="panneLigneADSL1" />
+          <NavigationProperty Name="panneLigneADSL2" Relationship="Self.FK_panneLigneADSL_panneLigneADSL" FromRole="panneLigneADSL1" ToRole="panneLigneADSL" />
+        </EntityType>
+        <EntityType Name="reference">
+          <Key>
+            <PropertyRef Name="idReference" />
+          </Key>
+          <Property Name="idReference" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bornedebutReference" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="bornefinReference" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="descriptionReference" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="historiqueKPI" Relationship="Self.FK_historiqueKPI_reference" FromRole="reference" ToRole="historiqueKPI" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="ticket">
+          <Key>
+            <PropertyRef Name="idTicket" />
+          </Key>
+          <Property Name="idTicket" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="statutTicket" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="descriptionTicket" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="numSequence" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idMotif" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="typeReseau">
+          <Key>
+            <PropertyRef Name="idReseau" />
+          </Key>
+          <Property Name="idReseau" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomReseau" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dateReseau" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="ligneADSL" Relationship="Self.typeReseauLigneADSL" FromRole="typeReseau" ToRole="ligneADSL" />
+        </EntityType>
+        <EntityType Name="userLigneADSL">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="numSequence" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="numSequence" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ligneADSL" Relationship="Self.FK_userLigneADSL_ligneADSL" FromRole="userLigneADSL" ToRole="ligneADSL" />
+          <NavigationProperty Name="userLigneADSL1" Relationship="Self.FK_userLigneADSL_userLigneADSL" FromRole="userLigneADSL" ToRole="userLigneADSL1" />
+          <NavigationProperty Name="userLigneADSL2" Relationship="Self.FK_userLigneADSL_userLigneADSL" FromRole="userLigneADSL1" ToRole="userLigneADSL" />
+        </EntityType>
+        <Association Name="FK_ligneADSL_client">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="codeClient" />
+            </Principal>
+            <Dependent Role="ligneADSL">
+              <PropertyRef Name="codeClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_historiqueKPI_KPI">
+          <End Role="KPI" Type="Self.KPI" Multiplicity="1" />
+          <End Role="historiqueKPI" Type="Self.historiqueKPI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KPI">
+              <PropertyRef Name="idKPI" />
+            </Principal>
+            <Dependent Role="historiqueKPI">
+              <PropertyRef Name="idKPI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_historiqueKPI_reference">
+          <End Role="reference" Type="Self.reference" Multiplicity="1" />
+          <End Role="historiqueKPI" Type="Self.historiqueKPI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="reference">
+              <PropertyRef Name="idReference" />
+            </Principal>
+            <Dependent Role="historiqueKPI">
+              <PropertyRef Name="idReference" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_panneLigneADSL_ligneADSL">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1" />
+          <End Role="panneLigneADSL" Type="Self.panneLigneADSL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="panneLigneADSL">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userLigneADSL_ligneADSL">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="1" />
+          <End Role="userLigneADSL" Type="Self.userLigneADSL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ligneADSL">
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="userLigneADSL">
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_panneLigneADSL_Panne">
+          <End Role="Panne" Type="Self.Panne" Multiplicity="1" />
+          <End Role="panneLigneADSL" Type="Self.panneLigneADSL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Panne">
+              <PropertyRef Name="idPanne" />
+            </Principal>
+            <Dependent Role="panneLigneADSL">
+              <PropertyRef Name="idPanne" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_panneLigneADSL_panneLigneADSL">
+          <End Role="panneLigneADSL" Type="Self.panneLigneADSL" Multiplicity="1" />
+          <End Role="panneLigneADSL1" Type="Self.panneLigneADSL" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="panneLigneADSL">
+              <PropertyRef Name="idPanne" />
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="panneLigneADSL1">
+              <PropertyRef Name="idPanne" />
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userLigneADSL_userLigneADSL">
+          <End Role="userLigneADSL" Type="Self.userLigneADSL" Multiplicity="1" />
+          <End Role="userLigneADSL1" Type="Self.userLigneADSL" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="userLigneADSL">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="numSequence" />
+            </Principal>
+            <Dependent Role="userLigneADSL1">
+              <PropertyRef Name="Id" />
+              <PropertyRef Name="numSequence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="KPILigneADSL">
+          <End Role="KPI" Type="Self.KPI" Multiplicity="*" />
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="*" />
+        </Association>
+        <Association Name="typeReseauLigneADSL">
+          <End Role="ligneADSL" Type="Self.ligneADSL" Multiplicity="*" />
+          <End Role="typeReseau" Type="Self.typeReseau" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="topnetBDEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="client" EntityType="Self.client" />
+          <EntitySet Name="historiqueConnexion" EntityType="Self.historiqueConnexion" />
+          <EntitySet Name="historiqueKPI" EntityType="Self.historiqueKPI" />
+          <EntitySet Name="KPI" EntityType="Self.KPI" />
+          <EntitySet Name="ligneADSL" EntityType="Self.ligneADSL" />
+          <EntitySet Name="modem" EntityType="Self.modem" />
+          <EntitySet Name="motif" EntityType="Self.motif" />
+          <EntitySet Name="Panne" EntityType="Self.Panne" />
+          <EntitySet Name="panneLigneADSL" EntityType="Self.panneLigneADSL" />
+          <EntitySet Name="reference" EntityType="Self.reference" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="ticket" EntityType="Self.ticket" />
+          <EntitySet Name="typeReseau" EntityType="Self.typeReseau" />
+          <EntitySet Name="userLigneADSL" EntityType="Self.userLigneADSL" />
+          <AssociationSet Name="FK_ligneADSL_client" Association="Self.FK_ligneADSL_client">
+            <End Role="client" EntitySet="client" />
+            <End Role="ligneADSL" EntitySet="ligneADSL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_historiqueKPI_KPI" Association="Self.FK_historiqueKPI_KPI">
+            <End Role="KPI" EntitySet="KPI" />
+            <End Role="historiqueKPI" EntitySet="historiqueKPI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_historiqueKPI_reference" Association="Self.FK_historiqueKPI_reference">
+            <End Role="reference" EntitySet="reference" />
+            <End Role="historiqueKPI" EntitySet="historiqueKPI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_panneLigneADSL_ligneADSL" Association="Self.FK_panneLigneADSL_ligneADSL">
+            <End Role="ligneADSL" EntitySet="ligneADSL" />
+            <End Role="panneLigneADSL" EntitySet="panneLigneADSL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userLigneADSL_ligneADSL" Association="Self.FK_userLigneADSL_ligneADSL">
+            <End Role="ligneADSL" EntitySet="ligneADSL" />
+            <End Role="userLigneADSL" EntitySet="userLigneADSL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_panneLigneADSL_Panne" Association="Self.FK_panneLigneADSL_Panne">
+            <End Role="Panne" EntitySet="Panne" />
+            <End Role="panneLigneADSL" EntitySet="panneLigneADSL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_panneLigneADSL_panneLigneADSL" Association="Self.FK_panneLigneADSL_panneLigneADSL">
+            <End Role="panneLigneADSL" EntitySet="panneLigneADSL" />
+            <End Role="panneLigneADSL1" EntitySet="panneLigneADSL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userLigneADSL_userLigneADSL" Association="Self.FK_userLigneADSL_userLigneADSL">
+            <End Role="userLigneADSL" EntitySet="userLigneADSL" />
+            <End Role="userLigneADSL1" EntitySet="userLigneADSL" />
+          </AssociationSet>
+          <AssociationSet Name="KPILigneADSL" Association="Self.KPILigneADSL">
+            <End Role="KPI" EntitySet="KPI" />
+            <End Role="ligneADSL" EntitySet="ligneADSL" />
+          </AssociationSet>
+          <AssociationSet Name="typeReseauLigneADSL" Association="Self.typeReseauLigneADSL">
+            <End Role="ligneADSL" EntitySet="ligneADSL" />
+            <End Role="typeReseau" EntitySet="typeReseau" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="topnetBDModelStoreContainer" CdmEntityContainer="topnetBDEntities">
+          <EntitySetMapping Name="client">
+            <EntityTypeMapping TypeName="topnetBDModel.client">
+              <MappingFragment StoreEntitySet="client">
+                <ScalarProperty Name="codeClient" ColumnName="codeClient" />
+                <ScalarProperty Name="gouvernorat" ColumnName="gouvernorat" />
+                <ScalarProperty Name="ville" ColumnName="ville" />
+                <ScalarProperty Name="delegation" ColumnName="delegation" />
+                <ScalarProperty Name="localite" ColumnName="localite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="historiqueConnexion">
+            <EntityTypeMapping TypeName="topnetBDModel.historiqueConnexion">
+              <MappingFragment StoreEntitySet="historiqueConnexion">
+                <ScalarProperty Name="idSession" ColumnName="idSession" />
+                <ScalarProperty Name="startTime" ColumnName="startTime" />
+                <ScalarProperty Name="stopTime" ColumnName="stopTime" />
+                <ScalarProperty Name="Calling" ColumnName="Calling" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="historiqueKPI">
+            <EntityTypeMapping TypeName="topnetBDModel.historiqueKPI">
+              <MappingFragment StoreEntitySet="historiqueKPI">
+                <ScalarProperty Name="idHistoriqueKPI" ColumnName="idHistoriqueKPI" />
+                <ScalarProperty Name="valeurHisKPI" ColumnName="valeurHisKPI" />
+                <ScalarProperty Name="dateHisKPI" ColumnName="dateHisKPI" />
+                <ScalarProperty Name="idKPI" ColumnName="idKPI" />
+                <ScalarProperty Name="idReference" ColumnName="idReference" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KPI">
+            <EntityTypeMapping TypeName="topnetBDModel.KPI">
+              <MappingFragment StoreEntitySet="KPI">
+                <ScalarProperty Name="per" ColumnName="per" />
+                <ScalarProperty Name="idKPI" ColumnName="idKPI" />
+                <ScalarProperty Name="nomKPI" ColumnName="nomKPI" />
+                <ScalarProperty Name="formuleKPI" ColumnName="formuleKPI" />
+                <ScalarProperty Name="resultatKPI" ColumnName="resultatKPI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ligneADSL">
+            <EntityTypeMapping TypeName="topnetBDModel.ligneADSL">
+              <MappingFragment StoreEntitySet="ligneADSL">
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+                <ScalarProperty Name="nature" ColumnName="nature" />
+                <ScalarProperty Name="codeClient" ColumnName="codeClient" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="modem">
+            <EntityTypeMapping TypeName="topnetBDModel.modem">
+              <MappingFragment StoreEntitySet="modem">
+                <ScalarProperty Name="numSerieModem" ColumnName="numSerieModem" />
+                <ScalarProperty Name="marqueModem" ColumnName="marqueModem" />
+                <ScalarProperty Name="debitModem" ColumnName="debitModem" />
+                <ScalarProperty Name="dateEchangeModem" ColumnName="dateEchangeModem" />
+                <ScalarProperty Name="modelModem" ColumnName="modelModem" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="motif">
+            <EntityTypeMapping TypeName="topnetBDModel.motif">
+              <MappingFragment StoreEntitySet="motif">
+                <ScalarProperty Name="idMotif" ColumnName="idMotif" />
+                <ScalarProperty Name="descriptionMotif" ColumnName="descriptionMotif" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Panne">
+            <EntityTypeMapping TypeName="topnetBDModel.Panne">
+              <MappingFragment StoreEntitySet="Panne">
+                <ScalarProperty Name="idPanne" ColumnName="idPanne" />
+                <ScalarProperty Name="typePanne" ColumnName="typePanne" />
+                <ScalarProperty Name="valeurPanne" ColumnName="valeurPanne" />
+                <ScalarProperty Name="debutPanne" ColumnName="debutPanne" />
+                <ScalarProperty Name="finPanne" ColumnName="finPanne" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="panneLigneADSL">
+            <EntityTypeMapping TypeName="topnetBDModel.panneLigneADSL">
+              <MappingFragment StoreEntitySet="panneLigneADSL">
+                <ScalarProperty Name="idPanne" ColumnName="idPanne" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reference">
+            <EntityTypeMapping TypeName="topnetBDModel.reference">
+              <MappingFragment StoreEntitySet="reference">
+                <ScalarProperty Name="idReference" ColumnName="idReference" />
+                <ScalarProperty Name="bornedebutReference" ColumnName="bornedebutReference" />
+                <ScalarProperty Name="bornefinReference" ColumnName="bornefinReference" />
+                <ScalarProperty Name="descriptionReference" ColumnName="descriptionReference" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="topnetBDModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ticket">
+            <EntityTypeMapping TypeName="topnetBDModel.ticket">
+              <MappingFragment StoreEntitySet="ticket">
+                <ScalarProperty Name="idTicket" ColumnName="idTicket" />
+                <ScalarProperty Name="statutTicket" ColumnName="statutTicket" />
+                <ScalarProperty Name="descriptionTicket" ColumnName="descriptionTicket" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+                <ScalarProperty Name="idMotif" ColumnName="idMotif" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="typeReseau">
+            <EntityTypeMapping TypeName="topnetBDModel.typeReseau">
+              <MappingFragment StoreEntitySet="typeReseau">
+                <ScalarProperty Name="idReseau" ColumnName="idReseau" />
+                <ScalarProperty Name="nomReseau" ColumnName="nomReseau" />
+                <ScalarProperty Name="dateReseau" ColumnName="dateReseau" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userLigneADSL">
+            <EntityTypeMapping TypeName="topnetBDModel.userLigneADSL">
+              <MappingFragment StoreEntitySet="userLigneADSL">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="KPILigneADSL" TypeName="topnetBDModel.KPILigneADSL" StoreEntitySet="KPILigneADSL">
+            <EndProperty Name="KPI">
+              <ScalarProperty Name="idKPI" ColumnName="idKPI" />
+            </EndProperty>
+            <EndProperty Name="ligneADSL">
+              <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="typeReseauLigneADSL" TypeName="topnetBDModel.typeReseauLigneADSL" StoreEntitySet="typeReseauLigneADSL">
+            <EndProperty Name="ligneADSL">
+              <ScalarProperty Name="numSequence" ColumnName="numSequence" />
+            </EndProperty>
+            <EndProperty Name="typeReseau">
+              <ScalarProperty Name="idReseau" ColumnName="idReseau" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

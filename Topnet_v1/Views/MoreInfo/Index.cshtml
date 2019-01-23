@@ -1,0 +1,437 @@
+﻿@{
+    ViewBag.Title = "Nombre de déconnexion";
+    ViewBag.SubTitle = "Ligne ADSL";
+    //ViewBag.SubTitle = "Tableau de bord";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Forms/Advanced/menu")
+}
+
+@Styles.Render("~/AdminLTE/plugins/daterangepicker/css")
+@Styles.Render("~/AdminLTE/plugins/icheck/css")
+@Styles.Render("~/AdminLTE/plugins/colorpicker/css")
+@Styles.Render("~/AdminLTE/plugins/timepicker/css")
+@Styles.Render("~/AdminLTE/plugins/select2/css")
+@Styles.Render("~/AdminLTE/dist/css")
+@Styles.Render("~/AdminLTE/dist/css/skins")
+<style>
+    .canvasjs-chart-credit {
+        display: none;
+    }
+
+    table tr td {
+        padding-top: 5px;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<script>
+    zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];</script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+
+<script type="text/javascript">
+
+
+       var resultNB = @Html.Raw(ViewBag.DataPointsnB);
+
+        var borneDebutNB;
+        var borneMoyenneNB;
+        var borneFinNB;
+
+        for (var i = 0; i < resultNB.length; i++){
+            borneDebutNB = resultNB[i].borneDebut;
+            borneMoyenneNB = resultNB[i].borneMoyenne;
+            borneFinNB = resultNB[i].borneFin;
+
+        }
+
+
+    /**
+     * **********************************************************************
+     */
+	function generateDashboard() {
+		var username = $('#nouha').val();
+		var sdate = $('#startDate').val();
+		var edate = $('#endDate').val();
+        if (sdate > edate) {
+
+          //  alert("La date début doit etre superieur que la date fin");
+            $('#myModal2').modal("show");
+        };
+		$.ajax({
+			url: "/MoreInfo/GetData",
+			data: {
+				username: username,
+				d1: sdate,
+				d2: edate
+
+			},
+			success: function (result) {
+
+				GetNumberData(result[0].Value);
+               GetResultProgessBarrenbDex(result[1].Value);
+            },
+            error: function () {
+              //  alert("Vous devez choisir la date debut et date fin ");
+                $('#myModal').modal("show");
+            }
+		});
+	}
+
+    /**
+     * *********************************************************************************
+     *  data
+     */
+    function GetResultProgessBarrenbDex(data) {
+       // document.write(data);
+        var myConfig15 = {
+            "type": "gauge",
+            "scale-r": {
+                "aperture": 200,
+                "values": "0:200:10",
+                "center": {
+                    "size": 12,
+                    "background-color": "#66CCFF #FFCCFF",
+                    "border-color": "none"
+                },
+                "ring": {
+                    "size": 10,
+                    "rules": [
+                        {
+                            "rule": "%v >= 0 && %v <= " + borneFinNB,
+                            "background-color": "green"
+                        },
+                        {
+                            "rule": "%v >=" + borneFinNB + " && %v <= " + borneMoyenneNB,
+                            "background-color": "yellow"
+                        },
+                        {
+                            "rule": "%v >= " + borneMoyenneNB + " && %v <= " + borneDebutNB,
+                            "background-color": "orange"
+                        },
+                        {
+                            "rule": "%v >= " + borneDebutNB + " && %v <= 200",
+                            "background-color": "red"
+                        }
+                    ]
+                },
+                "guide": {
+                    "background-color": "#66CCFF #FFCCFF",
+                    "alpha": 0.2
+                },
+                "tick": {
+                    "line-color": "#66CCFF",
+                    "line-style": "solid",
+                    "line-width": 3,
+                    "size": 15,
+                    "placement": "inner"
+                },
+                "minor-ticks": 4,
+                "minor-tick": {
+                    "line-color": "#FFFFFF",
+                    "line-style": "solid",
+                    "line-width": 2,
+                    "size": 10,
+                    "placement": "inner"
+                }
+            },
+            "plot": {
+                "csize": "5%",
+                "size": "80%",
+                "background-color": "#000000",
+                "value-box": { //Value Boxes
+                    "placement": "center",  //Specify "center", "tip", or "edge".
+                    "text": "%v",
+                    "font-color": "blue"
+                }
+            },
+            "labels": [
+                {
+                    "id": "lbl5",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 120,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": "mauvaise",
+                    "backgroundColor": "#FB0A02",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#ea0901",
+                        "text": "< " + borneDebutNB + "<br>déconnexions",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl4",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 60,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": " moyenne",
+                    "backgroundColor": "#EC7928",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#da6817",
+                        "text": "> " + borneDebutNB + " < " + borneMoyenneNB + "<br>déconnexions",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl3",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": 0,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": " bonne",
+                    "backgroundColor": "#FAC100",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#e9b000",
+                        "text": ">" + borneMoyenneNB + " < " + borneFinNB + "<br>déconnexions",
+                        "shadow": 0
+                    }
+                },
+                {
+                    "id": "lbl1",
+                    "x": "50%",
+                    "y": "90%",
+                    "width": 80,
+                    "offsetX": -60,
+                    "textAlign": "center",
+                    "padding": 10,
+                    "anchor": "c",
+                    "text": " Excelente",
+                    "backgroundColor": "#348D00",
+                    "tooltip": {
+                        "padding": 10,
+                        "backgroundColor": "#237b00",
+                        "text": "< " + borneFinNB + " déconnexions",
+                        "shadow": 0
+                    }
+                }
+
+            ],
+            "series": [
+                { "values": data }
+            ]
+        };
+
+
+        zingchart.render({
+            id: 'chartRefNB',
+            data: myConfig15,
+            height: "100%",
+            width: "100%"
+        });
+
+
+    }
+    /**
+     * ***************************************************************************************
+     *  data
+     */
+	function GetNumberData(data) {
+		var dps = [];
+		for (i = 0; i < data.length; i++) {
+			dps.push({ y: data[i].nbDeconnexionParJour, label: new Date(parseInt(data[i].date.split('(')[1].split(')')[0])).toLocaleDateString() })
+		}
+		var chart = new CanvasJS.Chart("numchart", {
+			animationEnabled: true,
+			theme: "light2",
+			title: {
+				text: "Nombre de deconnexion"
+			},
+			axisY: {
+				title: "Nombre"
+			},
+			data: [{
+				type: "column",
+				showInLegend: true,
+                legendMarkerColor: "grey",
+                legendText : "déconnexion",
+
+				dataPoints: dps
+			}]
+		});
+		chart.render();
+
+	}
+</script>
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Saisir une date</h3>
+    </div>
+    <form class="form-horizontal">
+        <div class="box-body">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Login</label>
+                <div class="col-sm-10">
+                    @Html.TextBox("aa", (string)ViewBag.usernam, new { @id = "nouha", disabled = "true", @class = "form-control", @style = "width:50%" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Date début</label>
+
+                <div class="col-sm-10">
+                    <input type="text" id="startDate" class="form-control" style="width:50%" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Date fin</label>
+                <div class="col-sm-10">
+                    <input type="text" id="endDate" class="form-control" style="width:50%" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask>
+                </div>
+
+            </div>
+            <script type="text/javascript">
+                                        $('#startDate').datepicker({
+                                            controlType: 'select',
+                                            oneLine: true,
+                                            format: 'yyyy/mm/dd'
+                                        });
+                                        $('#endDate').datepicker({
+                                            controlType: 'select',
+                                            oneLine: true,
+                                            format: 'yyyy/mm/dd'
+
+                                        });
+                </script>
+
+            <div class="box-footer">
+                <button id="genDash" type="button" value="submit" onclick="generateDashboard();" class="btn btn-info pull-right">Generate</button>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div style="clear:both;"></div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Suivi l'evolution des nombres des déconnexions</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-wrench"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div>
+                        <p class="text-center">
+                        </p>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div id="numchart" style="height: 400px; width: 100%; float:left;"></div>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="text-center">
+                                    <strong>Moyenne nombre des déconnexions </strong>
+                                </p>
+
+                                <div id="chartRefNB" style="width:300px; height:300px ; padding-right:20px;"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="box-footer">
+                <a href='@Url.Action("Index","Dashboard")' class="btn btn-info pull-right">Tableau de bord de la ligne</a>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content panel-warning">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Attention</h4>
+            </div>
+            <div class="modal-body">
+                <p id="error">Vous devez choisir une date début et une date fin</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content panel-warning">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Attention</h4>
+            </div>
+            <div class="modal-body">
+                <p id="error">La date début doit etre supérieure à la date fin</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+            @section Scripts {
+                @Scripts.Render("~/AdminLTE/plugins/select2/js")
+                @Scripts.Render("~/AdminLTE/plugins/input-mask/js")
+                @Scripts.Render("~/AdminLTE/plugins/momentjs/js")
+                @Scripts.Render("~/AdminLTE/plugins/daterangepicker/js")
+                @Scripts.Render("~/AdminLTE/plugins/colorpicker/js")
+                @Scripts.Render("~/AdminLTE/plugins/timepicker/js")
+                @Scripts.Render("~/AdminLTE/plugins/icheck/js")
+                @Scripts.Render("~/Scripts/Forms/Advanced")
+            }
+
+

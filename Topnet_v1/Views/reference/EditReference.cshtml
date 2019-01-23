@@ -1,0 +1,180 @@
+﻿@model Topnet_v1.reference
+@{
+    ViewBag.Title = "Modifier";
+    ViewBag.SubTitle = "Référence KPI";
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Menu {
+    @Scripts.Render("~/Scripts/Forms/General/menu")
+    @Scripts.Render("~/Scripts/Forms/Advanced/menu")
+}
+
+
+
+@Styles.Render("~/AdminLTE/plugins/daterangepicker/css")
+@Styles.Render("~/AdminLTE/plugins/icheck/css")
+@Styles.Render("~/AdminLTE/plugins/colorpicker/css")
+@Styles.Render("~/AdminLTE/plugins/timepicker/css")
+@Styles.Render("~/AdminLTE/plugins/select2/css")
+@Styles.Render("~/AdminLTE/dist/css")
+@Styles.Render("~/AdminLTE/dist/css/skins")
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    //function create() {
+
+    //    var bornDeb = $('#bornDeb').val();
+    //    var bornFin = $('#bornFin').val();
+    //    var bornMoy = $('#bornMoy').val();
+    //    //if (bornDeb == "" && bornMoy=="" && bornFin=="")
+    //    //{
+    //    //    alert("Vous devez remplir tous les champs");
+    //    //};
+    //    $.ajax({
+    //        url: "/reference/EditReference",
+
+    //        data: {
+
+    //            bornDeb: bornDeb,
+    //            bornFin: bornFin,
+    //            bornMoy: bornMoy
+
+    //        },
+
+    //        success: function () {
+    //            alert("Ajout avec succes !");
+
+    //        },
+    //        error: function () {
+    //            alert("Vous devez remplir tous les champs");
+    //        }
+
+    //    });
+
+    //}
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Modifier référence KPI</h3>
+        </div>
+
+        <div class="box-body">
+            <div class="form-horizontal">
+
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.idReference)
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Nom KPI</label>
+                    <div class="col-sm-10">
+                        @Html.TextBox("aa", (string)ViewBag.namekpi, new { @id = "nouha", disabled = "true", @class = "form-control", style = "width:50%" })
+                    </div>
+                </div>
+
+
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.nomReference, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.nomReference, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.nomReference, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Borne bonne</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.borneFin, new { htmlAttributes = new { @class = "form-control", style = "width:50%" } })
+                        @Html.ValidationMessageFor(model => model.borneFin, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Borne moyenne</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.borneMoyenne, new { htmlAttributes = new { @class = "form-control", style = "width:50%" } })
+                        @Html.ValidationMessageFor(model => model.borneMoyenne, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label class="control-label col-md-2">Borne mauvaise</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.borneDebut, new { htmlAttributes = new { @class = "form-control", style = "width:50%" } })
+                        @Html.ValidationMessageFor(model => model.borneDebut, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Date mise à jour</label>
+                    <div class="col-md-10">
+                        @Html.TextBox("date", (DateTime)ViewBag.date, new { @id = "date", disabled = "true", @class = "form-control", style = "width:50%" })
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="box-footer">
+            <input type="submit" value="Modifier" class="btn btn-info pull-right" onclick="create()" />
+            <div>
+                @Html.ActionLink("Annuler",
+                                                                    "Index",
+                                                                    null,
+                                                                    new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

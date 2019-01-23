@@ -1,0 +1,118 @@
+﻿@model PagedList.IPagedList<Topnet_v1.Models.ExpandedUserDTO>
+    
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Tables/Data/menu")
+    @Scripts.Render("~/Scripts/Elements/Icons/menu")
+}
+
+@Styles.Render("~/AdminLTE/plugins/datatables/css")
+
+@Styles.Render("~/Styles/Elements/Icons")
+
+<br />
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-default" })
+
+
+    @Html.ActionLink("Roles", "ViewAllRoles", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Back to Home", "../", "Home", null, new { @class = "btn btn-default" })
+</p>
+<br />
+@*@using (Html.BeginForm("Index", "Admin", FormMethod.Get))
+    {
+
+        <div class="form-group">
+            Search:&nbsp; @Html.TextBox("searchStringUserNameOrEmail", ViewBag.CurrentFilter as string)
+
+            <input type="submit" value="Search" />
+        </div>
+    }*@
+<br />
+
+
+
+
+<div class="col-md-6">
+
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Users</h3>
+        </div>
+        <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RoleName)
+                            </td>
+                            <td>
+                                @Html.ActionLink("  ", "EditUser", new { UserName = item.UserName }, new { @class = "fa fa-fw fa-pencil-square-o" }) |
+
+                                @if ((item.UserName.ToLower() != this.User.Identity.Name.ToLower()))
+                                {
+                                    @Html.ActionLink("  ", "DeleteUser", new { UserName = item.UserName },
+                                                                                new { onclick = "return confirm('Are you sure you wish to delete this user?');", @class = "fa fa-fw fa-trash-o" })
+
+                                }
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr></tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6">
+
+
+
+
+</div>
+
+    <br />
+    @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+
+
+    @*@Html.PagedListPager(Model,
+        page => Url.Action("Index",
+        new
+        {
+            page,
+            searchStringUserNameOrEmail = ViewBag.searchStringUserNameOrEmail,
+            currentFilter = ViewBag.CurrentFilter
+        }))*@
+
+    <hr />
+
+
+    @section Scripts {
+        @Scripts.Render("~/AdminLTE/plugins/datatables/js")
+        @Scripts.Render("~/Scripts/Tables/Data")
+    }
