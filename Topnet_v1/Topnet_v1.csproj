@@ -197,28 +197,28 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="AspNetRole.cs">
+    <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="AspNetUser.cs">
+    <Compile Include="Models\AspNetUser.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="AspNetUserClaim.cs">
+    <Compile Include="Models\AspNetUserClaim.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="AspNetUserLogin.cs">
+    <Compile Include="Models\AspNetUserLogin.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="attenuation.cs">
+    <Compile Include="Models\attenuation.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="carteGeoChartMoyConnexionNbPersonne_Result.cs">
+    <Compile Include="Models\carteGeoChartMoyConnexionNbPersonne_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="cherche_Result.cs">
+    <Compile Include="Models\cherche_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="client.cs">
+    <Compile Include="Models\client.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\DailyParameterController.cs" />
@@ -234,75 +234,75 @@
     <Compile Include="Controllers\MoreInfoMoyDureController.cs" />
     <Compile Include="Controllers\referenceController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
-    <Compile Include="C__MigrationHistory.cs">
+    <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="dailyParameter.cs">
+    <Compile Include="Models\dailyParameter.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="deligation.cs">
+    <Compile Include="Models\deligation.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="DetailBarreReferenceAvecDate_Result.cs">
+    <Compile Include="Models\DetailBarreReferenceAvecDate_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="DetailBarreReferenceNbDeconnexion_Result.cs">
+    <Compile Include="Models\DetailBarreReferenceNbDeconnexion_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="DetailBarreReference_Result.cs">
+    <Compile Include="Models\DetailBarreReference_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ClaimsExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="gouvernerat.cs">
+    <Compile Include="Models\gouvernerat.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="historiqueConnexionDetaille_Result.cs">
+    <Compile Include="Models\historiqueConnexionDetaille_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="historiqueConnexion_Result.cs">
+    <Compile Include="Models\historiqueConnexion_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="historiqueKPI.cs">
+    <Compile Include="Models\historiqueKPI.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="historiqueKPIGlobal.cs">
+    <Compile Include="Models\historiqueKPIGlobal.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="historiqueSession.cs">
+    <Compile Include="Models\historiqueSession.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="KPI.cs">
+    <Compile Include="Models\KPI.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="ligneADSL.cs">
+    <Compile Include="Models\ligneADSL.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="listeTicket_Result.cs">
+    <Compile Include="Models\listeTicket_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="localite.cs">
+    <Compile Include="Models\localite.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="maxConnexionSemaineDynamicDate_Result.cs">
+    <Compile Include="Models\maxConnexionSemaineDynamicDate_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="minConnexionSemaineDynamicDate_Result.cs">
+    <Compile Include="Models\minConnexionSemaineDynamicDate_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model1.Context.cs">
+    <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model1.cs">
+    <Compile Include="Models\Model1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model1.Designer.cs">
+    <Compile Include="Models\Model1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -314,84 +314,84 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\reqkpiModel.cs" />
     <Compile Include="Models\UserRolesDTO.cs" />
-    <Compile Include="modem.cs">
+    <Compile Include="Models\modem.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="motif.cs">
+    <Compile Include="Models\motif.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="moyDureeConnexionParJourParGouverneratHHmmSS_Result.cs">
+    <Compile Include="Models\moyDureeConnexionParJourParGouverneratHHmmSS_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="moyDureeConnexionParJourParGouvernerat_Result.cs">
+    <Compile Include="Models\moyDureeConnexionParJourParGouvernerat_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="moyDureeConnexionSemaineDynamicDate_Result.cs">
+    <Compile Include="Models\moyDureeConnexionSemaineDynamicDate_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="moyNbDeconnexionSemaineParGouvernerat_Result.cs">
+    <Compile Include="Models\moyNbDeconnexionSemaineParGouvernerat_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="moyNBdeonnexionSemaineDynamicDate_Result.cs">
+    <Compile Include="Models\moyNBdeonnexionSemaineDynamicDate_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="moyNBdeonnexionSemaineDynamicGouvernerat_Result.cs">
+    <Compile Include="Models\moyNBdeonnexionSemaineDynamicGouvernerat_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="moySessionDeconnexionSemaine_Result.cs">
+    <Compile Include="Models\moySessionDeconnexionSemaine_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="notexiste.cs">
+    <Compile Include="Models\notexiste.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="reference.cs">
+    <Compile Include="Models\reference.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="referenceDureeMaximalConnexion_Result.cs">
+    <Compile Include="Models\referenceDureeMaximalConnexion_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="referenceDureeMinimalConnexion_Result.cs">
+    <Compile Include="Models\referenceDureeMinimalConnexion_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="referenceDureeMoyenneConnexion_Result.cs">
+    <Compile Include="Models\referenceDureeMoyenneConnexion_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="referenceKPIDureeMaximale_Result.cs">
+    <Compile Include="Models\referenceKPIDureeMaximale_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="referenceKPIDureeMinimale_Result.cs">
+    <Compile Include="Models\referenceKPIDureeMinimale_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="referenceKPINbDeconnexion_Result.cs">
+    <Compile Include="Models\referenceKPINbDeconnexion_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="sessionTime_Result.cs">
+    <Compile Include="Models\sessionTime_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="sysdiagram.cs">
+    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="testdes_Result.cs">
+    <Compile Include="Models\testdes_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="testnotEXISTE_Result.cs">
+    <Compile Include="Models\testnotEXISTE_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="test_Result.cs">
+    <Compile Include="Models\test_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="ticket.cs">
+    <Compile Include="Models\ticket.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="ticketdate_Result.cs">
+    <Compile Include="Models\ticketdate_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="ticketGenere.cs">
+    <Compile Include="Models\ticketGenere.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="TypeReseau.cs">
+    <Compile Include="Models\TypeReseau.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -1198,12 +1198,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Model1.Context.tt">
+    <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model1.tt">
+    <Content Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
@@ -1249,11 +1249,11 @@
     <Content Include="AdminLTE\plugins\ionicons\fonts\ionicons.eot" />
     <Content Include="AdminLTE\plugins\ionicons\fonts\ionicons.ttf" />
     <Content Include="AdminLTE\plugins\ionicons\fonts\ionicons.woff" />
-    <EntityDeploy Include="Model1.edmx">
+    <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Model1.edmx.diagram">
+    <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
